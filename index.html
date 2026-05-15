@@ -7,7 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23F5A623'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Inter,sans-serif' font-weight='800' font-size='18' fill='%23003B73'>G</text></svg>">
 <style>
 /* ═══════════════════════════════════════════════════════════
-   GUIDEWELL OS — Design System
+   GUIDEWELL OS — Design System v6
    Brand: Navy #003B73 · Teal #008B8B · Gold #F5A623 · Cream #FAF9F7
 ══════════════════════════════════════════════════════════════ */
 :root {
@@ -38,16 +38,117 @@
   --red-muted:    rgba(220,60,60,0.10);
   --purple-muted: rgba(124,58,237,0.10);
   --navy-muted:   rgba(0,59,115,0.08);
+  /* Dark mode overrides */
+  --dm-bg: #0f1b2d;
+  --dm-surface: #1a2942;
+  --dm-border: #2a3a55;
+  --dm-text: #e8e6e1;
+  --dm-text-secondary: #9a9a9a;
+  --dm-text-muted: #6a6a6a;
+  --dm-sidebar: #0a1425;
+  --dm-cream: #1e2d42;
 }
+
+/* ── Dark Mode ── */
+[data-theme="dark"] {
+  --cream:   #1a2942;
+  --cream-dark: #141e30;
+  --surface:  #1e2d42;
+  --border:   #2a3a55;
+  --text-primary:   #e8e6e1;
+  --text-secondary: #9a9a9a;
+  --text-muted:     #6a6a6a;
+  background: var(--dm-bg);
+}
+[data-theme="dark"] .sidebar { background: var(--dm-sidebar); }
+[data-theme="dark"] .topbar { background: var(--dm-surface); border-color: var(--dm-border); }
+[data-theme="dark"] .card,
+[data-theme="dark"] .dash-widget,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .recruiter-card,
+[data-theme="dark"] .job-card,
+[data-theme="dark"] .candidate-card,
+[data-theme="dark"] .company-card { background: var(--dm-surface); border-color: var(--dm-border); }
+[data-theme="dark"] .app-shell { background: var(--dm-bg); }
+[data-theme="dark"] .page-title, [data-theme="dark"] .dash-widget-title,
+[data-theme="dark"] .card-title, [data-theme="dark"] .stat-value { color: var(--dm-text); }
+[data-theme="dark"] .ai-insight { background: linear-gradient(135deg,rgba(0,59,115,0.4) 0%,rgba(0,139,139,0.3) 100%); border-color: rgba(0,139,139,0.3); }
+[data-theme="dark"] tbody tr:hover { background: rgba(255,255,255,0.03); }
+[data-theme="dark"] .kanban-card { background: var(--dm-surface); }
+[data-theme="dark"] .cal-day.other-month { background: var(--dm-cream); }
+[data-theme="dark"] thead th { background: var(--dm-cream); }
+[data-theme="dark"] .notif-panel { background: var(--dm-surface); border-color: var(--dm-border); }
+[data-theme="dark"] .notif-item { border-bottom-color: var(--dm-border); }
+[data-theme="dark"] .notif-item:hover { background: rgba(255,255,255,0.04); }
+
+/* ── Animations ── */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes celebrateBurst { 0% { transform: scale(0.8); opacity: 0; } 60% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes notifPop { 0% { transform: scale(0.85); opacity: 0; } 70% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+
+.animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
+.animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+.animate-slide-left { animation: slideInLeft 0.35s ease-out forwards; }
+.animate-slide-right { animation: slideInRight 0.35s ease-out forwards; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; }
+
+/* Staggered children */
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.10s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.20s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.30s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.40s; }
+
+/* Hover lift */
+.hover-lift { transition: transform 0.18s ease, box-shadow 0.18s ease; }
+.hover-lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+/* Haptic pulse feedback */
+.haptic-pulse { animation: pulse 0.3s ease-out; }
 
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html,body { font-family: var(--font); background: var(--cream); color: var(--text-primary); font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased; }
 
 /* ── App Shell ── */
-.app-shell { display: grid; grid-template-columns: 220px 1fr; grid-template-rows: 60px 1fr; grid-template-areas: "sidebar topbar" "sidebar main"; min-height: 100vh; }
+.app-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas: "sidebar topbar" "sidebar main";
+  min-height: 100vh;
+  transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.app-shell.sidebar-collapsed {
+  grid-template-columns: 0 1fr;
+}
+.app-shell.sidebar-collapsed .sidebar {
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+}
 
 /* ── Sidebar ── */
-.sidebar { grid-area: sidebar; background: var(--navy); position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; }
+.sidebar {
+  grid-area: sidebar;
+  background: var(--navy);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
 .sidebar-logo { padding: 18px 20px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px; }
 .sidebar-logo-icon { width:32px;height:32px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--navy); }
 .sidebar-logo-name { font-size:14px;font-weight:700;color:#fff; }
@@ -83,8 +184,39 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
 /* Topbar buttons */
 .topbar-btn { width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);transition:all 0.12s;position:relative; }
 .topbar-btn:hover { background:var(--cream);color:var(--text-primary); }
+.topbar-btn:active { transform: scale(0.92); }
+.topbar-btn.active { background:var(--navy-muted);color:var(--navy);border-color:transparent; }
 .notif-dot { position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid var(--surface); }
 .topbar-avatar { width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;position:relative; }
+
+/* Sidebar toggle */
+#sidebarToggle {
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-secondary); transition: all 0.15s;
+  flex-shrink: 0;
+}
+#sidebarToggle:hover { background: var(--cream); color: var(--text-primary); }
+#sidebarToggle:active { transform: scale(0.88); }
+#sidebarToggle svg { transition: transform 0.3s ease; }
+#sidebarToggle.toggled svg { transform: rotate(180deg); }
+
+/* Theme toggle */
+#themeToggle {
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-secondary); transition: all 0.2s;
+  flex-shrink: 0; position: relative; overflow: hidden;
+}
+#themeToggle:hover { background: var(--cream); color: var(--text-primary); }
+#themeToggle:active { transform: scale(0.88); }
+.theme-icon { transition: opacity 0.2s, transform 0.3s; }
+[data-theme="dark"] #themeToggle .icon-sun { opacity: 1; transform: rotate(0deg); }
+[data-theme="dark"] #themeToggle .icon-moon { opacity: 0; transform: rotate(-90deg); }
+#themeToggle .icon-sun { opacity: 0; transform: rotate(90deg); position: absolute; }
+#themeToggle .icon-moon { opacity: 1; transform: rotate(0deg); }
 .topbar-avatar img { width:100%;height:100%;border-radius:50%;object-fit:cover; }
 
 /* Multi-timezone clocks */
@@ -107,6 +239,41 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
 .dropdown-item:hover { background:var(--cream);color:var(--text-primary); }
 .dropdown-item.active { background:var(--teal-muted);color:var(--teal);font-weight:600; }
 .dropdown-item img { width:24px;height:24px;border-radius:50%;object-fit:cover; }
+
+/* ── Enhanced Notification Panel ── */
+.notif-panel { position:absolute;top:calc(100% + 10px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);min-width:340px;z-index:200;display:none;overflow:hidden; }
+.notif-panel.open { display:block; animation: notifPop 0.25s ease-out; }
+.notif-panel-header { display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px;border-bottom:1px solid var(--border); }
+.notif-panel-title { font-size:13.5px;font-weight:700;color:var(--text-primary); }
+.notif-actions { display:flex;gap:6px; }
+.notif-action-btn { font-size:11px;font-weight:600;color:var(--teal);background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:4px;transition:background 0.1s; }
+.notif-action-btn:hover { background:var(--teal-muted); }
+.notif-action-btn.dismiss { color:var(--text-muted); }
+.notif-action-btn.dismiss:hover { background:var(--cream-dark); }
+.notif-list { max-height:380px;overflow-y:auto; }
+.notif-list::-webkit-scrollbar { width: 4px; }
+.notif-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.notif-item { display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s; position:relative; }
+.notif-item:last-child { border-bottom:none; }
+.notif-item:hover { background:var(--cream); }
+.notif-item.unread { background:rgba(0,139,139,0.04); }
+.notif-item.unread::before { content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);border-radius:0 2px 2px 0; }
+.notif-icon-wrap { width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px; }
+.notif-body { flex:1;min-width:0; }
+.notif-text { font-size:12.5px;color:var(--text-primary);line-height:1.4;margin-bottom:2px; }
+.notif-text strong { font-weight:600; }
+.notif-time { font-size:10.5px;color:var(--text-muted); }
+.notif-close { width:20px;height:20px;border-radius:50%;border:none;background:none;cursor:pointer;color:var(--text-muted);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.1s;flex-shrink:0;font-size:12px; }
+.notif-item:hover .notif-close { opacity:1; }
+.notif-close:hover { background:var(--red-muted);color:var(--red); }
+.notif-badge-sm { font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:8px;background:var(--teal-muted);color:var(--teal);white-space:nowrap; }
+
+/* Notification types */
+.notif-type-success .notif-icon-wrap { background:var(--green-muted); }
+.notif-type-warning .notif-icon-wrap { background:var(--gold-muted); }
+.notif-type-error .notif-icon-wrap { background:var(--red-muted); }
+.notif-type-info .notif-icon-wrap { background:var(--navy-muted); }
+.notif-type-social .notif-icon-wrap { background:var(--purple-muted); }
 
 /* ── Main ── */
 .main-content { grid-area: main; padding: 24px; overflow-y: auto; min-height:0; }
@@ -141,6 +308,178 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
 .card { background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);overflow:hidden; }
 .card-header { display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px;border-bottom:1px solid var(--border); }
 .card-title { font-size:13.5px;font-weight:700;color:var(--text-primary); }
+
+/* ── Metrics Strip ── */
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.metric-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s;
+  cursor: default;
+}
+.metric-chip:hover {
+  border-color: var(--teal);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.metric-chip-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.metric-chip-body { flex: 1; min-width: 0; }
+.metric-chip-val { font-size: 16px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.1; }
+.metric-chip-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-top: 1px; }
+.metric-chip-trend { font-size: 10px; font-weight: 600; }
+.metric-chip-trend.up { color: var(--teal); }
+.metric-chip-trend.down { color: var(--red); }
+
+/* ── Announcements Banner ── */
+.announcement-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+  color: #fff;
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.announcement-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  animation: shimmer 3s infinite;
+}
+.announcement-banner:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,59,115,0.25); }
+.annc-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.annc-body { flex: 1; }
+.annc-title { font-size: 13px; font-weight: 700; margin-bottom: 1px; }
+.annc-text { font-size: 11.5px; opacity: 0.85; }
+.annc-tag { font-size: 9.5px; font-weight: 700; padding: 2px 8px; background: rgba(255,255,255,0.2); border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.annc-close { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; padding: 4px; border-radius: 4px; transition: background 0.1s; display: flex; align-items: center; }
+.annc-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+/* ── Quick Actions Bar ── */
+.quick-actions-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.qa-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px;
+  font-family: var(--font); font-size: 12.5px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-secondary);
+}
+.qa-btn:hover { border-color: var(--teal); background: var(--teal-muted); color: var(--teal); transform: translateY(-1px); }
+.qa-btn:active { transform: scale(0.96); }
+.qa-btn svg { flex-shrink: 0; }
+
+/* ── Team Wins Feed ── */
+.team-wins-feed { padding: 6px 0; }
+.win-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px;
+  transition: background 0.1s;
+  position: relative;
+}
+.win-item:hover { background: var(--cream); }
+.win-item::after {
+  content: '';
+  position: absolute;
+  left: 16px; right: 16px; bottom: 0;
+  height: 1px; background: var(--border);
+}
+.win-item:last-child::after { display: none; }
+.win-icon-wrap {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+  animation: celebrateBurst 0.5s ease-out;
+}
+.win-body { flex: 1; min-width: 0; }
+.win-title { font-size: 12.5px; font-weight: 600; color: var(--text-primary); margin-bottom: 1px; }
+.win-meta { font-size: 11px; color: var(--text-muted); }
+.win-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; white-space: nowrap; }
+
+/* ── Time Tracking Panel ── */
+.time-tracking-panel { padding: 14px 16px; }
+.tt-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.tt-timer { font-size: 28px; font-weight: 800; color: var(--navy); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; margin-bottom: 8px; }
+.tt-task { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.tt-project { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; }
+.tt-progress-bar { height: 6px; background: var(--cream-dark); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+.tt-progress-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--navy)); border-radius: 3px; transition: width 1s ease; }
+.tt-stats { display: flex; justify-content: space-between; }
+.tt-stat { text-align: center; }
+.tt-stat-val { font-size: 14px; font-weight: 800; color: var(--text-primary); }
+.tt-stat-label { font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+.tt-controls { display: flex; gap: 6px; margin-top: 10px; }
+
+/* ── Activity Feed v2 ── */
+.activity-list-v2 { display: flex; flex-direction: column; }
+.activity-v2-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); transition: background 0.1s; }
+.activity-v2-item:last-child { border-bottom: none; }
+.activity-v2-item:hover { background: var(--cream); }
+.activity-v2-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.activity-v2-body { flex: 1; min-width: 0; }
+.activity-v2-text { font-size: 12px; color: var(--text-primary); line-height: 1.4; }
+.activity-v2-text strong { font-weight: 600; }
+.activity-v2-time { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
+.activity-v2-action { font-size: 11px; font-weight: 600; color: var(--teal); margin-left: auto; flex-shrink: 0; padding: 2px 8px; border-radius: 4px; transition: background 0.1s; cursor: pointer; }
+.activity-v2-action:hover { background: var(--teal-muted); }
+
+/* ── Upcoming Widget ── */
+.upcoming-list { padding: 6px 0; }
+.upcoming-item { display: flex; align-items: center; gap: 10px; padding: 9px 16px; transition: background 0.1s; }
+.upcoming-item:hover { background: var(--cream); }
+.upcoming-time { min-width: 48px; text-align: center; background: var(--cream-dark); border-radius: 7px; padding: 5px 6px; flex-shrink: 0; }
+.upcoming-time-day { font-size: 11px; font-weight: 800; color: var(--navy); line-height: 1; }
+.upcoming-time-mon { font-size: 9px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
+.upcoming-body { flex: 1; min-width: 0; }
+.upcoming-title { font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.upcoming-sub { font-size: 10.5px; color: var(--text-muted); }
+.upcoming-type { font-size: 9.5px; font-weight: 700; padding: 1px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
+
+/* ── Calendar birthdays & leave ── */
+.cal-birthday { background: linear-gradient(135deg, var(--purple-muted), rgba(124,58,237,0.2)); color: var(--purple); border: 1px dashed var(--purple); }
+.cal-leave { background: linear-gradient(135deg, var(--gold-muted), rgba(245,166,35,0.2)); color: #9a7000; border: 1px dashed var(--gold); }
+.cal-birthday-text, .cal-leave-text { font-size: 9.5px; font-weight: 700; padding: 1px 5px; border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; margin-bottom: 1px; }
+.cal-birthday-text:hover, .cal-leave-text:hover { opacity: 0.8; }
+
+/* ── Holidays Multi-Country ── */
+.holiday-flag { font-size: 12px; margin-right: 4px; }
+.holiday-item.nl .hi-name { color: var(--navy); }
+.holiday-item.sa .hi-name { color: var(--gold); }
+.holiday-item.ph .hi-name { color: var(--teal); }
+.holiday-item.cw .hi-name { color: var(--purple); }
+.holiday-country-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 4px; margin-left: 4px; vertical-align: middle; }
+.holiday-country-badge.nl { background: var(--navy-muted); color: var(--navy); }
+.holiday-country-badge.sa { background: var(--gold-muted); color: #9a7000; }
+.holiday-country-badge.ph { background: var(--teal-muted); color: var(--teal); }
+.holiday-country-badge.cw { background: var(--purple-muted); color: var(--purple); }
 
 /* ── Stats Grid ── */
 .stats-grid { display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px; }
@@ -868,6 +1207,15 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       <span class="topbar-breadcrumb" id="topbarBreadcrumb">Agency Overview</span>
     </div>
     <div class="topbar-right">
+      <!-- Sidebar Toggle -->
+      <button class="topbar-btn" id="sidebarToggle" title="Toggle Sidebar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <!-- Theme Toggle -->
+      <button class="topbar-btn" id="themeToggle" title="Toggle Dark/Light Mode">
+        <span class="icon-moon theme-icon">🌙</span>
+        <span class="icon-sun theme-icon">☀️</span>
+      </button>
       <!-- Multi-timezone clock -->
       <div class="tz-clocks">
         <div class="tz-clock" title="Netherlands (Europe/Amsterdam)">
@@ -959,12 +1307,644 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
           <p class="page-subtitle" id="dashSubtitle">Friday, May 15, 2026 · 6 active deals · 4 open jobs · 47 candidates</p>
         </div>
         <div class="topbar-actions">
-          <button class="btn btn-ghost"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>May 2026</button>
+          <button class="btn btn-ghost" id="anncBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Announcements</button>
           <button class="btn btn-primary" data-open-ai><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Daily AI Brief</button>
         </div>
       </div>
 
-      <div class="stats-grid">
+      <!-- Metrics Strip -->
+      <div class="metrics-strip stagger-children">
+        <div class="metric-chip hover-lift animate-fade-in-up" style="opacity:0;animation-fill-mode:forwards;">
+          <div class="metric-chip-icon" style="background:var(--navy-muted);color:var(--navy);">💼</div>
+          <div class="metric-chip-body">
+            <div class="metric-chip-val">6</div>
+            <div class="metric-chip-label">Active Deals</div>
+            <div class="metric-chip-trend up">↑ 2 this mo</div>
+          </div>
+        </div>
+        <div class="metric-chip hover-lift animate-fade-in-up" style="opacity:0;animation-fill-mode:forwards;">
+          <div class="metric-chip-icon" style="background:var(--teal-muted);color:var(--teal);">💰</div>
+          <div class="metric-chip-body">
+            <div class="metric-chip-val">€328K</div>
+            <div class="metric-chip-label">Pipeline</div>
+            <div class="metric-chip-trend up">↑ €74K</div>
+          </div>
+        </div>
+        <div class="metric-chip hover-lift animate-fade-in-up" style="opacity:0;animation-fill-mode:forwards;">
+          <div class="metric-chip-icon" style="background:var(--gold-muted);color:#9a7000;">📋</div>
+          <div class="metric-chip-body">
+            <div class="metric-chip-val">4</div>
+            <div class="metric-chip-label">Open Jobs</div>
+            <div class="metric-chip-trend" style="color:var(--red);">3 urgent</div>
+          </div>
+        </div>
+        <div class="metric-chip hover-lift animate-fade-in-up" style="opacity:0;animation-fill-mode:forwards;">
+          <div class="metric-chip-icon" style="background:var(--green-muted);color:var(--green);">👥</div>
+          <div class="metric-chip-body">
+            <div class="metric-chip-val">47</div>
+            <div class="metric-chip-label">Candidates</div>
+            <div class="metric-chip-trend up">↑ 14 wk</div>
+          </div>
+        </div>
+        <div class="metric-chip hover-lift animate-fade-in-up" style="opacity:0;animation-fill-mode:forwards;">
+          <div class="metric-chip-icon" style="background:var(--purple-muted);color:var(--purple);">🎤</div>
+          <div class="metric-chip-body">
+            <div class="metric-chip-val">8</div>
+            <div class="metric-chip-label">Interviews</div>
+            <div class="metric-chip-trend">Next 7d</div>
+          </div>
+        </div>
+        <div class="metric-chip hover-lift animate-fade-in-up" style="opacity:0;animation-fill-mode:forwards;">
+          <div class="metric-chip-icon" style="background:linear-gradient(135deg,var(--green-muted),rgba(34,160,107,0.2));color:var(--green);">✅</div>
+          <div class="metric-chip-body">
+            <div class="metric-chip-val">2</div>
+            <div class="metric-chip-label">Offers Out</div>
+            <div class="metric-chip-trend up">1 accepted</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Announcement Banner -->
+      <div class="announcement-banner animate-fade-in" id="anncBanner" style="opacity:0;animation-fill-mode:forwards;animation-delay:0.1s;">
+        <div class="annc-icon">📣</div>
+        <div class="annc-body">
+          <div class="annc-title">Q2 Kickoff — All-Hands Meeting This Friday at 3 PM</div>
+          <div class="annc-text">Join us for the quarterly review and team awards ceremony · Virtual & Amsterdam Office</div>
+        </div>
+        <div class="annc-tag">New</div>
+        <button class="annc-close" onclick="dismissBanner()">✕</button>
+      </div>
+
+      <!-- Quick Actions Bar -->
+      <div class="quick-actions-bar">
+        <button class="qa-btn" onclick="showView('deals')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Deal</button>
+        <button class="qa-btn" onclick="showView('jobs')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Post Job</button>
+        <button class="qa-btn" onclick="showView('candidates')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Add Candidate</button>
+        <button class="qa-btn" onclick="showView('calendar')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Schedule</button>
+        <button class="qa-btn" onclick="showView('outreach')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email Sequence</button>
+        <button class="qa-btn" data-open-ai style="border-color:var(--teal);color:var(--teal);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>AI Assistant</button>
+      </div>
+
+      <!-- AI Insight -->
+      <div class="ai-insight animate-fade-in-up" style="opacity:0;animation-fill-mode:forwards;animation-delay:0.2s;">
+        <div class="ai-insight-header">
+          <span class="ai-insight-badge">AI Insight</span>
+          <span class="ai-insight-title">Thomas Müller's offer pending for 3 days</span>
+        </div>
+        <div class="ai-insight-text">Deals past 5 days without response have a 40% lower acceptance rate. AI-generated follow-up ready — click to review and send.</div>
+        <div style="margin-top:10px;display:flex;gap:8px;">
+          <button class="btn btn-primary btn-sm" data-ai-gen>Review & Send</button>
+          <button class="btn btn-ghost btn-sm" onclick="dismissAIInsight()">Dismiss</button>
+        </div>
+      </div>
+
+      <!-- Main Dashboard Grid: 3 columns -->
+      <div style="display:grid;grid-template-columns:1fr 300px 260px;gap:16px;margin-bottom:16px;align-items:start;">
+
+        <!-- LEFT: Activity Feed + Team Wins -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <!-- Activity Feed -->
+          <div class="dash-widget">
+            <div class="dash-widget-header">
+              <span class="dash-widget-title">📡 Activity Feed</span>
+              <button class="btn btn-ghost btn-sm" style="font-size:11px;">View all →</button>
+            </div>
+            <div class="activity-list-v2">
+              <div class="activity-v2-item">
+                <div class="activity-v2-icon" style="background:var(--green-muted);color:var(--green);">✓</div>
+                <div class="activity-v2-body">
+                  <div class="activity-v2-text"><strong>Brian Anderson</strong> moved <strong>Randstad Group</strong> to Won — €96K deal closed</div>
+                  <div class="activity-v2-time">2 min ago</div>
+                </div>
+                <div class="activity-v2-action">View</div>
+              </div>
+              <div class="activity-v2-item">
+                <div class="activity-v2-icon" style="background:var(--navy-muted);color:var(--navy);">📋</div>
+                <div class="activity-v2-body">
+                  <div class="activity-v2-text"><strong>Sara Lindqvist</strong> scheduled interview with <strong>Priya Nair</strong> for Lead Designer role</div>
+                  <div class="activity-v2-time">18 min ago</div>
+                </div>
+                <div class="activity-v2-action">Details</div>
+              </div>
+              <div class="activity-v2-item">
+                <div class="activity-v2-icon" style="background:var(--teal-muted);color:var(--teal);">📧</div>
+                <div class="activity-v2-body">
+                  <div class="activity-v2-text"><strong>Maya Kim</strong> sent Step 3 email to <strong>Marco van der Berg</strong> — Finova Bank Java role</div>
+                  <div class="activity-v2-time">45 min ago</div>
+                </div>
+                <div class="activity-v2-action">View</div>
+              </div>
+              <div class="activity-v2-item">
+                <div class="activity-v2-icon" style="background:var(--gold-muted);color:#9a7000;">🎤</div>
+                <div class="activity-v2-body">
+                  <div class="activity-v2-text"><strong>Thomas Vermeulen</strong> completed technical screening — <strong>James O'Brien</strong> advancing</div>
+                  <div class="activity-v2-time">1 hr ago</div>
+                </div>
+                <div class="activity-v2-action">Notes</div>
+              </div>
+              <div class="activity-v2-item">
+                <div class="activity-v2-icon" style="background:var(--purple-muted);color:var(--purple);">⭐</div>
+                <div class="activity-v2-body">
+                  <div class="activity-v2-text"><strong>Anna Schmidt</strong> candidate profile updated — new portfolio link added</div>
+                  <div class="activity-v2-time">2 hr ago</div>
+                </div>
+                <div class="activity-v2-action">Review</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Wins -->
+          <div class="dash-widget">
+            <div class="dash-widget-header">
+              <span class="dash-widget-title">🏆 Team Wins</span>
+              <span class="tb-badge badge-green" style="font-size:10px;">5 this week</span>
+            </div>
+            <div class="team-wins-feed">
+              <div class="win-item">
+                <div class="win-icon-wrap" style="background:var(--green-muted);">🎉</div>
+                <div class="win-body">
+                  <div class="win-title">Randstad Group — 4 placements!</div>
+                  <div class="win-meta">Brian Anderson · Closed 2h ago · €96K value</div>
+                </div>
+                <span class="win-badge" style="background:var(--green-muted);color:var(--green);">Won</span>
+              </div>
+              <div class="win-item">
+                <div class="win-icon-wrap" style="background:var(--teal-muted);">🔥</div>
+                <div class="win-body">
+                  <div class="win-title">3 interviews booked in one day</div>
+                  <div class="win-meta">Sara Lindqvist · Today · Finova + Randstad</div>
+                </div>
+                <span class="win-badge" style="background:var(--teal-muted);color:var(--teal);">Hot</span>
+              </div>
+              <div class="win-item">
+                <div class="win-icon-wrap" style="background:var(--gold-muted);">💡</div>
+                <div class="win-body">
+                  <div class="win-title">AI sourced 6 candidates for Data Engineer</div>
+                  <div class="win-meta">Maya Kim · This morning · Avg score 87%</div>
+                </div>
+                <span class="win-badge" style="background:var(--gold-muted);color:#9a7000;">AI</span>
+              </div>
+              <div class="win-item">
+                <div class="win-icon-wrap" style="background:var(--navy-muted);">📞</div>
+                <div class="win-body">
+                  <div class="win-title">Thomas V. — 10 candidate calls completed</div>
+                  <div class="win-meta">Thomas Vermeulen · Yesterday · Personal best</div>
+                </div>
+                <span class="win-badge" style="background:var(--navy-muted);color:var(--navy);">Record</span>
+              </div>
+              <div class="win-item">
+                <div class="win-icon-wrap" style="background:var(--purple-muted);">🌟</div>
+                <div class="win-body">
+                  <div class="win-title">Anna Schmidt — Offer accepted!</div>
+                  <div class="win-meta">Brian Anderson · Yesterday · €85K/year</div>
+                </div>
+                <span class="win-badge" style="background:var(--green-muted);color:var(--green);">Accepted</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MIDDLE: Deals + Upcoming -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <!-- Deals Pipeline -->
+          <div class="dash-widget">
+            <div class="dash-widget-header">
+              <span class="dash-widget-title">Deals Pipeline</span>
+              <button class="btn btn-ghost btn-sm" data-show-view="deals">View all →</button>
+            </div>
+            <div class="dash-kanban-scroll">
+              <div class="dash-kanban">
+                <div class="dash-kanban-col" data-stage="prospect">
+                  <div class="dash-kanban-col-hd"><div class="dash-col-dot" style="background:#9E9890"></div><span class="dash-col-name">Prospect</span><span class="dash-col-count">2</span></div>
+                  <div class="dash-kanban-card" draggable="true" data-deal-id="deal-techcom" data-modal="deal-techcom">
+                    <div class="dkc-title">Techcom Solutions</div><div class="dkc-meta">IT Infrastructure · Amsterdam</div>
+                    <div class="dkc-footer"><span class="dkc-value">€18K</span><span class="dkc-jobs">☐ 2 jobs</span></div>
+                    <div class="dkc-footer2"><div class="dkc-recruiter"><div class="ravatar-sm" style="background:#7c3aed">TV</div><span>Thomas V.</span></div><span class="dkc-date">2d ago</span></div>
+                  </div>
+                  <div class="dash-kanban-card" draggable="true" data-deal-id="deal-dataflow" data-modal="deal-dataflow">
+                    <div class="dkc-title">DataFlow BV</div><div class="dkc-meta">Data Analytics · Utrecht</div>
+                    <div class="dkc-footer"><span class="dkc-value">€12K</span><span class="dkc-jobs">☐ 1 job</span></div>
+                    <div class="dkc-footer2"><div class="dkc-recruiter"><div class="ravatar-sm" style="background:#F5A623">MK</div><span>Maya K.</span></div><span class="dkc-date">5d ago</span></div>
+                  </div>
+                </div>
+                <div class="dash-kanban-col" data-stage="qualified">
+                  <div class="dash-kanban-col-hd"><div class="dash-col-dot" style="background:#008B8B"></div><span class="dash-col-name">Qualified</span><span class="dash-col-count">1</span></div>
+                  <div class="dash-kanban-card" draggable="true" data-deal-id="deal-bluewave" data-modal="deal-bluewave">
+                    <div class="dkc-title">BlueWave Media</div><div class="dkc-meta">Digital Marketing · Rotterdam</div>
+                    <div class="dkc-footer"><span class="dkc-value">€24K</span><span class="dkc-jobs">☑ 1 job</span></div>
+                    <div class="dkc-footer2"><div class="dkc-recruiter"><div class="ravatar-sm" style="background:#008B8B">SL</div><span>Sara L.</span></div><span class="dkc-date">1d ago</span></div>
+                  </div>
+                </div>
+                <div class="dash-kanban-col" data-stage="proposal">
+                  <div class="dash-kanban-col-hd"><div class="dash-col-dot" style="background:#F5A623"></div><span class="dash-col-name">Proposal</span><span class="dash-col-count">1</span></div>
+                  <div class="dash-kanban-card" draggable="true" data-deal-id="deal-greentech" data-modal="deal-greentech">
+                    <div class="dkc-title">GreenTech NL</div><div class="dkc-meta">Sustainability · Groningen</div>
+                    <div class="dkc-footer"><span class="dkc-value">€38K</span><span class="dkc-jobs">☑ 2 jobs</span></div>
+                    <div class="dkc-footer2"><div class="dkc-recruiter"><div class="ravatar-sm" style="background:#003B73">BA</div><span>Brian A.</span></div><span class="dkc-date">3d ago</span></div>
+                  </div>
+                </div>
+                <div class="dash-kanban-col" data-stage="negotiation">
+                  <div class="dash-kanban-col-hd"><div class="dash-col-dot" style="background:#7c3aed"></div><span class="dash-col-name">Negotiation</span><span class="dash-col-count">1</span></div>
+                  <div class="dash-kanban-card" draggable="true" data-deal-id="deal-finova" data-modal="deal-finova">
+                    <div class="dkc-title">Finova Bank</div><div class="dkc-meta">Financial Services · Amsterdam</div>
+                    <div class="dkc-footer"><span class="dkc-value">€52K</span><span class="dkc-jobs">☑ 3 jobs</span></div>
+                    <div class="dkc-footer2"><div class="dkc-recruiter"><div class="ravatar-sm" style="background:#003B73">BA</div><span>Brian A.</span></div><span class="dkc-date">Today</span></div>
+                  </div>
+                </div>
+                <div class="dash-kanban-col" data-stage="won">
+                  <div class="dash-kanban-col-hd"><div class="dash-col-dot" style="background:#22a06b"></div><span class="dash-col-name">Won</span><span class="dash-col-count">1</span></div>
+                  <div class="dash-kanban-card" draggable="true" data-deal-id="deal-randstad" data-modal="deal-randstad">
+                    <div class="dkc-title">Randstad Group</div><div class="dkc-meta">Staffing & Recruitment · Diemen</div>
+                    <div class="dkc-footer"><span class="dkc-value">€96K</span><span class="dkc-jobs">☑ 4 jobs</span></div>
+                    <div class="dkc-footer2"><div class="dkc-recruiter"><div class="ravatar-sm" style="background:#22a06b">BA</div><span>Brian A.</span></div><span class="dkc-date" style="color:var(--green)">Closed ✓</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Events -->
+          <div class="dash-widget">
+            <div class="dash-widget-header">
+              <span class="dash-widget-title">📅 Coming Up</span>
+              <button class="btn btn-ghost btn-sm" data-show-view="calendar">Calendar →</button>
+            </div>
+            <div class="upcoming-list">
+              <div class="upcoming-item">
+                <div class="upcoming-time"><div class="upcoming-time-day">15</div><div class="upcoming-time-mon">May</div></div>
+                <div class="upcoming-body"><div class="upcoming-title">Anna Schmidt — Screening</div><div class="upcoming-sub">10:00 AM · Randstad Group</div></div>
+                <div class="upcoming-type" style="background:var(--teal-muted);color:var(--teal);">Today</div>
+              </div>
+              <div class="upcoming-item">
+                <div class="upcoming-time"><div class="upcoming-time-day">15</div><div class="upcoming-time-mon">May</div></div>
+                <div class="upcoming-body"><div class="upcoming-title">James O'Brien — 1st Interview</div><div class="upcoming-sub">2:00 PM · Finova Bank</div></div>
+                <div class="upcoming-type" style="background:var(--teal-muted);color:var(--teal);">Today</div>
+              </div>
+              <div class="upcoming-item">
+                <div class="upcoming-time"><div class="upcoming-time-day">16</div><div class="upcoming-time-mon">May</div></div>
+                <div class="upcoming-body"><div class="upcoming-title">Priya Nair — Technical Round</div><div class="upcoming-sub">11:30 AM · Randstad Group</div></div>
+                <div class="upcoming-type" style="background:var(--navy-muted);color:var(--navy);">Tomorrow</div>
+              </div>
+              <div class="upcoming-item">
+                <div class="upcoming-time"><div class="upcoming-time-day">16</div><div class="upcoming-time-mon">May</div></div>
+                <div class="upcoming-body"><div class="upcoming-title">Sara Lindqvist — Final Round</div><div class="upcoming-sub">3:00 PM · Finova Bank</div></div>
+                <div class="upcoming-type" style="background:var(--navy-muted);color:var(--navy);">Tomorrow</div>
+              </div>
+              <div class="upcoming-item">
+                <div class="upcoming-time"><div class="upcoming-time-day">19</div><div class="upcoming-time-mon">May</div></div>
+                <div class="upcoming-body"><div class="upcoming-title">Team All-Hands Q2 Kickoff</div><div class="upcoming-sub">3:00 PM · Virtual + Amsterdam</div></div>
+                <div class="upcoming-type" style="background:var(--gold-muted);color:#9a7000;">Event</div>
+              </div>
+              <div class="upcoming-item">
+                <div class="upcoming-time"><div class="upcoming-time-day">21</div><div class="upcoming-time-mon">May</div></div>
+                <div class="upcoming-body"><div class="upcoming-title">Maya Kim — Client Call</div><div class="upcoming-sub">11:00 AM · BlueWave Media</div></div>
+                <div class="upcoming-type" style="background:var(--purple-muted);color:var(--purple);">Call</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Time Tracking Panel -->
+          <div class="dash-widget">
+            <div class="dash-widget-header">
+              <span class="dash-widget-title">⏱ Time Tracking</span>
+              <span class="tb-badge badge-teal" id="ttStatus" style="font-size:10px;">Working</span>
+            </div>
+            <div class="time-tracking-panel">
+              <div class="tt-timer" id="ttTimer">00:00:00</div>
+              <div class="tt-task">Screening Candidates</div>
+              <div class="tt-project">Finova Bank — Java Developer</div>
+              <div class="tt-progress-bar"><div class="tt-progress-fill" id="ttProgress" style="width:35%;"></div></div>
+              <div class="tt-stats">
+                <div class="tt-stat"><div class="tt-stat-val">2h 14m</div><div class="tt-stat-label">Today</div></div>
+                <div class="tt-stat"><div class="tt-stat-val">38h</div><div class="tt-stat-label">This Week</div></div>
+                <div class="tt-stat"><div class="tt-stat-val">92%</div><div class="tt-stat-label">Goal</div></div>
+              </div>
+              <div class="tt-controls">
+                <button class="btn btn-primary btn-sm" id="ttStartBtn" onclick="toggleTimer()"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start</button>
+                <button class="btn btn-ghost btn-sm" onclick="stopTimer()"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Stop</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Clock + Holidays + Team + Outreach -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <!-- Live Clock -->
+          <div class="dash-widget" style="padding:18px 16px;">
+            <div class="dash-widget-header" style="margin-bottom:14px;"><span class="dash-widget-title">Amsterdam Time</span><span class="dash-tz-badge">UTC+2</span></div>
+            <div class="live-clock" id="liveClock">--:--</div>
+            <div class="clock-date" id="clockDate">Loading…</div>
+            <div class="clock-weekday" id="clockWeekday"></div>
+          </div>
+
+          <!-- Multi-Country Holidays -->
+          <div class="dash-widget">
+            <div class="dash-widget-header"><span class="dash-widget-title">🌍 Multi-Country Holidays</span></div>
+            <div class="holidays-list">
+              <div class="holiday-item nl">
+                <div class="hi-date"><div class="hi-day">29</div><div class="hi-month">May</div></div>
+                <div class="hi-info">
+                  <div class="hi-name">Hemelvaartsdag <span class="holiday-country-badge nl">🇳🇱 NL</span></div>
+                  <div class="hi-note">Ascension Day</div>
+                </div>
+                <div class="hi-soon">soon</div>
+              </div>
+              <div class="holiday-item sa">
+                <div class="hi-date"><div class="hi-day">16</div><div class="hi-month">Apr</div></div>
+                <div class="hi-info">
+                  <div class="hi-name">Family Day <span class="holiday-country-badge sa">🇿🇦 SA</span></div>
+                  <div class="hi-note">South Africa</div>
+                </div>
+                <div class="hi-soon hi-done">✓</div>
+              </div>
+              <div class="holiday-item ph">
+                <div class="hi-date"><div class="hi-day">1</div><div class="hi-month">May</div></div>
+                <div class="hi-info">
+                  <div class="hi-name">Araw ng Manggagawa <span class="holiday-country-badge ph">🇵🇭 PH</span></div>
+                  <div class="hi-note">Labour Day</div>
+                </div>
+                <div class="hi-soon hi-done">✓</div>
+              </div>
+              <div class="holiday-item cw">
+                <div class="hi-date"><div class="hi-day">30</div><div class="hi-month">Apr</div></div>
+                <div class="hi-info">
+                  <div class="hi-name">King's Day <span class="holiday-country-badge cw">🇨🇼 CW</span></div>
+                  <div class="hi-note">Curaçao</div>
+                </div>
+                <div class="hi-soon hi-done">✓</div>
+              </div>
+              <div class="holiday-item nl">
+                <div class="hi-date"><div class="hi-day">25</div><div class="hi-month">Dec</div></div>
+                <div class="hi-info">
+                  <div class="hi-name">Kerstmis <span class="holiday-country-badge nl">🇳🇱 NL</span></div>
+                  <div class="hi-note">Christmas Day</div>
+                </div>
+                <div class="hi-soon">later</div>
+              </div>
+              <div class="holiday-item sa">
+                <div class="hi-date"><div class="hi-day">25</div><div class="hi-month">Dec</div></div>
+                <div class="hi-info">
+                  <div class="hi-name">Christmas Day <span class="holiday-country-badge sa">🇿🇦 SA</span></div>
+                  <div class="hi-note">Public Holiday</div>
+                </div>
+                <div class="hi-soon">later</div>
+              </div>
+              <div class="holiday-item ph">
+                <div class="hi-date"><div class="hi-day">25</div><div class="hi-month">Dec</div></div>
+                <div class="hi-info">
+                  <div class="hi-name">Christmas Day <span class="holiday-country-badge ph">🇵🇭 PH</span></div>
+                  <div class="hi-note">Regular Holiday</div>
+                </div>
+                <div class="hi-soon">later</div>
+              </div>
+              <div class="holiday-item cw">
+                <div class="hi-date"><div class="hi-day">25</div><div class="hi-month">Dec</div></div>
+                <div class="hi-info">
+                  <div class="hi-name">Kerstmis <span class="holiday-country-badge cw">🇨🇼 CW</span></div>
+                  <div class="hi-note">Curaçao</div>
+                </div>
+                <div class="hi-soon">later</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team This Week -->
+          <div class="dash-widget">
+            <div class="dash-widget-header"><span class="dash-widget-title">👥 Team This Week</span></div>
+            <div class="team-week-summary">
+              <div class="tws-item"><div class="tws-avatar" style="background:#003B73">BA</div><div><div class="tws-name">Brian Anderson</div><div class="tws-stat">12 calls · 5 interviews · 3 offers</div></div></div>
+              <div class="tws-item"><div class="tws-avatar" style="background:#008B8B">SL</div><div><div class="tws-name">Sara Lindqvist</div><div class="tws-stat">8 calls · 4 interviews · 1 offer</div></div></div>
+              <div class="tws-item"><div class="tws-avatar" style="background:#7c3aed">MK</div><div><div class="tws-name">Maya Kim</div><div class="tws-stat">6 calls · 2 interviews · 1 offer</div></div></div>
+              <div class="tws-item"><div class="tws-avatar" style="background:#F5A623">TV</div><div><div class="tws-name">Thomas Vermeulen</div><div class="tws-stat">4 calls · 1 interview · 0 offers</div></div></div>
+            </div>
+          </div>
+
+          <!-- Active Outreach -->
+          <div class="dash-widget">
+            <div class="dash-widget-header">
+              <span class="dash-widget-title">📧 Active Outreach</span>
+              <button class="btn btn-ghost btn-sm" data-show-view="outreach">Outreach →</button>
+            </div>
+            <div style="padding:12px 14px;">
+              <div class="dash-outreach-item" data-open-outreach-modal="seq-marco">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <img class="dout-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=56&h=56&fit=crop&crop=face" alt="Marco">
+                  <div style="flex:1;min-width:0;">
+                    <div class="dout-name">Marco van der Berg</div>
+                    <div class="dout-meta">Java Developer · Finova Bank · Step 2/4</div>
+                    <div class="dout-step">
+                      <div class="dout-step-pip done"></div>
+                      <div class="dout-step-pip active"></div>
+                      <div class="dout-step-pip pending"></div>
+                      <div class="dout-step-pip pending"></div>
+                    </div>
+                  </div>
+                  <span class="tb-badge badge-teal" style="font-size:10px;padding:2px 7px;">Active</span>
+                </div>
+              </div>
+              <div class="dash-outreach-item" data-open-outreach-modal="seq-priya">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <img class="dout-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=56&h=56&fit=crop&crop=face" alt="Priya">
+                  <div style="flex:1;min-width:0;">
+                    <div class="dout-name">Priya Nair</div>
+                    <div class="dout-meta">Lead Designer · Randstad · Step 3/4</div>
+                    <div class="dout-step">
+                      <div class="dout-step-pip done"></div>
+                      <div class="dout-step-pip done"></div>
+                      <div class="dout-step-pip active"></div>
+                      <div class="dout-step-pip pending"></div>
+                    </div>
+                  </div>
+                  <span class="tb-badge badge-gold" style="font-size:10px;padding:2px 7px;">Reply!</span>
+                </div>
+              </div>
+              <div class="dash-outreach-item" data-open-outreach-modal="seq-thomas">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#dc2626);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;">TM</div>
+                  <div style="flex:1;min-width:0;">
+                    <div class="dout-name">Thomas Müller</div>
+                    <div class="dout-meta">Principal Designer · GreenTech · Step 4/4</div>
+                    <div class="dout-step">
+                      <div class="dout-step-pip done"></div>
+                      <div class="dout-step-pip done"></div>
+                      <div class="dout-step-pip done"></div>
+                      <div class="dout-step-pip done"></div>
+                    </div>
+                  </div>
+                  <span class="tb-badge badge-green" style="font-size:10px;padding:2px 7px;">Done</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Calendar mini + Team Birthdays + Leave Requests -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;">
+        <!-- Calendar mini with birthdays -->
+        <div class="dash-widget">
+          <div class="dash-widget-header">
+            <span class="dash-widget-title">📅 May 2026 — Calendar</span>
+            <button class="btn btn-ghost btn-sm" data-show-view="calendar">Full →</button>
+          </div>
+          <div style="padding:12px 14px;">
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-bottom:8px;">
+              <div style="font-size:9.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Mo</div>
+              <div style="font-size:9.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Tu</div>
+              <div style="font-size:9.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">We</div>
+              <div style="font-size:9.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Th</div>
+              <div style="font-size:9.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Fr</div>
+              <div style="font-size:9.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Sa</div>
+              <div style="font-size:9.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">Su</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;" id="miniCalGrid">
+              <!-- Week 1 -->
+              <div class="cal-mini-day other-month" style="font-size:11px;color:var(--text-muted);padding:4px;text-align:center;">28</div>
+              <div class="cal-mini-day other-month" style="font-size:11px;color:var(--text-muted);padding:4px;text-align:center;">29</div>
+              <div class="cal-mini-day other-month" style="font-size:11px;color:var(--text-muted);padding:4px;text-align:center;">30</div>
+              <div class="cal-mini-day other-month" style="font-size:11px;color:var(--text-muted);padding:4px;text-align:center;">31</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;position:relative;">1</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;"><span style="background:var(--gold-muted);color:#9a7000;font-size:9px;font-weight:700;padding:1px 4px;border-radius:3px;display:block;">1</span>2</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">3</div>
+              <!-- Week 2 -->
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;position:relative;">4</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">5</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;position:relative;">6</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">7</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;position:relative;">8</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;background:var(--teal-muted);color:var(--teal);font-weight:700;">9</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">10</div>
+              <!-- Week 3 -->
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">11</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">12</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">13</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">14</div>
+              <div class="cal-mini-day today" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;background:var(--teal-muted);color:var(--teal);font-weight:800;position:relative;">15<div style="position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:var(--teal);border-radius:50%;"></div></div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">16</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">17</div>
+              <!-- Week 4 -->
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">18</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;background:var(--navy-muted);color:var(--navy);font-weight:700;">19<div style="font-size:8px;font-weight:400;opacity:0.7;">All-Hands</div></div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">20</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;position:relative;">21</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;position:relative;">22</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">23</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">24</div>
+              <!-- Week 5 -->
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;position:relative;">25</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;background:var(--purple-muted);color:var(--purple);font-weight:700;">26<div style="font-size:8px;font-weight:400;">🎂 Sara B.</div></div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;background:var(--gold-muted);color:#9a7000;font-weight:700;">27<div style="font-size:8px;font-weight:400;">🏖 MK PTO</div></div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;background:var(--gold-muted);color:#9a7000;font-weight:700;">28<div style="font-size:8px;font-weight:400;">🏖 MK PTO</div></div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;background:var(--navy-muted);color:var(--navy);font-weight:700;">29<div style="font-size:8px;font-weight:400;">🌅 Ascension</div></div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">30</div>
+              <div class="cal-mini-day" style="font-size:11px;padding:4px;text-align:center;border-radius:6px;cursor:pointer;">31</div>
+              <!-- Next month -->
+              <div class="cal-mini-day other-month" style="font-size:11px;color:var(--text-muted);padding:4px;text-align:center;">1</div>
+              <div class="cal-mini-day other-month" style="font-size:11px;color:var(--text-muted);padding:4px;text-align:center;">2</div>
+              <div class="cal-mini-day other-month" style="font-size:11px;color:var(--text-muted);padding:4px;text-align:center;">3</div>
+            </div>
+            <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-muted);"><span style="width:8px;height:8px;border-radius:2px;background:var(--teal);display:inline-block;"></span>Interview</div>
+              <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-muted);"><span style="width:8px;height:8px;border-radius:2px;background:var(--navy);display:inline-block;"></span>Event</div>
+              <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-muted);"><span style="width:8px;height:8px;border-radius:2px;background:var(--purple);display:inline-block;"></span>🎂 Birthday</div>
+              <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-muted);"><span style="width:8px;height:8px;border-radius:2px;background:var(--gold);display:inline-block;"></span>🏖 Leave</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Birthdays -->
+        <div class="dash-widget">
+          <div class="dash-widget-header">
+            <span class="dash-widget-title">🎂 Upcoming Birthdays</span>
+            <span class="tb-badge badge-purple" style="font-size:10px;">3 this month</span>
+          </div>
+          <div style="padding:8px 0;">
+            <div class="tws-item" style="padding:10px 16px;">
+              <div class="tws-avatar" style="background:linear-gradient(135deg,#7c3aed,#db2777);font-size:12px;">SL</div>
+              <div style="flex:1;">
+                <div class="tws-name">Sara Lindqvist</div>
+                <div class="tws-stat" style="color:var(--purple);font-weight:600;">🎂 Birthday — May 26</div>
+              </div>
+              <span class="tb-badge badge-purple" style="font-size:10px;">in 11 days</span>
+            </div>
+            <div class="tws-item" style="padding:10px 16px;">
+              <div class="tws-avatar" style="background:linear-gradient(135deg,#F5A623,#dc2626);font-size:12px;">TV</div>
+              <div style="flex:1;">
+                <div class="tws-name">Thomas Vermeulen</div>
+                <div class="tws-stat" style="color:var(--gold);font-weight:600;">🎂 Birthday — June 8</div>
+              </div>
+              <span class="tb-badge badge-gold" style="font-size:10px;">in 24 days</span>
+            </div>
+            <div class="tws-item" style="padding:10px 16px;">
+              <div class="tws-avatar" style="background:linear-gradient(135deg,#003B73,#008B8B);font-size:12px;">BA</div>
+              <div style="flex:1;">
+                <div class="tws-name">Brian Anderson</div>
+                <div class="tws-stat" style="color:var(--navy);font-weight:600;">🎂 Birthday — July 3</div>
+              </div>
+              <span class="tb-badge badge-navy" style="font-size:10px;">in 49 days</span>
+            </div>
+            <div class="tws-item" style="padding:10px 16px;">
+              <div class="tws-avatar" style="background:linear-gradient(135deg,#22a06b,#0d9488);font-size:12px;">MK</div>
+              <div style="flex:1;">
+                <div class="tws-name">Maya Kim</div>
+                <div class="tws-stat" style="color:var(--green);font-weight:600;">🎂 Birthday — September 14</div>
+              </div>
+              <span class="tb-badge badge-green" style="font-size:10px;">in 122 days</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Leave Requests -->
+        <div class="dash-widget">
+          <div class="dash-widget-header">
+            <span class="dash-widget-title">🏖️ Leave Requests</span>
+            <span class="tb-badge badge-gold" style="font-size:10px;">2 pending</span>
+          </div>
+          <div style="padding:8px 0;">
+            <div class="tws-item" style="padding:10px 16px;">
+              <div class="tws-avatar" style="background:linear-gradient(135deg,#7c3aed,#db2777);font-size:12px;">MK</div>
+              <div style="flex:1;">
+                <div class="tws-name">Maya Kim</div>
+                <div class="tws-stat">May 27–28 (2 days) · Annual Leave</div>
+              </div>
+              <div style="display:flex;gap:4px;">
+                <button class="btn btn-sm" style="background:var(--green-muted);color:var(--green);border:none;padding:3px 8px;font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;">✓</button>
+                <button class="btn btn-sm" style="background:var(--red-muted);color:var(--red);border:none;padding:3px 8px;font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;">✕</button>
+              </div>
+            </div>
+            <div class="tws-item" style="padding:10px 16px;">
+              <div class="tws-avatar" style="background:linear-gradient(135deg,#F5A623,#dc2626);font-size:12px;">TV</div>
+              <div style="flex:1;">
+                <div class="tws-name">Thomas Vermeulen</div>
+                <div class="tws-stat">Jun 2–6 (5 days) · Annual Leave</div>
+              </div>
+              <div style="display:flex;gap:4px;">
+                <button class="btn btn-sm" style="background:var(--green-muted);color:var(--green);border:none;padding:3px 8px;font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;">✓</button>
+                <button class="btn btn-sm" style="background:var(--red-muted);color:var(--red);border:none;padding:3px 8px;font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;">✕</button>
+              </div>
+            </div>
+            <div class="tws-item" style="padding:10px 16px;">
+              <div class="tws-avatar" style="background:linear-gradient(135deg,#003B73,#008B8B);font-size:12px;">SL</div>
+              <div style="flex:1;">
+                <div class="tws-name">Sara Lindqvist</div>
+                <div class="tws-stat" style="color:var(--green);">✓ Approved: May 26 (Birthday)</div>
+              </div>
+              <span class="tb-badge badge-green" style="font-size:10px;">Approved</span>
+            </div>
+            <div class="tws-item" style="padding:10px 16px;">
+              <div class="tws-avatar" style="background:linear-gradient(135deg,#22a06b,#0d9488);font-size:12px;">BA</div>
+              <div style="flex:1;">
+                <div class="tws-name">Brian Anderson</div>
+                <div class="tws-stat" style="color:var(--green);">✓ Approved: Jun 20–22 (3 days)</div>
+              </div>
+              <span class="tb-badge badge-green" style="font-size:10px;">Approved</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legacy stats grid (kept for compatibility) -->
+      <div class="stats-grid" style="display:none;">
         <div class="stat-card"><div class="stat-label">Active Deals</div><div class="stat-value">6</div><div class="stat-change up">↑ 2 this month</div></div>
         <div class="stat-card"><div class="stat-label">Pipeline Value</div><div class="stat-value">€328K</div><div class="stat-change up">↑ €74K</div></div>
         <div class="stat-card"><div class="stat-label">Open Jobs</div><div class="stat-value">4</div><div class="stat-change neutral">3 urgent</div></div>
@@ -973,19 +1953,8 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
         <div class="stat-card"><div class="stat-label">Offers Extended</div><div class="stat-value">2</div><div class="stat-change up">1 accepted</div></div>
       </div>
 
-      <div class="ai-insight">
-        <div class="ai-insight-header">
-          <span class="ai-insight-badge">AI Insight</span>
-          <span class="ai-insight-title">Thomas Müller's offer pending for 3 days</span>
-        </div>
-        <div class="ai-insight-text">Deals past 5 days without response have a 40% lower acceptance rate. AI-generated follow-up ready — click to review and send.</div>
-        <div style="margin-top:10px;display:flex;gap:8px;">
-          <button class="btn btn-primary btn-sm" data-ai-gen>Review & Send</button>
-          <button class="btn btn-ghost btn-sm">Dismiss</button>
-        </div>
-      </div>
-
-      <div class="dash-widgets">
+      <!-- Legacy dash-widgets (kept for compatibility) -->
+      <div class="dash-widgets" style="display:none;">
         <!-- Deals Pipeline -->
         <div class="dash-widget">
           <div class="dash-widget-header">
@@ -1042,7 +2011,6 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             </div>
           </div>
         </div>
-
         <!-- Upcoming Meetings -->
         <div class="dash-widget">
           <div class="dash-widget-header">
@@ -1077,16 +2045,14 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
           </div>
           <div class="dash-widget-footer"><span class="dwf-label">8 interviews this week · 2 offers pending</span></div>
         </div>
-
         <!-- Right Stack -->
         <div class="dash-widget-stack">
           <div class="dash-widget" style="padding:18px 16px;">
             <div class="dash-widget-header" style="margin-bottom:14px;"><span class="dash-widget-title">Amsterdam Time</span><span class="dash-tz-badge">UTC+2</span></div>
-            <div class="live-clock" id="liveClock">--:--</div>
-            <div class="clock-date" id="clockDate">Loading…</div>
-            <div class="clock-weekday" id="clockWeekday"></div>
+            <div class="live-clock" id="liveClock2">--:--</div>
+            <div class="clock-date" id="clockDate2">Loading…</div>
+            <div class="clock-weekday" id="clockWeekday2"></div>
           </div>
-
           <div class="dash-widget">
             <div class="dash-widget-header"><span class="dash-widget-title">🇳🇱 Dutch Holidays 2026</span></div>
             <div class="holidays-list">
@@ -1094,11 +2060,8 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
               <div class="holiday-item"><div class="hi-date"><div class="hi-day">27</div><div class="hi-month">Apr</div></div><div class="hi-info"><div class="hi-name">Koningsdag</div><div class="hi-note">King's Day</div></div><div class="hi-soon hi-done">✓</div></div>
               <div class="holiday-item"><div class="hi-date"><div class="hi-day">5</div><div class="hi-month">May</div></div><div class="hi-info"><div class="hi-name">Dag v/d Arbeid</div><div class="hi-note">Labour Day</div></div><div class="hi-soon hi-done">✓</div></div>
               <div class="holiday-item"><div class="hi-date"><div class="hi-day">25</div><div class="hi-month">Dec</div></div><div class="hi-info"><div class="hi-name">Kerstmis</div><div class="hi-note">Christmas Day</div></div><div class="hi-soon">later</div></div>
-              <div class="holiday-item"><div class="hi-date"><div class="hi-day">1</div><div class="hi-month">Jan</div></div><div class="hi-info"><div class="hi-name">Nieuwjaarsdag</div><div class="hi-note">New Year's Day</div></div><div class="hi-soon hi-done">✓</div></div>
-              <div class="holiday-item"><div class="hi-date"><div class="hi-day">18</div><div class="hi-month">Apr</div></div><div class="hi-info"><div class="hi-name">Goede Vrijdag</div><div class="hi-note">Good Friday</div></div><div class="hi-soon hi-done">✓</div></div>
             </div>
           </div>
-
           <div class="dash-widget">
             <div class="dash-widget-header"><span class="dash-widget-title">Team This Week</span></div>
             <div class="team-week-summary">
@@ -1109,7 +2072,6 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             </div>
           </div>
         </div>
-
         <!-- Outreach widget -->
         <div class="dash-widget">
           <div class="dash-widget-header">
@@ -1130,93 +2092,13 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
                     <div class="dout-step-pip pending"></div>
                   </div>
                 </div>
-                <span class="tb-badge badge-teal" style="font-size:10px;padding:2px 7px;">Active</span>
+                <span class="tb-badge badge-green" style="font-size:10px;padding:2px 7px;">Active</span>
               </div>
-            </div>
-            <div class="dash-outreach-item" data-open-outreach-modal="seq-priya">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <img class="dout-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=56&h=56&fit=crop&crop=face" alt="Priya">
-                <div style="flex:1;min-width:0;">
-                  <div class="dout-name">Priya Nair</div>
-                  <div class="dout-meta">Lead Designer · Randstad · Step 3/4</div>
-                  <div class="dout-step">
-                    <div class="dout-step-pip done"></div>
-                    <div class="dout-step-pip done"></div>
-                    <div class="dout-step-pip active"></div>
-                    <div class="dout-step-pip pending"></div>
-                  </div>
-                </div>
-                <span class="tb-badge badge-gold" style="font-size:10px;padding:2px 7px;">Reply!</span>
-              </div>
-            </div>
-            <div class="dash-outreach-item" data-open-outreach-modal="seq-thomas">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#dc2626);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;">TM</div>
-                <div style="flex:1;min-width:0;">
-                  <div class="dout-name">Thomas Müller</div>
-                  <div class="dout-meta">Principal Designer · Randstad · Done ✓</div>
-                  <div class="dout-step">
-                    <div class="dout-step-pip done"></div>
-                    <div class="dout-step-pip done"></div>
-                    <div class="dout-step-pip done"></div>
-                    <div class="dout-step-pip done"></div>
-                  </div>
-                </div>
-                <span class="tb-badge badge-green" style="font-size:10px;padding:2px 7px;">Won ✓</span>
-              </div>
-            </div>
-            <div class="dash-outreach-item" data-open-outreach-modal="seq-lisa">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <img class="dout-avatar" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=56&h=56&fit=crop&crop=face" alt="Lisa">
-                <div style="flex:1;min-width:0;">
-                  <div class="dout-name">Lisa Moon</div>
-                  <div class="dout-meta">UX Designer · GreenTech NL · Step 1/3</div>
-                  <div class="dout-step">
-                    <div class="dout-step-pip active"></div>
-                    <div class="dout-step-pip pending"></div>
-                    <div class="dout-step-pip pending"></div>
-                  </div>
-                </div>
-                <span class="tb-badge badge-gold" style="font-size:10px;padding:2px 7px;">Scheduled</span>
-              </div>
-            </div>
-          </div>
-          <div class="dash-widget-footer"><span class="dwf-label">4 active sequences · 2 replies today</span></div>
-        </div>
-      </div><!-- end widgets -->
-
-      <div class="dash-row-2">
-        <div class="card">
-          <div class="card-header"><span class="card-title">Recent Activity</span><span style="font-size:11.5px;color:var(--text-muted)">Last 24h</span></div>
-          <div class="activity-list">
-            <div class="activity-item"><div class="activity-icon" style="background:var(--teal-muted)">📞</div><div class="activity-content"><div class="activity-text"><strong>Brian Anderson</strong> logged screening with <strong>Anna Schmidt</strong></div><div class="activity-time">10:30 AM · Senior UX/UI Designer · Randstad</div></div><span class="tb-badge badge-teal">Call</span></div>
-            <div class="activity-item"><div class="activity-icon" style="background:var(--gold-muted)">📧</div><div class="activity-content"><div class="activity-text"><strong>AI</strong> sent outreach step 2 to <strong>Marco van der Berg</strong></div><div class="activity-time">9:45 AM · Java Developer · Finova Bank</div></div><span class="tb-badge badge-gold">AI</span></div>
-            <div class="activity-item"><div class="activity-icon" style="background:var(--green-muted)">✅</div><div class="activity-content"><div class="activity-text"><strong>Thomas Müller</strong> moved to <strong>Offer</strong> stage</div><div class="activity-time">9:00 AM · Principal Designer · Randstad Group</div></div><span class="tb-badge badge-green">Stage</span></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title">AI Pipeline Alerts</span></div>
-          <div style="padding:0">
-            <div style="padding:12px 18px;border-bottom:1px solid var(--border)">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:12px;font-weight:700;color:var(--red)">⚠ 2 stale deals</span></div>
-              <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">DataFlow BV and Techcom Solutions haven't had activity in 5+ days. AI suggests re-engagement email.</div>
-              <button class="btn btn-sm" style="margin-top:8px;background:var(--red-muted);color:var(--red);border:none" data-open-ai>Generate outreach →</button>
-            </div>
-            <div style="padding:12px 18px;border-bottom:1px solid var(--border)">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:12px;font-weight:700;color:#9a7000">⏰ Thomas Müller offer — day 3</span></div>
-              <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">No response from client. Follow-up recommended today.</div>
-              <button class="btn btn-sm" style="margin-top:8px;background:var(--gold-muted);color:#9a7000;border:none" data-ai-gen>Review follow-up →</button>
-            </div>
-            <div style="padding:12px 18px">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:12px;font-weight:700;color:var(--teal)">✨ 3 candidate matches</span></div>
-              <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">3 candidates match Netwerkspecialist role at GreenTech NL.</div>
-              <button class="btn btn-sm" style="margin-top:8px;background:var(--teal-muted);color:var(--teal);border:none">Review matches →</button>
             </div>
           </div>
         </div>
       </div>
     </div><!-- end dashboard -->
-
 
     <!-- ═══ DEALS ═══ -->
     <div id="view-deals" class="view">
@@ -4043,6 +4925,261 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   }
   updateClocks();
   setInterval(updateClocks, 30000); // update every 30s
+
+  // ═══════════════════════════════════════════════════════
+  // DASHBOARD v6 ENHANCEMENTS
+  // ═══════════════════════════════════════════════════════
+
+  // ── Sidebar Toggle ─────────────────────────────────────
+  var sidebarToggle = document.getElementById('sidebarToggle');
+  var appShell = document.querySelector('.app-shell');
+  if (sidebarToggle && appShell) {
+    sidebarToggle.addEventListener('click', function() {
+      appShell.classList.toggle('sidebar-collapsed');
+      sidebarToggle.classList.toggle('toggled');
+      // Haptic feedback via scale animation
+      sidebarToggle.classList.add('haptic-pulse');
+      setTimeout(function(){ sidebarToggle.classList.remove('haptic-pulse'); }, 300);
+    });
+  }
+
+  // ── Theme Toggle ────────────────────────────────────────
+  var themeToggle = document.getElementById('themeToggle');
+  var htmlEl = document.documentElement;
+  // Load saved theme
+  var savedTheme = localStorage.getItem('gw-theme');
+  if (savedTheme) {
+    htmlEl.setAttribute('data-theme', savedTheme);
+  }
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      var current = htmlEl.getAttribute('data-theme');
+      if (current === 'dark') {
+        htmlEl.removeAttribute('data-theme');
+        localStorage.setItem('gw-theme', 'light');
+      } else {
+        htmlEl.setAttribute('data-theme', 'dark');
+        localStorage.setItem('gw-theme', 'dark');
+      }
+      // Haptic feedback
+      themeToggle.classList.add('haptic-pulse');
+      setTimeout(function(){ themeToggle.classList.remove('haptic-pulse'); }, 300);
+    });
+  }
+
+  // ── Live Clock (main) ──────────────────────────────────
+  function updateLiveClock() {
+    var now = new Date();
+    var opts = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Europe/Amsterdam' };
+    var timeStr = new Intl.DateTimeFormat('en-GB', opts).format(now);
+    var els = ['liveClock','liveClock2'];
+    els.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = timeStr;
+    });
+    var dateStr = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Amsterdam' });
+    var wday = now.toLocaleDateString('en-GB', { weekday: 'short', timeZone: 'Europe/Amsterdam' });
+    ['clockDate','clockDate2'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = dateStr;
+    });
+    ['clockWeekday','clockWeekday2'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = wday;
+    });
+  }
+  updateLiveClock();
+  setInterval(updateLiveClock, 1000);
+
+  // ── Announcement Banner ─────────────────────────────────
+  window.dismissBanner = function() {
+    var banner = document.getElementById('anncBanner');
+    if (banner) {
+      banner.style.transition = 'opacity 0.3s, transform 0.3s';
+      banner.style.opacity = '0';
+      banner.style.transform = 'translateY(-8px)';
+      setTimeout(function(){ banner.style.display = 'none'; }, 300);
+    }
+  };
+  // Announcements button → show banner if dismissed
+  var anncBtn = document.getElementById('anncBtn');
+  if (anncBtn) {
+    anncBtn.addEventListener('click', function() {
+      var banner = document.getElementById('anncBanner');
+      if (banner && banner.style.display === 'none') {
+        banner.style.display = 'flex';
+        banner.style.opacity = '0';
+        requestAnimationFrame(function() {
+          banner.style.opacity = '1';
+          banner.style.transform = 'translateY(0)';
+        });
+      }
+    });
+  }
+
+  // ── AI Insight Dismiss ─────────────────────────────────
+  window.dismissAIInsight = function() {
+    var insight = document.querySelector('.ai-insight');
+    if (insight) {
+      insight.style.transition = 'opacity 0.3s, transform 0.3s';
+      insight.style.opacity = '0';
+      insight.style.transform = 'translateY(-8px)';
+      setTimeout(function(){ insight.style.display = 'none'; }, 300);
+    }
+  };
+
+  // ── Time Tracking Timer ─────────────────────────────────
+  var timerSeconds = 0;
+  var timerRunning = false;
+  var timerInterval = null;
+  window.toggleTimer = function() {
+    var btn = document.getElementById('ttStartBtn');
+    var status = document.getElementById('ttStatus');
+    if (!timerRunning) {
+      timerRunning = true;
+      if (timerSeconds === 0) timerSeconds = 8140; // start at ~2h 14m for demo
+      timerInterval = setInterval(function() {
+        timerSeconds++;
+        var h = Math.floor(timerSeconds / 3600);
+        var m = Math.floor((timerSeconds % 3600) / 60);
+        var s = timerSeconds % 60;
+        var el = document.getElementById('ttTimer');
+        if (el) el.textContent = [h,m,s].map(function(v){ return String(v).padStart(2,'0'); }).join(':');
+        var progress = document.getElementById('ttProgress');
+        if (progress) {
+          var pct = Math.min((timerSeconds / 28800) * 100, 100); // 8hr goal
+          progress.style.width = pct + '%';
+        }
+      }, 1000);
+      if (btn) {
+        btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pause';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-ghost');
+      }
+      if (status) { status.textContent = 'Working'; status.className = 'tb-badge badge-teal'; }
+    } else {
+      timerRunning = false;
+      clearInterval(timerInterval);
+      if (btn) {
+        btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>Resume';
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-ghost');
+      }
+      if (status) { status.textContent = 'Paused'; status.className = 'tb-badge badge-gold'; }
+    }
+  };
+  window.stopTimer = function() {
+    timerRunning = false;
+    clearInterval(timerInterval);
+    timerSeconds = 0;
+    var el = document.getElementById('ttTimer');
+    if (el) el.textContent = '00:00:00';
+    var progress = document.getElementById('ttProgress');
+    if (progress) progress.style.width = '0%';
+    var btn = document.getElementById('ttStartBtn');
+    if (btn) {
+      btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start';
+      btn.classList.add('btn-primary');
+      btn.classList.remove('btn-ghost');
+    }
+    var status = document.getElementById('ttStatus');
+    if (status) { status.textContent = 'Stopped'; status.className = 'tb-badge badge-gray'; }
+  };
+
+  // ── Notification Panel Enhancements ─────────────────────
+  var notifPanel = document.getElementById('notifPanel');
+  var notifBellBtn = document.getElementById('notifBellBtn');
+  if (notifBellBtn && notifPanel) {
+    notifBellBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      notifPanel.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!notifPanel.contains(e.target) && !notifBellBtn.contains(e.target)) {
+        notifPanel.classList.remove('open');
+      }
+    });
+    // Mark all read
+    var markAllBtn = document.getElementById('notifMarkAllRead');
+    if (markAllBtn) {
+      markAllBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        document.querySelectorAll('.notif-item.unread').forEach(function(item) {
+          item.classList.remove('unread');
+        });
+        var bell = document.querySelector('#notifBellBtn .notif-dot');
+        if (bell) bell.style.display = 'none';
+      });
+    }
+    // Individual dismiss
+    var notifList = document.getElementById('notifList');
+    if (notifList) {
+      notifList.addEventListener('click', function(e) {
+        var closeBtn = e.target.closest('.notif-close');
+        if (closeBtn) {
+          e.stopPropagation();
+          var item = closeBtn.closest('.notif-item');
+          if (item) {
+            item.style.transition = 'opacity 0.2s, transform 0.2s';
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(20px)';
+            setTimeout(function(){ item.remove(); }, 200);
+          }
+        }
+      });
+    }
+  }
+
+  // ── Haptic-style button press feedback ─────────────────
+  document.querySelectorAll('.btn, .topbar-btn, .qa-btn, .metric-chip').forEach(function(el) {
+    el.addEventListener('mousedown', function() {
+      el.classList.add('haptic-pulse');
+    });
+    el.addEventListener('mouseup', function() {
+      el.classList.remove('haptic-pulse');
+    });
+  });
+
+  // ── Leave request approve/reject ────────────────────────
+  document.querySelectorAll('.tws-item').forEach(function(item) {
+    var approveBtn = item.querySelector('button[style*="green-muted"]');
+    var rejectBtn = item.querySelector('button[style*="red-muted"]');
+    if (approveBtn) {
+      approveBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        approveBtn.textContent = '✓';
+        approveBtn.style.cursor = 'default';
+        var rejectSib = approveBtn.nextElementSibling;
+        if (rejectSib) rejectSib.style.display = 'none';
+      });
+    }
+    if (rejectBtn) {
+      rejectBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var parent = rejectBtn.closest('.tws-item');
+        if (parent) {
+          parent.style.transition = 'opacity 0.3s, transform 0.3s';
+          parent.style.opacity = '0';
+          parent.style.transform = 'translateX(20px)';
+          setTimeout(function(){ parent.style.display = 'none'; }, 300);
+        }
+      });
+    }
+  });
+
+  // ── Mini calendar day hover ─────────────────────────────
+  document.querySelectorAll('.cal-mini-day').forEach(function(day) {
+    day.addEventListener('mouseenter', function() {
+      day.style.background = 'var(--teal-muted)';
+      day.style.color = 'var(--teal)';
+    });
+    day.addEventListener('mouseleave', function() {
+      if (!day.classList.contains('today')) {
+        day.style.background = '';
+        day.style.color = '';
+      }
+    });
+  });
 
 })();
 </script>
