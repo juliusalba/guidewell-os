@@ -1271,7 +1271,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 
 /* ── 900px: sidebar hidden, desktop layout stripped ── */
 @media (max-width:900px) {
-  .app-shell { grid-template-columns:1fr;grid-template-areas:"topbar" "main" }
+  .app-shell { grid-template-columns:1fr;grid-template-areas:"topbar" "main"; overflow-x:hidden }
   .sidebar { display:none }
   .stats-grid { grid-template-columns:repeat(2,1fr) }
   .dash-widgets { grid-template-columns:1fr }
@@ -1288,14 +1288,14 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 
 /* ── 768px: off-canvas sidebar + hamburger ── */
 @media (max-width:768px) {
-  .main-content { padding:16px }
+  .main-content { padding:16px; overflow-x:hidden; }
 
   /* Off-canvas sidebar */
   .sidebar {
     position: fixed;
     top: 0;
-    left: -260px;
-    width: 260px;
+    left: -280px;
+    width: 280px;
     height: 100vh;
     z-index: 1000;
     display: flex;
@@ -1304,7 +1304,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     box-shadow: 4px 0 20px rgba(0,0,0,0.15);
   }
   .sidebar.open { left: 0; }
-  .sidebar-collapsed { display: flex; left: -260px; opacity: 0; }
+  .sidebar-collapsed { display: flex; left: -280px; opacity: 0; }
   .app-shell.sidebar-collapsed { grid-template-columns:1fr; }
   .app-shell.sidebar-open { overflow: hidden; }
 
@@ -1313,7 +1313,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 
   /* Sidebar overlay backdrop */
   .sidebar-overlay {
-    display: block;
+    display: none;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.4);
@@ -1322,7 +1322,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     pointer-events: none;
     transition: opacity 0.3s;
   }
-  .sidebar-overlay.visible { opacity: 1; pointer-events: auto; }
+  .sidebar-overlay.visible { display: block; opacity: 1; pointer-events: auto; }
 
   /* Page header stacked */
   .page-header { flex-direction:column;align-items:flex-start;gap:12px }
@@ -1388,11 +1388,14 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 
   /* Team member detail */
   .team-member-hero { flex-direction:column }
+
+  /* Horizontal overflow guard for all views */
+  .view { overflow-x:hidden }
 }
 
 /* ── 600px: tighter spacing, full-width cards ── */
 @media (max-width:600px) {
-  .main-content { padding:12px }
+  .main-content { padding:12px; overflow-x:hidden; }
 
   .page-title { font-size:18px }
   .page-subtitle { font-size:12px }
@@ -1403,7 +1406,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   /* Metric chips scroll */
   .dash-metrics-strip { gap:8px;padding:10px 12px }
 
-  /* Stats grid 2→1 */
+  /* Stats grid 1 column */
   .stats-grid { grid-template-columns:1fr }
 
   /* Kanban col narrower */
@@ -1430,7 +1433,8 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   .outreach-item { padding:12px }
 
   /* Calendar day min-height reduced */
-  .cal-day { min-height:60px }
+  .cal-day { min-height:60px;padding:4px }
+  .cal-day-num { font-size:12px }
 
   /* Notifications panel full-width-ish */
   .notif-panel { min-width:280px;right:-20px }
@@ -1456,39 +1460,82 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 
   /* Candidates toolbar */
   .candidates-toolbar { overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap }
+
+  /* Topbar clocks hidden on mobile */
+  .tz-clocks { display:none }
+  .topbar-divider-v { display:none }
+
+  /* Table: sticky first column via overflow */
+  .table-wrapper { overflow-x:auto;-webkit-overflow-scrolling:touch }
+  table { min-width:500px }
+
+  /* Kanban: always show card actions on mobile */
+  .kanban-card-actions { opacity:1;transform:translateY(0) }
+
+  /* Buttons min 44px tap target */
+  .btn { min-height:44px;min-width:44px;padding:10px 14px }
+  .topbar-btn { min-width:44px;min-height:44px;width:44px;height:44px }
+
+  /* All modal full width on mobile */
+  .modal { max-width:100%;border-radius:var(--radius-md) }
+  .modal-overlay { padding:12px }
+
+  /* Calendar day names always visible */
+  .cal-day-header { font-size:10px;padding:6px 2px }
+
+  /* Outreach thread detail stacks */
+  .thread-email { padding:12px }
+
+  /* Internal tasks board horizontal scroll on mobile */
+  .tasks-board { overflow-x:auto;-webkit-overflow-scrolling:touch;display:flex;gap:12px;padding-bottom:8px }
+  .task-column { min-width:260px;flex-shrink:0 }
+
+  /* Internal kanban horizontal scroll */
+  .internal-kanban { overflow-x:auto;-webkit-overflow-scrolling:touch }
+
+  /* Sidebar nav items min 44px tap target */
+  .sidebar-nav-item a { min-height:44px }
+
+  /* Font sizes readable on mobile (min 12px) */
+  body { font-size:13px }
 }
 
 /* ── 480px: compact mobile, single column everything ── */
 @media (max-width:480px) {
-  .main-content { padding:10px }
+  .main-content { padding:10px; overflow-x:hidden; }
 
   /* Metric chips compact */
-  .dash-metric-chip { padding:6px 10px }
-  .dash-metric-chip-val { font-size:14px }
-  .dash-metric-chip-label { font-size:9px }
+  .dash-metrics-strip { gap:6px;padding:8px 10px }
+  .metric-chip { padding:8px 10px;min-height:44px }
+  .metric-chip-val { font-size:14px }
+  .metric-chip-label { font-size:9px }
 
   /* Kanban narrower */
-  .kanban-col { min-width:210px;width:210px }
-  .kanban-card { padding:12px }
+  .kanban-col { min-width:200px;width:200px }
+  .kanban-card { padding:10px }
+  .kanban-card-title { font-size:12px }
+  .kanban-card-value { font-size:13px }
 
   /* Job card full bleed */
   .job-card-header { padding:12px 14px }
   .job-card-body { padding:10px 14px }
   .job-card-footer { padding:8px 14px }
+  .job-card-title { font-size:12.5px }
 
   /* Stat cards */
   .stat-card { padding:12px 14px }
   .stat-value { font-size:20px }
 
   /* Team grid */
-  .recruiter-card { padding:12px }
+  .recruiter-card { padding:12px;min-height:44px }
 
   /* Tab bars very compact */
   .dash-tab { padding:8px 12px;font-size:12px }
 
   /* Calendar compact */
-  .cal-day { min-height:50px;padding:4px }
+  .cal-day { min-height:50px;padding:3px }
   .cal-day-num { font-size:11px }
+  .cal-day-header { font-size:9.5px }
 
   /* Notification panel */
   .notif-panel { width:260px;right:-60px }
@@ -1541,6 +1588,170 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   .meeting-card { padding:8px }
   .mc-time-block { min-width:36px;padding:4px }
   .mc-title { font-size:12px }
+
+  /* Pipeline stat on deals view */
+  .pipeline-stat { flex-wrap:wrap;gap:6px }
+  .pipeline-stat-value { font-size:15px }
+
+  /* Deals table: ensure scrollable with sticky col */
+  #deals-table-view table { min-width:480px }
+
+  /* Team member detail full width */
+  .team-member-detail { padding:12px }
+
+  /* Internal: analytics KPI smaller */
+  .analytics-kpi-val { font-size:18px }
+
+  /* All text min 12px readable */
+  .page-title { font-size:17px }
+  .card-title { font-size:13px }
+  .dash-widget-title { font-size:13px }
+
+  /* Kanban board extra narrow scroll */
+  .kanban-board { scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch }
+  .kanban-col { scroll-snap-align:start;min-width:190px;width:190px }
+
+  /* Outrich tabs scroll */
+  .outreach-tabs { -webkit-overflow-scrolling:touch }
+  .outreach-tab { padding:6px 10px;font-size:12px }
+
+  /* View tabs smaller */
+  .view-tab { padding:5px 10px;font-size:12px }
+
+  /* Internal tabs scroll */
+  .internal-tabs { -webkit-overflow-scrolling:touch }
+}
+
+/* ── 375px (iPhone SE / small Android): critical fixes ── */
+@media (max-width:375px) {
+  .main-content { padding:10px 8px; overflow-x:hidden; }
+
+  /* Page title readable */
+  .page-title { font-size:16px }
+
+  /* Metric chips: 1 column scroll strip */
+  .dash-metrics-strip { gap:6px;padding:8px }
+  .metric-chip { padding:8px;min-width:120px;min-height:44px }
+  .metric-chip-val { font-size:13px }
+  .metric-chip-label { font-size:9px }
+  .metric-chip-icon { width:24px;height:24px;font-size:12px }
+
+  /* Kanban: extra narrow columns for 375px */
+  .kanban-col { min-width:180px;width:180px }
+  .kanban-card { padding:10px }
+  .kanban-card-title { font-size:12px;font-weight:700 }
+  .kanban-card-company { font-size:11px }
+  .kanban-card-value { font-size:13px }
+  .kanban-card-jobs { font-size:10px }
+  .kanban-card-footer { flex-direction:column;align-items:flex-start;gap:4px }
+  .kanban-card-recruiter { display:none } /* hide recruiter on tiny screens */
+  .kanban-card-date { font-size:10px }
+  .kanban-col-header { padding:8px 10px }
+  .kanban-col-title h3 { font-size:12px }
+  .kanban-count { font-size:10px;padding:2px 8px }
+  .kanban-col-total { display:none }
+
+  /* Stats: single column */
+  .stats-grid { grid-template-columns:1fr }
+  .stat-card { min-height:44px }
+
+  /* Team: single column cards */
+  .team-grid { grid-template-columns:1fr;gap:8px }
+  .recruiter-card { min-height:44px }
+
+  /* Jobs/Candidates/Companies grid: full width single column */
+  .jobs-grid { grid-template-columns:1fr;gap:8px }
+  .candidates-grid { grid-template-columns:1fr;gap:8px }
+  .companies-grid { grid-template-columns:1fr;gap:8px }
+
+  /* Job/Candidate/Company cards: compact */
+  .job-card-header { padding:10px 12px }
+  .job-card-body { padding:8px 12px }
+  .job-card-footer { padding:6px 12px }
+  .candidate-card-body { padding:10px 12px }
+  .company-card-header { padding:12px }
+  .company-card-body { padding:10px 12px }
+
+  /* Calendar: smaller cells */
+  .cal-day { min-height:44px;padding:2px }
+  .cal-day-num { font-size:10px }
+  .cal-day-header { font-size:9px;padding:4px 1px }
+  .cal-event { font-size:9px;padding:1px 3px }
+  .cal-nav-btn { width:24px;height:24px;font-size:12px }
+
+  /* Meetings grid stacked */
+  .meetings-grid { grid-template-columns:1fr }
+  .meeting-card { min-height:44px }
+
+  /* Outreach: list and thread detail */
+  .outreach-item { padding:10px 12px }
+  .outreach-subject { font-size:12px }
+  .outreach-body { -webkit-line-clamp:1 }
+  .outreach-tabs { gap:2px }
+  .outreach-tab { padding:5px 10px;font-size:11.5px }
+
+  /* Internal: tasks horizontal scroll */
+  .tasks-board { gap:10px }
+  .task-column { min-width:240px }
+
+  /* Analytics: stacked */
+  .analytics-grid { grid-template-columns:1fr;gap:10px }
+  .analytics-kpi { grid-template-columns:1fr 1fr }
+
+  /* Template grid */
+  .template-grid { grid-template-columns:1fr }
+
+  /* Table: always scrollable with sticky first col */
+  .table-wrapper { overflow-x:auto;-webkit-overflow-scrolling:touch }
+  table { min-width:420px }
+  thead th { padding:8px 10px;font-size:10px }
+  tbody td { padding:9px 10px;font-size:12px }
+
+  /* Modals: full screen on tiny mobile */
+  .modal-overlay { padding:0;align-items:flex-end }
+  .modal { max-width:100%;border-radius:var(--radius-md) var(--radius-md) 0 0;max-height:90vh }
+  .modal-body { max-height:60vh }
+  .modal-header { padding:14px 16px }
+  .modal-footer { padding:12px 16px;flex-wrap:wrap }
+
+  /* All buttons min 44px tap */
+  .btn { min-height:44px;min-width:44px;padding:10px 14px;font-size:13px }
+  .topbar-btn { min-width:44px;min-height:44px;width:44px;height:44px }
+  #sidebarToggle { width:44px;height:44px }
+  #themeToggle { width:44px;height:44px }
+
+  /* Sidebar: make sure items are tappable */
+  .sidebar-nav-item a { min-height:44px;padding:8px 16px;font-size:12.5px }
+
+  /* Text overflow fixes */
+  .page-title { white-space:normal;word-break:break-word }
+  .dash-widget-title { font-size:12.5px }
+  .card-title { font-size:13px }
+  .annc-title { font-size:12.5px }
+  .annc-text { font-size:11px }
+
+  /* Quick actions: scroll strip */
+  .quick-actions-bar { gap:6px;padding:8px }
+  .qa-btn { padding:6px 12px;font-size:12px;min-height:44px }
+
+  /* Deals toolbar: scrollable */
+  .deals-toolbar { gap:6px;padding-bottom:4px }
+  .view-tabs { gap:2px }
+  .filter-chip { padding:4px 10px;font-size:11.5px;min-height:36px }
+
+  /* Candidate/Job toolbars */
+  .candidates-toolbar { gap:6px }
+
+  /* Topbar: very compact */
+  .topbar-brand { font-size:13px }
+  .topbar-breadcrumb { display:none }
+  .tz-clocks { display:none }
+  .topbar-divider-v { display:none }
+  .topbar-divider { display:none }
+
+  /* AI insight compact */
+  .ai-insight { padding:10px 12px;font-size:12px }
+  .ai-suggestion { font-size:11px;padding:4px 10px }
 }
 
 /* ── Off-canvas sidebar JS hook classes ── */
