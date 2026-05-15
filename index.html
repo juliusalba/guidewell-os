@@ -2405,8 +2405,8 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       '<img class="team-member-avatar-lg" src="' + m.img + '" alt="' + m.name + '">' +
       '<div><div class="team-member-name">' + m.name + '</div><div class="team-member-role">' + m.role + '</div><div class="team-member-dept">📍 ' + m.location + ' · ' + m.dept + '</div></div>' +
       '<div style="margin-left:auto;display:flex;gap:8px">' +
-        "<button class='btn btn-ghost' onclick=\"document.getElementById('teamMemberDetail').style.display='none'\">← Back</button>" +
-        "<button class='btn btn-primary' onclick=\"impersonate('" + memberId + "')\">Impersonate</button>" +
+        "<button class=\"btn btn-ghost\" onclick=\"document.getElementById('teamMemberDetail').style.display='none'\">← Back</button>" +
+        "<button class=\"btn btn-primary\" onclick=\"impersonate('" + memberId + "')\">Impersonate</button>" +
       '</div>' +
     '</div>' +
     '<div class="analytics-grid" style="grid-template-columns:repeat(3,1fr)">' +
@@ -2661,7 +2661,6 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     var navItem = target.closest('.sidebar-nav-item');
     if (navItem && navItem.dataset.view) {
       showView(navItem.dataset.view);
-      document.getElementById('teamGrid').style.display = '';
       document.getElementById('teamMemberDetail').style.display = 'none';
       return;
     }
@@ -2671,7 +2670,6 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       var btn = target.closest('[data-show-view]');
       var v = btn.dataset.showView;
       showView(v);
-      if (v === 'jobs') document.getElementById('teamGrid').style.display = '';
       document.getElementById('teamMemberDetail').style.display = 'none';
       return;
     }
@@ -2874,26 +2872,16 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   });
 
   // ── Multi-timezone clocks ────────────────────────────────────
-  var tzOffsets = { nl: 2, sa: 2, ph: 8, cw: -4 }; // UTC offsets (DST-aware would need a lib)
+  var tzMap = { nl: 'Europe/Amsterdam', sa: 'Africa/Johannesburg', ph: 'Asia/Manila', cw: 'America/Curacao' };
+  var tzLabels = { nl: 'NL', sa: 'SA', ph: 'PH', cw: 'CW' };
   function updateClocks() {
     var now = new Date();
-    var fmt = function(h, m) { return ((h < 10 ? '0' : '') + h) + ':' + ((m < 10 ? '0' : '') + m); };
-    var toUTC = function(d, offset) {
-      var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-      return new Date(utc + (offset * 3600000));
-    };
-    var saTime = toUTC(now, tzOffsets.sa);
-    var phTime = toUTC(now, tzOffsets.ph);
-    var nlTime = toUTC(now, tzOffsets.nl);
-    var cwTime = toUTC(now, tzOffsets.cw);
-    var el = document.getElementById('clock-nl');
-    if (el) el.textContent = fmt(nlTime.getHours(), nlTime.getMinutes());
-    el = document.getElementById('clock-sa');
-    if (el) el.textContent = fmt(saTime.getHours(), saTime.getMinutes());
-    el = document.getElementById('clock-ph');
-    if (el) el.textContent = fmt(phTime.getHours(), phTime.getMinutes());
-    el = document.getElementById('clock-cw');
-    if (el) el.textContent = fmt(cwTime.getHours(), cwTime.getMinutes());
+    Object.keys(tzMap).forEach(function(k) {
+      var el = document.getElementById('clock-' + k);
+      if (!el) return;
+      var t = new Intl.DateTimeFormat('en-US', { timeZone: tzMap[k], hour: '2-digit', minute: '2-digit', hour12: false }).format(now);
+      el.textContent = t;
+    });
   }
   updateClocks();
   setInterval(updateClocks, 30000); // update every 30s
