@@ -661,11 +661,123 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 .ai-result-area.thinking::after { content:'…';animation:pulse 1s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
+/* ── Notification Bell ── */
+.notif-panel { position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);width:360px;z-index:200;display:none; }
+.notif-panel.open { display:block; }
+.notif-panel-header { padding:12px 16px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
+.notif-panel-title { font-size:13px;font-weight:700;color:var(--text-primary); }
+.notif-panel-action { font-size:11.5px;color:var(--teal);cursor:pointer;font-weight:600; }
+.notif-panel-action:hover { text-decoration:underline; }
+.notif-list { max-height:380px;overflow-y:auto; }
+.notif-item { display:flex;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s; }
+.notif-item:last-child { border-bottom:none; }
+.notif-item:hover { background:var(--cream); }
+.notif-item.unread { background:var(--teal-muted); }
+.notif-item.unread:hover { background:rgba(0,139,139,0.15); }
+.notif-icon-wrap { width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px; }
+.notif-icon-reply { background:var(--navy-muted);color:var(--navy); }
+.notif-icon-milestone { background:var(--green-muted);color:var(--green); }
+.notif-icon-alert { background:var(--gold-muted);color:#9a7000; }
+.notif-content { flex:1;min-width:0; }
+.notif-text { font-size:12.5px;color:var(--text-primary);line-height:1.4;margin-bottom:3px; }
+.notif-text strong { font-weight:700; }
+.notif-meta { font-size:10.5px;color:var(--text-muted); }
+.notif-empty { padding:32px 16px;text-align:center;font-size:13px;color:var(--text-muted); }
+
+/* ── Outreach Panel ── */
+.outreach-tabs { display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap; }
+.outreach-tab { padding:7px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;color:var(--text-secondary);background:transparent;border:1px solid var(--border);cursor:pointer;transition:all 0.12s; }
+.outreach-tab:hover { background:var(--cream);color:var(--text-primary); }
+.outreach-tab.active { background:var(--navy);color:#fff;border-color:var(--navy); }
+
+/* Sequence items */
+.outreach-item { background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow-sm);transition:all 0.15s; }
+.outreach-item:hover { border-color:var(--teal);box-shadow:var(--shadow-md); }
+.outreach-item-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:10px; }
+.outreach-item-candidate { display:flex;align-items:center;gap:12px; }
+.outreach-avatar { width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0; }
+.outreach-subject { font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px; }
+.outreach-meta { font-size:11.5px;color:var(--text-muted); }
+.outreach-body { font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+.outreach-sequence { display:flex;align-items:center;gap:6px;margin-bottom:12px; }
+.sequence-dot { width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0; }
+.sequence-dot.sent { background:var(--teal); }
+.sequence-dot.active { background:var(--gold);box-shadow:0 0 0 3px var(--gold-muted); }
+.sequence-label { font-size:11px;font-weight:600;color:var(--text-muted);margin-left:4px; }
+.outreach-actions { display:flex;gap:8px; }
+
+/* Team reply thread */
+.reply-thread { margin-top:16px; }
+.reply-item { display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border); }
+.reply-item:last-child { border-bottom:none; }
+.reply-avatar { width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff; }
+.reply-bubble { flex:1; }
+.reply-from { font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px; }
+.reply-date { font-size:10.5px;color:var(--text-muted);margin-bottom:5px; }
+.reply-text { font-size:12.5px;color:var(--text-secondary);line-height:1.5;background:var(--cream);border-radius:var(--radius-sm);padding:8px 12px;border:1px solid var(--border); }
+
+/* Email thread view */
+.email-thread { display:none; }
+.email-thread.open { display:block; }
+.thread-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px; }
+.thread-candidate { display:flex;align-items:center;gap:12px; }
+.thread-avatar { width:44px;height:44px;border-radius:50%;object-fit:cover; }
+.thread-info-name { font-size:15px;font-weight:800;color:var(--text-primary); }
+.thread-info-meta { font-size:11.5px;color:var(--text-muted); }
+.thread-email { border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:10px;overflow:hidden; }
+.thread-email-header { padding:12px 16px;background:var(--cream);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px; }
+.thread-email-from { font-size:12.5px;font-weight:700;color:var(--text-primary); }
+.thread-email-to { font-size:11.5px;color:var(--text-muted); }
+.thread-email-subject { font-size:13px;font-weight:600;color:var(--text-primary);padding:10px 16px 0; }
+.thread-email-meta { font-size:11px;color:var(--text-muted);padding:3px 16px 8px; }
+.thread-email-body { padding:12px 16px;font-size:12.5px;color:var(--text-secondary);line-height:1.6;background:var(--surface); }
+.thread-email.outbound .thread-email-header { background:var(--navy-muted);border-color:rgba(0,59,115,0.15); }
+.thread-email.outbound .thread-email-from { color:var(--navy); }
+
+/* Enriched sequence detail */
+.seq-detail-meta { display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap; }
+.seq-detail-chip { display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;background:var(--cream);border:1px solid var(--border);font-size:11.5px;font-weight:600;color:var(--text-secondary); }
+.seq-steps { margin:16px 0; }
+.seq-step { display:flex;gap:12px;margin-bottom:14px;position:relative; }
+.seq-step-line { position:absolute;left:15px;top:30px;bottom:-14px;width:2px;background:var(--border); }
+.seq-step:last-child .seq-step-line { display:none; }
+.seq-step-dot { width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;z-index:1;position:relative; }
+.seq-step.done .seq-step-dot { background:var(--green);color:#fff; }
+.seq-step.active .seq-step-dot { background:var(--gold);color:#fff;box-shadow:0 0 0 4px var(--gold-muted); }
+.seq-step.pending .seq-step-dot { background:var(--border);color:var(--text-muted); }
+.seq-step-content { flex:1;padding-top:4px; }
+.seq-step-label { font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px; }
+.seq-step-date { font-size:11px;color:var(--text-muted);margin-bottom:5px; }
+.seq-step-preview { font-size:12px;color:var(--text-secondary);line-height:1.4;background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px; }
+.seq-step-pending-tag { font-size:10.5px;color:var(--text-muted);font-style:italic;margin-bottom:5px;display:block; }
+
+/* Job/placement detail section */
+.seq-placement { margin-top:16px;padding:14px 16px;background:var(--teal-muted);border-radius:var(--radius-sm);border:1px solid rgba(0,139,139,0.15); }
+.seq-placement-title { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--teal);margin-bottom:8px; }
+.seq-placement-row { display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:12.5px;color:var(--text-secondary); }
+.seq-placement-row:last-child { margin-bottom:0; }
+.seq-placement-label { font-weight:600;color:var(--text-primary);min-width:80px; }
+
+/* Dashboard outreach widget */
+.dash-widget-stack { display:flex;flex-direction:column;gap:16px; }
+.dash-outreach-item { padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s; }
+.dash-outreach-item:last-child { border-bottom:none; }
+.dash-outreach-item:hover { background:var(--cream);margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:6px; }
+.dout-avatar { width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0; }
+.dout-name { font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px; }
+.dout-meta { font-size:10.5px;color:var(--text-muted); }
+.dout-step { display:flex;align-items:center;gap:4px;margin-top:5px; }
+.dout-step-pip { width:6px;height:6px;border-radius:50%; }
+.dout-step-pip.done { background:var(--green); }
+.dout-step-pip.active { background:var(--gold); }
+.dout-step-pip.pending { background:var(--border); }
+
 /* Responsive */
 @media (max-width:1400px) { .dash-widgets { grid-template-columns:1fr 280px 240px } .stats-grid { grid-template-columns:repeat(3,1fr) } .analytics-grid { grid-template-columns:repeat(2,1fr) } }
 @media (max-width:1100px) { .dash-widgets { grid-template-columns:1fr 1fr } .dash-widget-meetings { grid-column:1/-1 } }
 @media (max-width:900px) { .app-shell { grid-template-columns:1fr;grid-template-areas:"topbar" "main" } .sidebar { display:none } .stats-grid { grid-template-columns:repeat(2,1fr) } .dash-widgets { grid-template-columns:1fr } .dash-row-2 { grid-template-columns:1fr } .team-grid { grid-template-columns:repeat(2,1fr) } .meetings-grid { grid-template-columns:1fr } .tasks-board { grid-template-columns:1fr } .analytics-grid { grid-template-columns:1fr 1fr } }
 @media (max-width:600px) { .main-content { padding:16px } .page-header { flex-direction:column } }
+@media (max-width:480px) { .notif-panel { width:300px;right:-40px; } }
 </style>
 </head>
 <body>
@@ -776,10 +888,60 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
         </div>
       </div>
       <div class="topbar-divider-v"></div>
-      <button class="topbar-btn" title="Notifications">
+      <button class="topbar-btn" id="notifBellBtn" title="Notifications">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
         <span class="notif-dot"></span>
       </button>
+      <div class="notif-panel" id="notifPanel">
+        <div class="notif-panel-header">
+          <span class="notif-panel-title">Notifications</span>
+          <span class="notif-panel-action" id="notifMarkAllRead">Mark all read</span>
+        </div>
+        <div class="notif-list" id="notifList">
+          <div class="notif-item unread" data-notif-type="reply" data-seq="seq-marco">
+            <div class="notif-icon-wrap notif-icon-reply">↩</div>
+            <div class="notif-content">
+              <div class="notif-text"><strong>Marco van der Berg</strong> replied to your outreach email — <em>"Sounds great Brian, I'm available Thursday"</em></div>
+              <div class="notif-meta">2 minutes ago</div>
+            </div>
+          </div>
+          <div class="notif-item unread" data-notif-type="reply" data-seq="seq-priya">
+            <div class="notif-icon-wrap notif-icon-reply">↩</div>
+            <div class="notif-content">
+              <div class="notif-text"><strong>Priya Nair</strong> replied — <em>"Thank you for the update, I can start June 1st"</em></div>
+              <div class="notif-meta">1 hour ago</div>
+            </div>
+          </div>
+          <div class="notif-item" data-notif-type="milestone">
+            <div class="notif-icon-wrap notif-icon-milestone">✓</div>
+            <div class="notif-content">
+              <div class="notif-text">Thomas Müller accepted the <strong>Principal Designer</strong> offer at Randstad Group! 🎉</div>
+              <div class="notif-meta">Yesterday at 4:12 PM</div>
+            </div>
+          </div>
+          <div class="notif-item" data-notif-type="alert">
+            <div class="notif-icon-wrap notif-icon-alert">!</div>
+            <div class="notif-content">
+              <div class="notif-text"><strong>Thomas Vermeulen</strong> needs you to review the GreenTech NL proposal before EOD</div>
+              <div class="notif-meta">Yesterday at 9:30 AM</div>
+            </div>
+          </div>
+          <div class="notif-item" data-notif-type="reply" data-seq="seq-lisa">
+            <div class="notif-icon-wrap notif-icon-reply">↩</div>
+            <div class="notif-content">
+              <div class="notif-text"><strong>Lisa Moon</strong> opened your email — UX Designer at GreenTech NL</div>
+              <div class="notif-meta">May 14 at 11:05 AM</div>
+            </div>
+          </div>
+          <div class="notif-item" data-notif-type="milestone">
+            <div class="notif-icon-wrap notif-icon-milestone">✓</div>
+            <div class="notif-content">
+              <div class="notif-text">James O'Brien completed technical screening — <strong>Java Developer</strong> at Finova Bank</div>
+              <div class="notif-meta">May 14 at 3:45 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="topbar-avatar" id="topbarAvatarBtn" onclick="toggleAvatarDropdown()">
         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face" alt="BA">
       </div>
@@ -946,6 +1108,80 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
               <div class="tws-item"><div class="tws-avatar" style="background:#F5A623">TV</div><div><div class="tws-name">Thomas Vermeulen</div><div class="tws-stat">4 calls · 1 interview · 0 offers</div></div></div>
             </div>
           </div>
+        </div>
+
+        <!-- Outreach widget -->
+        <div class="dash-widget">
+          <div class="dash-widget-header">
+            <span class="dash-widget-title">Active Outreach</span>
+            <button class="btn btn-ghost btn-sm" data-show-view="outreach">Outreach →</button>
+          </div>
+          <div style="padding:12px 14px;">
+            <div class="dash-outreach-item" data-open-outreach-modal="seq-marco">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <img class="dout-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=56&h=56&fit=crop&crop=face" alt="Marco">
+                <div style="flex:1;min-width:0;">
+                  <div class="dout-name">Marco van der Berg</div>
+                  <div class="dout-meta">Java Developer · Finova Bank · Step 2/4</div>
+                  <div class="dout-step">
+                    <div class="dout-step-pip done"></div>
+                    <div class="dout-step-pip active"></div>
+                    <div class="dout-step-pip pending"></div>
+                    <div class="dout-step-pip pending"></div>
+                  </div>
+                </div>
+                <span class="tb-badge badge-teal" style="font-size:10px;padding:2px 7px;">Active</span>
+              </div>
+            </div>
+            <div class="dash-outreach-item" data-open-outreach-modal="seq-priya">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <img class="dout-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=56&h=56&fit=crop&crop=face" alt="Priya">
+                <div style="flex:1;min-width:0;">
+                  <div class="dout-name">Priya Nair</div>
+                  <div class="dout-meta">Lead Designer · Randstad · Step 3/4</div>
+                  <div class="dout-step">
+                    <div class="dout-step-pip done"></div>
+                    <div class="dout-step-pip done"></div>
+                    <div class="dout-step-pip active"></div>
+                    <div class="dout-step-pip pending"></div>
+                  </div>
+                </div>
+                <span class="tb-badge badge-gold" style="font-size:10px;padding:2px 7px;">Reply!</span>
+              </div>
+            </div>
+            <div class="dash-outreach-item" data-open-outreach-modal="seq-thomas">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#dc2626);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;">TM</div>
+                <div style="flex:1;min-width:0;">
+                  <div class="dout-name">Thomas Müller</div>
+                  <div class="dout-meta">Principal Designer · Randstad · Done ✓</div>
+                  <div class="dout-step">
+                    <div class="dout-step-pip done"></div>
+                    <div class="dout-step-pip done"></div>
+                    <div class="dout-step-pip done"></div>
+                    <div class="dout-step-pip done"></div>
+                  </div>
+                </div>
+                <span class="tb-badge badge-green" style="font-size:10px;padding:2px 7px;">Won ✓</span>
+              </div>
+            </div>
+            <div class="dash-outreach-item" data-open-outreach-modal="seq-lisa">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <img class="dout-avatar" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=56&h=56&fit=crop&crop=face" alt="Lisa">
+                <div style="flex:1;min-width:0;">
+                  <div class="dout-name">Lisa Moon</div>
+                  <div class="dout-meta">UX Designer · GreenTech NL · Step 1/3</div>
+                  <div class="dout-step">
+                    <div class="dout-step-pip active"></div>
+                    <div class="dout-step-pip pending"></div>
+                    <div class="dout-step-pip pending"></div>
+                  </div>
+                </div>
+                <span class="tb-badge badge-gold" style="font-size:10px;padding:2px 7px;">Scheduled</span>
+              </div>
+            </div>
+          </div>
+          <div class="dash-widget-footer"><span class="dwf-label">4 active sequences · 2 replies today</span></div>
         </div>
       </div><!-- end widgets -->
 
@@ -1676,6 +1912,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       </div>
       <div class="outreach-tabs">
         <button class="outreach-tab active" data-outreach-tab="sequences">Active Sequences (4)</button>
+        <button class="outreach-tab" data-outreach-tab="threads">Team Replies (3)</button>
         <button class="outreach-tab" data-outreach-tab="templates">Templates</button>
         <button class="outreach-tab" data-outreach-tab="scheduled">Scheduled (3)</button>
       </div>
@@ -1700,7 +1937,8 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
           </div>
           <div class="outreach-actions">
             <button class="btn btn-primary btn-sm" data-open-ai>Continue with AI</button>
-            <button class="btn btn-ghost btn-sm" data-open-outreach-modal="seq-marco">View Details</button>
+            <button class="btn btn-ghost btn-sm" data-open-outreach-modal="seq-marco">View Thread</button>
+            <button class="btn btn-ghost btn-sm" data-seq-detail="seq-marco">Job Details</button>
           </div>
         </div>
         <div class="outreach-item" data-outreach-id="seq-lisa">
@@ -1721,7 +1959,8 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
           </div>
           <div class="outreach-actions">
             <button class="btn btn-ghost btn-sm" data-open-ai>Edit with AI</button>
-            <button class="btn btn-ghost btn-sm" data-open-outreach-modal="seq-lisa">View Details</button>
+            <button class="btn btn-ghost btn-sm" data-open-outreach-modal="seq-lisa">View Thread</button>
+            <button class="btn btn-ghost btn-sm" data-seq-detail="seq-lisa">Job Details</button>
           </div>
         </div>
         <div class="outreach-item" data-outreach-id="seq-priya">
@@ -1742,19 +1981,20 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
           </div>
           <div class="outreach-actions">
             <button class="btn btn-primary btn-sm" data-open-ai>Continue with AI</button>
-            <button class="btn btn-ghost btn-sm" data-open-outreach-modal="seq-priya">View Details</button>
+            <button class="btn btn-ghost btn-sm" data-open-outreach-modal="seq-priya">View Thread</button>
+            <button class="btn btn-ghost btn-sm" data-seq-detail="seq-priya">Job Details</button>
           </div>
         </div>
         <div class="outreach-item" data-outreach-id="seq-thomas">
           <div class="outreach-item-header">
             <div class="outreach-item-candidate">
-              <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#dc2626);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff">TM</div>
+              <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#dc2626);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff">TM</div>
               <div>
                 <div class="outreach-subject">Thomas Müller — Principal Designer</div>
                 <div class="outreach-meta">Randstad Group · Step 4 of 4 · Completed yesterday</div>
               </div>
             </div>
-            <span class="tb-badge badge-green">Completed</span>
+            <span class="tb-badge badge-green">Completed ✓</span>
           </div>
           <div class="outreach-body">Hi Thomas, we are delighted to extend an official offer for the Principal Designer position at Randstad Group. Please find the offer letter attached...</div>
           <div class="outreach-sequence">
@@ -1763,6 +2003,63 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
           </div>
           <div class="outreach-actions">
             <button class="btn btn-ghost btn-sm" data-open-outreach-modal="seq-thomas">View Full Thread</button>
+            <button class="btn btn-ghost btn-sm" data-seq-detail="seq-thomas">Job Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Replies panel (Reply from outreach) -->
+      <div id="outreach-threads" style="display:none;">
+        <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:16px;">Incoming replies from candidates on active outreach sequences. Click to view full thread.</p>
+        <div class="reply-item" data-reply-seq="seq-marco" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px;margin-bottom:10px;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <img style="width:38px;height:38px;border-radius:50%;object-fit:cover;" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=72&h=72&fit=crop&crop=face" alt="Marco">
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Marco van der Berg</div>
+              <div style="font-size:11.5px;color:var(--text-muted);">Java Developer · Finova Bank · Reply received 2 min ago</div>
+            </div>
+            <span class="tb-badge badge-navy">New Reply</span>
+          </div>
+          <div style="background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-size:12.5px;color:var(--text-secondary);line-height:1.5;font-style:italic;">
+            "Hi Brian, thanks for getting back to me. Sounds great — I'm available Thursday afternoon for the technical interview. Should I prepare anything specific? Looking forward to it!"
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="btn btn-primary btn-sm" data-open-outreach-modal="seq-marco">View Full Thread</button>
+            <button class="btn btn-ghost btn-sm" data-open-ai>Generate Reply with AI</button>
+          </div>
+        </div>
+        <div class="reply-item" data-reply-seq="seq-priya" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px;margin-bottom:10px;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <img style="width:38px;height:38px;border-radius:50%;object-fit:cover;" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=72&h=72&fit=crop&crop=face" alt="Priya">
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Priya Nair</div>
+              <div style="font-size:11.5px;color:var(--text-muted);">Lead Designer · Randstad Group · Reply received 1 hour ago</div>
+            </div>
+            <span class="tb-badge badge-navy">New Reply</span>
+          </div>
+          <div style="background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-size:12.5px;color:var(--text-secondary);line-height:1.5;font-style:italic;">
+            "Thank you so much for the update, Brian! I'm absolutely delighted to accept. I can start June 1st as discussed. Looking forward to joining Randstad Group!"
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="btn btn-primary btn-sm" data-open-outreach-modal="seq-priya">View Full Thread</button>
+            <button class="btn btn-ghost btn-sm" data-open-ai>Generate Reply with AI</button>
+          </div>
+        </div>
+        <div class="reply-item" data-reply-seq="seq-thomas" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px;margin-bottom:10px;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#dc2626);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">TM</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Thomas Müller</div>
+              <div style="font-size:11.5px;color:var(--text-muted);">Principal Designer · Randstad Group · Accepted yesterday</div>
+            </div>
+            <span class="tb-badge badge-green">Offer Accepted ✓</span>
+          </div>
+          <div style="background:var(--green-muted);border:1px solid rgba(34,160,107,0.2);border-radius:var(--radius-sm);padding:12px 14px;font-size:12.5px;color:var(--green);line-height:1.5;font-weight:600;">
+            ✓ Thomas accepted the offer for Principal Designer at Randstad Group — €95K target. Start date: June 1, 2026.
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="btn btn-primary btn-sm" data-open-outreach-modal="seq-thomas">View Full Thread</button>
+            <button class="btn btn-ghost btn-sm" data-open-ai>Celebrate with AI ✨</button>
           </div>
         </div>
       </div>
@@ -2125,9 +2422,9 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   </div>
 </div>
 
-<!-- Outreach Detail Modal -->
+<!-- Outreach Detail Modal — Email Thread + Job/Placement Details -->
 <div class="modal-overlay" id="outreachModal">
-  <div class="modal" style="max-width:600px">
+  <div class="modal" style="max-width:660px">
     <div class="modal-header">
       <div>
         <div class="modal-title" id="oTitle">Sequence Details</div>
@@ -2138,7 +2435,27 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     <div class="modal-body" id="oBody"></div>
     <div class="modal-footer">
       <button class="btn btn-ghost" data-modal-close>Close</button>
+      <button class="btn btn-ghost" id="oShowJobDetail">Job & Placement Details</button>
       <button class="btn btn-primary" data-open-ai>Rewrite with AI</button>
+    </div>
+  </div>
+</div>
+
+<!-- Job/Placement Detail Modal — enriched view -->
+<div class="modal-overlay" id="seqDetailModal">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="sdTitle">Sequence Details</div>
+        <div class="modal-subtitle" id="sdMeta"></div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body" id="sdBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Close</button>
+      <button class="btn btn-ghost" id="sdShowThread">← View Email Thread</button>
+      <button class="btn btn-primary" data-open-ai>Continue Sequence with AI</button>
     </div>
   </div>
 </div>
@@ -2517,10 +2834,10 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   };
 
   var outreachData = {
-    'seq-marco':{candidate:'Marco van der Berg',role:'Java Developer',company:'Finova Bank',steps:[{num:1,done:true,subject:'Initial Outreach — Java Developer at Finova Bank',body:'Hi Marco, I came across your profile and was impressed by your experience with Spring Boot and microservices. We have an exciting Java Developer opportunity at Finova Bank in Amsterdam...',sent:'May 11'},{num:2,done:true,subject:'Following up — Java Developer role',body:'Hi Marco, following up on my previous message about the Java Developer role at Finova Bank. We have moved to the technical interview stage and would love to schedule a call this week...',sent:'May 13'},{num:3,done:false,subject:'Technical Interview Invitation',body:'Hi Marco, great news! We would like to invite you to a technical interview with our engineering team at Finova Bank. The interview will cover system design and live coding...',sent:null},{num:4,done:false,subject:'Offer Discussion',body:'Hi Marco, congratulations on passing the technical interview! We would love to discuss the offer details with you. Are you available for a call this week?',sent:null}]},
-    'seq-lisa':{candidate:'Lisa Moon',role:'UX Designer',company:'GreenTech NL',steps:[{num:1,done:false,subject:'Exciting UX Designer opportunity at GreenTech NL',body:'Hi Lisa, great to connect! I am reaching out about an exciting UX Designer opportunity at GreenTech NL, a fast-growing sustainability startup in Groningen...',sent:'May 20'},{num:2,done:false,subject:'Follow up — UX Designer opportunity',body:'Hi Lisa, wanted to follow up on the UX Designer role at GreenTech NL. The team is growing quickly and your experience with design systems would be a great fit...',sent:null},{num:3,done:false,subject:'Portfolio review invitation',body:'Hi Lisa, we were impressed by your background! Would you be available for a portfolio review call with our design lead this week?',sent:null}]},
-    'seq-priya':{candidate:'Priya Nair',role:'Lead Designer',company:'Randstad Group',steps:[{num:1,done:true,subject:'Lead Designer opportunity at Randstad Group',body:'Hi Priya, I came across your profile and was impressed by your design leadership experience...',sent:'May 5'},{num:2,done:true,subject:'Follow up — Lead Designer role',body:'Hi Priya, wanted to follow up on the Lead Designer opportunity at Randstad Group...',sent:'May 8'},{num:3,done:true,subject:'Technical interview invitation',body:'Hi Priya, congratulations on making it to the final stage! I would love to schedule a call with you to discuss the Lead Designer opportunity...',sent:'May 12'},{num:4,done:false,subject:'Offer discussion call',body:'Hi Priya, we are delighted to extend an official offer for the Lead Designer position. Please find the offer letter attached...',sent:null}]},
-    'seq-thomas':{candidate:'Thomas Müller',role:'Principal Designer',company:'Randstad Group',steps:[{num:1,done:true,subject:'Principal Designer opportunity at Randstad Group',body:'Hi Thomas, I wanted to reach out about an exciting Principal Designer opportunity...',sent:'Apr 25'},{num:2,done:true,subject:'Follow up',body:'Hi Thomas, wanted to follow up on the Principal Designer opportunity...',sent:'Apr 28'},{num:3,done:true,subject:'Interview invitation',body:'Hi Thomas, congratulations! We would love to invite you to an interview...',sent:'May 2'},{num:4,done:true,subject:'Official Offer — Principal Designer',body:'Hi Thomas, we are delighted to extend an official offer for the Principal Designer position at Randstad Group. Please find the offer letter attached...',sent:'May 14'}]}
+    'seq-marco':{candidate:'Marco van der Berg',role:'Java Developer',company:'Finova Bank',jobId:'job-java',steps:[{num:1,done:true,sent:'May 11',subject:'Initial Outreach — Java Developer at Finova Bank',body:'Hi Marco, I came across your profile and was impressed by your experience with Spring Boot and microservices. We have an exciting Java Developer opportunity at Finova Bank in Amsterdam...',scheduled:null},{num:2,done:true,sent:'May 13',subject:'Following up — Java Developer role',body:'Hi Marco, following up on my previous message about the Java Developer role at Finova Bank. We have moved to the technical interview stage and would love to schedule a call this week...',scheduled:null},{num:3,done:false,sent:null,subject:'Technical Interview Invitation',body:'Hi Marco, great news! We would like to invite you to a technical interview with our engineering team at Finova Bank. The interview will cover system design and live coding...',scheduled:'May 20'},{num:4,done:false,sent:null,subject:'Offer Discussion',body:'Hi Marco, congratulations on passing the technical interview! We would love to discuss the offer details with you. Are you available for a call this week?',scheduled:'May 25'}],reply:'Sounds great Brian, I\'m available Thursday afternoon for the technical interview. Should I prepare anything specific?',replyDate:'2 minutes ago'},
+    'seq-lisa':{candidate:'Lisa Moon',role:'UX Designer',company:'GreenTech NL',jobId:'job-ux',steps:[{num:1,done:false,sent:null,subject:'Exciting UX Designer opportunity at GreenTech NL',body:'Hi Lisa, great to connect! I am reaching out about an exciting UX Designer opportunity at GreenTech NL, a fast-growing sustainability startup in Groningen...',scheduled:'May 20'},{num:2,done:false,sent:null,subject:'Follow up — UX Designer opportunity',body:'Hi Lisa, wanted to follow up on the UX Designer role at GreenTech NL. The team is growing quickly and your experience with design systems would be a great fit...',scheduled:'May 27'},{num:3,done:false,sent:null,subject:'Portfolio review invitation',body:'Hi Lisa, we were impressed by your background! Would you be available for a portfolio review call with our design lead this week?',scheduled:'Jun 3'}]},
+    'seq-priya':{candidate:'Priya Nair',role:'Lead Designer',company:'Randstad Group',jobId:'job-ux',steps:[{num:1,done:true,sent:'May 5',subject:'Lead Designer opportunity at Randstad Group',body:'Hi Priya, I came across your profile and was impressed by your design leadership experience...',scheduled:null},{num:2,done:true,sent:'May 8',subject:'Follow up — Lead Designer role',body:'Hi Priya, wanted to follow up on the Lead Designer opportunity at Randstad Group...',scheduled:null},{num:3,done:true,sent:'May 12',subject:'Technical interview invitation',body:'Hi Priya, congratulations on making it to the final stage! I would love to schedule a call with you to discuss the Lead Designer opportunity...',scheduled:null},{num:4,done:false,sent:null,subject:'Offer discussion call',body:'Hi Priya, we are delighted to extend an official offer for the Lead Designer position. Please find the offer letter attached...',scheduled:'May 20'}],reply:'Thank you so much for the update, Brian! I\'m absolutely delighted to accept. I can start June 1st as discussed.',replyDate:'1 hour ago'},
+    'seq-thomas':{candidate:'Thomas Müller',role:'Principal Designer',company:'Randstad Group',jobId:'job-ux',steps:[{num:1,done:true,sent:'Apr 25',subject:'Principal Designer opportunity at Randstad Group',body:'Hi Thomas, I wanted to reach out about an exciting Principal Designer opportunity...',scheduled:null},{num:2,done:true,sent:'Apr 28',subject:'Follow up',body:'Hi Thomas, wanted to follow up on the Principal Designer opportunity...',scheduled:null},{num:3,done:true,sent:'May 2',subject:'Interview invitation',body:'Hi Thomas, congratulations! We would love to invite you to an interview...',scheduled:null},{num:4,done:true,sent:'May 14',subject:'Official Offer — Principal Designer',body:'Hi Thomas, we are delighted to extend an official offer for the Principal Designer position at Randstad Group. Please find the offer letter attached...',scheduled:null}],placement:{company:'Randstad Group',role:'Principal Designer',salary:'€95K target',startDate:'June 1, 2026',status:'Offer Accepted ✓'}}
   };
 
   var templateData = {
@@ -3360,26 +3677,87 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       return;
     }
 
-    // Outreach detail modal
+    // Outreach detail modal — email thread view
     var outreachBtn = target.closest('[data-open-outreach-modal]');
     if (outreachBtn) {
       var seqId = outreachBtn.dataset.openOutreachModal;
       var seq = outreachData[seqId];
       if (seq) {
         document.getElementById('oTitle').textContent = seq.candidate + ' — ' + seq.role;
-        document.getElementById('oMeta').textContent = seq.company + ' · ' + seq.steps.length + ' steps';
-        document.getElementById('oBody').innerHTML = seq.steps.map(function(s) {
-          var cls = s.done ? 'done' : s.sent ? 'active' : 'pending';
-          return '<div class="sequence-step">' +
-            '<div class="step-num ' + cls + '">' + s.num + '</div>' +
-            '<div class="step-content">' +
-              '<div class="step-title">' + s.subject + '</div>' +
-              '<div class="step-body">' + s.body + '</div>' +
-              (s.sent ? '<div style="margin-top:4px;font-size:11px;color:var(--text-muted)">✓ Sent ' + s.sent + '</div>' : '<div style="margin-top:4px;font-size:11px;color:var(--text-muted)">⏳ Scheduled</div>') +
+        document.getElementById('oMeta').textContent = seq.company + ' · Email Thread';
+        var threadHTML = '';
+        seq.steps.forEach(function(s) {
+          var stepClass = s.done ? 'done' : (!s.sent ? 'pending' : 'active');
+          var stepDot = s.done ? '✓' : (!s.sent ? s.num : s.num);
+          threadHTML += '<div class="thread-email ' + (s.sent && !s.done ? 'outbound' : '') + '">' +
+            '<div class="thread-email-header">' +
+              '<div class="thread-email-from">' + (s.sent ? 'Brian Anderson (You)' : seq.candidate) + '</div>' +
+              '<div class="thread-email-to">→ ' + (s.sent ? seq.candidate : 'Guidewell Recruiter') + '</div>' +
+            '</div>' +
+            '<div class="thread-email-subject">' + s.subject + '</div>' +
+            '<div class="thread-email-meta">' + (s.sent ? 'Sent ' + s.sent : '⏳ Pending send') + '</div>' +
+            '<div class="thread-email-body">' + s.body + '</div>' +
+          '</div>';
+        });
+        // Add candidate reply if exists
+        if (seq.reply) {
+          threadHTML += '<div class="thread-email">' +
+            '<div class="thread-email-header" style="background:var(--green-muted);border-color:rgba(34,160,107,0.15);">' +
+              '<div class="thread-email-from" style="color:var(--green);">' + seq.candidate + ' (Reply)</div>' +
+            '</div>' +
+            '<div class="thread-email-meta">Received ' + seq.replyDate + '</div>' +
+            '<div class="thread-email-body" style="font-style:italic;">"' + seq.reply + '"</div>' +
+          '</div>';
+        }
+        document.getElementById('oBody').innerHTML = threadHTML;
+        document.getElementById('outreachModal').dataset.currentSeq = seqId;
+        document.getElementById('outreachModal').classList.add('open');
+      }
+      return;
+    }
+
+    // Job/placement detail modal
+    var seqDetailBtn = target.closest('[data-seq-detail]');
+    if (seqDetailBtn) {
+      var sid = seqDetailBtn.dataset.seqDetail;
+      var s = outreachData[sid];
+      if (s) {
+        document.getElementById('sdTitle').textContent = s.candidate + ' — ' + s.role;
+        document.getElementById('sdMeta').textContent = s.company + ' · Sequence Details';
+        var job = jobData[s.jobId] || {};
+        var stepsHTML = s.steps.map(function(step) {
+          var sc = step.done ? 'done' : (!step.sent ? 'pending' : 'active');
+          var icon = step.done ? '✓' : (!step.sent ? step.num : '→');
+          return '<div class="seq-step ' + sc + '">' +
+            '<div class="seq-step-line"></div>' +
+            '<div class="seq-step-dot">' + icon + '</div>' +
+            '<div class="seq-step-content">' +
+              '<div class="seq-step-label">' + step.subject + '</div>' +
+              (step.sent ? '<div class="seq-step-date">✓ Sent ' + step.sent + '</div>' : '<span class="seq-step-pending-tag">⏳ Pending — ' + (step.scheduled || 'Not scheduled') + '</span>') +
+              '<div class="seq-step-preview">' + step.body + '</div>' +
             '</div>' +
           '</div>';
         }).join('');
-        document.getElementById('outreachModal').classList.add('open');
+        var placementHTML = '';
+        if (s.placement) {
+          placementHTML = '<div class="seq-placement">' +
+            '<div class="seq-placement-title">📋 Placement Details</div>' +
+            '<div class="seq-placement-row"><span class="seq-placement-label">Company</span><span>' + s.placement.company + '</span></div>' +
+            '<div class="seq-placement-row"><span class="seq-placement-label">Role</span><span>' + s.placement.role + '</span></div>' +
+            '<div class="seq-placement-row"><span class="seq-placement-label">Salary</span><span>' + s.placement.salary + '</span></div>' +
+            '<div class="seq-placement-row"><span class="seq-placement-label">Start Date</span><span>' + s.placement.startDate + '</span></div>' +
+            '<div class="seq-placement-row"><span class="seq-placement-label">Status</span><span>' + s.placement.status + '</span></div>' +
+          '</div>';
+        }
+        document.getElementById('sdBody').innerHTML = '<div class="seq-detail-meta">' +
+          '<div class="seq-detail-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' + s.role + '</div>' +
+          '<div class="seq-detail-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>' + s.company + '</div>' +
+          (job.salary ? '<div class="seq-detail-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>' + job.salary + '</div>' : '') +
+        '</div>' +
+        '<div class="seq-steps">' + stepsHTML + '</div>' +
+        placementHTML;
+        document.getElementById('seqDetailModal').dataset.currentSeq = sid;
+        document.getElementById('seqDetailModal').classList.add('open');
       }
       return;
     }
@@ -3487,6 +3865,155 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       return;
     }
   });
+
+  // ── Outreach tab switching ─────────────────────────────────
+  document.querySelectorAll('[data-outreach-tab]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tab = btn.dataset.outreachTab;
+      document.querySelectorAll('[data-outreach-tab]').forEach(function(b){ b.classList.toggle('active', b.dataset.outreachTab === tab); });
+      document.getElementById('outreach-sequences').style.display = tab === 'sequences' ? '' : 'none';
+      document.getElementById('outreach-threads').style.display = tab === 'threads' ? '' : 'none';
+      document.getElementById('outreach-templates').style.display = tab === 'templates' ? '' : 'none';
+      document.getElementById('outreach-scheduled').style.display = tab === 'scheduled' ? '' : 'none';
+    });
+  });
+
+  // ── Notification bell ──────────────────────────────────────
+  var notifBellBtn = document.getElementById('notifBellBtn');
+  var notifPanel = document.getElementById('notifPanel');
+  if (notifBellBtn && notifPanel) {
+    notifBellBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      notifPanel.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!notifPanel.contains(e.target)) {
+        notifPanel.classList.remove('open');
+      }
+    });
+    document.getElementById('notifMarkAllRead').addEventListener('click', function(e) {
+      e.stopPropagation();
+      document.querySelectorAll('.notif-item.unread').forEach(function(item) {
+        item.classList.remove('unread');
+      });
+    });
+    // Notification click → open thread
+    document.getElementById('notifList').addEventListener('click', function(e) {
+      var item = e.target.closest('.notif-item');
+      if (!item) return;
+      var seqId = item.dataset.seq;
+      if (seqId && outreachData[seqId]) {
+        notifPanel.classList.remove('open');
+        var seq = outreachData[seqId];
+        document.getElementById('oTitle').textContent = seq.candidate + ' — ' + seq.role;
+        document.getElementById('oMeta').textContent = seq.company + ' · Email Thread';
+        var threadHTML = '';
+        seq.steps.forEach(function(s) {
+          threadHTML += '<div class="thread-email ' + (s.sent ? 'outbound' : '') + '">' +
+            '<div class="thread-email-header">' +
+              '<div class="thread-email-from">' + (s.sent ? 'Brian Anderson (You)' : seq.candidate) + '</div>' +
+              '<div class="thread-email-to">→ ' + (s.sent ? seq.candidate : 'Guidewell Recruiter') + '</div>' +
+            '</div>' +
+            '<div class="thread-email-subject">' + s.subject + '</div>' +
+            '<div class="thread-email-meta">' + (s.sent ? 'Sent ' + s.sent : '⏳ Pending send') + '</div>' +
+            '<div class="thread-email-body">' + s.body + '</div>' +
+          '</div>';
+        });
+        if (seq.reply) {
+          threadHTML += '<div class="thread-email">' +
+            '<div class="thread-email-header" style="background:var(--green-muted);border-color:rgba(34,160,107,0.15);">' +
+              '<div class="thread-email-from" style="color:var(--green);">' + seq.candidate + ' (Reply)</div>' +
+            '</div>' +
+            '<div class="thread-email-meta">Received ' + seq.replyDate + '</div>' +
+            '<div class="thread-email-body" style="font-style:italic;">"' + seq.reply + '"</div>' +
+          '</div>';
+        }
+        document.getElementById('oBody').innerHTML = threadHTML;
+        document.getElementById('outreachModal').classList.add('open');
+      }
+    });
+  }
+
+  // ── Modal cross-links ──────────────────────────────────────
+  var oShowJobDetailBtn = document.getElementById('oShowJobDetail');
+  if (oShowJobDetailBtn) {
+    oShowJobDetailBtn.addEventListener('click', function() {
+      var seqId = document.getElementById('outreachModal').dataset.currentSeq;
+      var seq = outreachData[seqId];
+      if (!seq) return;
+      document.getElementById('outreachModal').classList.remove('open');
+      document.getElementById('sdTitle').textContent = seq.candidate + ' — ' + seq.role;
+      document.getElementById('sdMeta').textContent = seq.company + ' · Sequence Details';
+      var job = jobData[seq.jobId] || {};
+      var stepsHTML = seq.steps.map(function(step) {
+        var sc = step.done ? 'done' : (!step.sent ? 'pending' : 'active');
+        var icon = step.done ? '✓' : (!step.sent ? step.num : '→');
+        return '<div class="seq-step ' + sc + '">' +
+          '<div class="seq-step-line"></div>' +
+          '<div class="seq-step-dot">' + icon + '</div>' +
+          '<div class="seq-step-content">' +
+            '<div class="seq-step-label">' + step.subject + '</div>' +
+            (step.sent ? '<div class="seq-step-date">✓ Sent ' + step.sent + '</div>' : '<span class="seq-step-pending-tag">⏳ Pending — ' + (step.scheduled || 'Not scheduled') + '</span>') +
+            '<div class="seq-step-preview">' + step.body + '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      var placementHTML = '';
+      if (seq.placement) {
+        placementHTML = '<div class="seq-placement">' +
+          '<div class="seq-placement-title">📋 Placement Details</div>' +
+          '<div class="seq-placement-row"><span class="seq-placement-label">Company</span><span>' + seq.placement.company + '</span></div>' +
+          '<div class="seq-placement-row"><span class="seq-placement-label">Role</span><span>' + seq.placement.role + '</span></div>' +
+          '<div class="seq-placement-row"><span class="seq-placement-label">Salary</span><span>' + seq.placement.salary + '</span></div>' +
+          '<div class="seq-placement-row"><span class="seq-placement-label">Start Date</span><span>' + seq.placement.startDate + '</span></div>' +
+          '<div class="seq-placement-row"><span class="seq-placement-label">Status</span><span>' + seq.placement.status + '</span></div>' +
+        '</div>';
+      }
+      document.getElementById('sdBody').innerHTML = '<div class="seq-detail-meta">' +
+        '<div class="seq-detail-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' + seq.role + '</div>' +
+        '<div class="seq-detail-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>' + seq.company + '</div>' +
+        (job.salary ? '<div class="seq-detail-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>' + job.salary + '</div>' : '') +
+      '</div>' +
+      '<div class="seq-steps">' + stepsHTML + '</div>' +
+      placementHTML;
+      document.getElementById('seqDetailModal').classList.add('open');
+    });
+  }
+
+  var sdShowThreadBtn = document.getElementById('sdShowThread');
+  if (sdShowThreadBtn) {
+    sdShowThreadBtn.addEventListener('click', function() {
+      var seqId = document.getElementById('seqDetailModal').dataset.currentSeq;
+      var seq = outreachData[seqId];
+      if (!seq) return;
+      document.getElementById('seqDetailModal').classList.remove('open');
+      document.getElementById('oTitle').textContent = seq.candidate + ' — ' + seq.role;
+      document.getElementById('oMeta').textContent = seq.company + ' · Email Thread';
+      var threadHTML = '';
+      seq.steps.forEach(function(s) {
+        threadHTML += '<div class="thread-email ' + (s.sent ? 'outbound' : '') + '">' +
+          '<div class="thread-email-header">' +
+            '<div class="thread-email-from">' + (s.sent ? 'Brian Anderson (You)' : seq.candidate) + '</div>' +
+            '<div class="thread-email-to">→ ' + (s.sent ? seq.candidate : 'Guidewell Recruiter') + '</div>' +
+          '</div>' +
+          '<div class="thread-email-subject">' + s.subject + '</div>' +
+          '<div class="thread-email-meta">' + (s.sent ? 'Sent ' + s.sent : '⏳ Pending send') + '</div>' +
+          '<div class="thread-email-body">' + s.body + '</div>' +
+        '</div>';
+      });
+      if (seq.reply) {
+        threadHTML += '<div class="thread-email">' +
+          '<div class="thread-email-header" style="background:var(--green-muted);border-color:rgba(34,160,107,0.15);">' +
+            '<div class="thread-email-from" style="color:var(--green);">' + seq.candidate + ' (Reply)</div>' +
+          '</div>' +
+          '<div class="thread-email-meta">Received ' + seq.replyDate + '</div>' +
+          '<div class="thread-email-body" style="font-style:italic;">"' + seq.reply + '"</div>' +
+        '</div>';
+      }
+      document.getElementById('oBody').innerHTML = threadHTML;
+      document.getElementById('outreachModal').classList.add('open');
+    });
+  }
 
   // AI send button
   var aiSendBtn = document.getElementById('aiSendBtn');
