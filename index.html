@@ -502,6 +502,7 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
    DASHBOARD TABBED LAYOUT
 ══════════════════════════════════════ */
 #view-dashboard { display: grid; grid-template-rows: auto auto 1fr auto; height: 100%; gap: 0; }
+#view-dashboard.active { display: grid; }
 
 #view-dashboard .page-header { display: none; }
 
@@ -620,7 +621,7 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
    VIEWS
 ══════════════════════════════════════ */
 .view { display:none; padding:0; }
-.view.active { display:inherit; }
+.view.active { display:block; }
 
 /* ── Dashboard Widgets ── */
 .dash-widgets { display:grid;grid-template-columns:1fr 320px 260px;gap:16px;margin-bottom:16px;align-items:start; }
