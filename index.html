@@ -499,6 +499,124 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
 .ai-insight-text { font-size:12.5px;color:var(--text-secondary);line-height:1.6; }
 
 /* ═══════════════════════════════════════
+   DASHBOARD TABBED LAYOUT
+══════════════════════════════════════ */
+#view-dashboard { display: grid; grid-template-rows: auto auto 1fr auto; height: 100%; gap: 0; }
+
+#view-dashboard .page-header { display: none; }
+
+/* Metrics Strip */
+.dash-metrics-strip { display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface); overflow-x: auto; flex-shrink: 0; }
+.dash-metrics-strip::-webkit-scrollbar { height: 4px; }
+.dash-metrics-strip::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.dash-metric-chip { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); white-space: nowrap; flex-shrink: 0; transition: box-shadow 0.15s, transform 0.15s; }
+.dash-metric-chip:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
+.dash-metric-chip-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.dash-metric-chip-body { display: flex; flex-direction: column; }
+.dash-metric-chip-val { font-size: 16px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.1; }
+.dash-metric-chip-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-top: 1px; }
+
+/* Tab Bar */
+.dash-tab-bar { display: flex; gap: 0; padding: 0 16px; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; overflow-x: auto; }
+.dash-tab-bar::-webkit-scrollbar { height: 3px; }
+.dash-tab-bar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.dash-tab { padding: 10px 18px; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.12s, border-color 0.12s; white-space: nowrap; }
+.dash-tab:hover { color: var(--text-primary); }
+.dash-tab.active { color: var(--navy); font-weight: 700; border-bottom-color: var(--gold); }
+
+/* Tab Content Area */
+.dash-tab-area { display: flex; flex-direction: column; flex: 1; overflow: hidden; min-height: 0; }
+.dash-tab-content { display: none; flex: 1; padding: 16px; overflow-y: auto; gap: 16px; }
+.dash-tab-content.active { display: flex; flex-direction: column; }
+
+/* Activity Tab */
+.dash-tab-activity { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; overflow: hidden; }
+.dash-tab-activity .dash-col { display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+.dash-tab-activity .dash-col-scroll { overflow-y: auto; flex: 1; }
+
+/* Pipeline Tab */
+.dash-tab-pipeline { flex: 1; overflow: hidden; }
+.dash-tab-pipeline .dash-kanban-strip { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; flex: 1; align-items: stretch; }
+.dash-kanban-stage { min-width: 180px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); display: flex; flex-direction: column; overflow: hidden; flex: 1; }
+.dash-kanban-stage-hd { padding: 10px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; background: var(--cream); flex-shrink: 0; }
+.dash-stage-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dash-stage-name { font-size: 11.5px; font-weight: 700; color: var(--text-primary); flex: 1; }
+.dash-stage-count { font-size: 10px; font-weight: 700; background: var(--navy-muted); color: var(--navy); padding: 1px 6px; border-radius: 8px; }
+.dash-stage-value { font-size: 10px; color: var(--text-muted); font-weight: 600; }
+.dash-kanban-stage-body { padding: 8px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.dash-kanban-stage .dkc-title { font-size: 12px; font-weight: 600; }
+.dash-kanban-stage .dkc-meta { font-size: 10.5px; }
+.dash-kanban-stage .dkc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+.dash-kanban-stage .dkc-value { font-size: 12px; font-weight: 800; color: var(--navy); }
+
+/* Calendar Tab */
+.dash-tab-calendar { display: grid; grid-template-columns: 1fr 280px; gap: 16px; flex: 1; overflow: hidden; }
+.dash-cal-month { display: flex; flex-direction: column; overflow: hidden; }
+.cal-grid-large { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; flex: 1; }
+.cal-header-cell { text-align: center; font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 0; }
+.cal-day-cell { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 8px; min-height: 52px; display: flex; flex-direction: column; gap: 2px; overflow: hidden; transition: background 0.1s; cursor: pointer; position: relative; }
+.cal-day-cell:hover { background: var(--cream); }
+.cal-day-cell.other-month { opacity: 0.4; }
+.cal-day-cell.today { border-color: var(--teal); background: var(--teal-muted); }
+.cal-day-num { font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+.cal-day-cell.today .cal-day-num { color: var(--teal); }
+.cal-day-events { display: flex; flex-direction: column; gap: 2px; }
+.cal-event-pill { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cal-event-pill.bday { background: var(--purple-muted); color: var(--purple); }
+.cal-event-pill.leave { background: var(--gold-muted); color: #9a7000; }
+.cal-event-pill.interview { background: var(--teal-muted); color: var(--teal); }
+.cal-event-pill.event { background: var(--navy-muted); color: var(--navy); }
+.cal-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.cal-legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-muted); }
+.cal-legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+.dash-cal-sidebar { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+
+/* Team Tab */
+.dash-tab-team { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; overflow: hidden; }
+.dash-tab-team .dash-col { display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+.dash-col-scroll { overflow-y: auto; flex: 1; }
+
+/* Outreach Tab */
+.dash-tab-outreach { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; overflow: hidden; }
+.dash-tab-outreach .dash-col { display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+.dash-tab-outreach .dash-col-scroll { overflow-y: auto; flex: 1; }
+
+/* Announcement + Quick Actions (bottom strip) */
+.dash-bottom-strip { display: flex; flex-direction: column; gap: 8px; padding: 10px 16px; border-top: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
+.dash-announcement { display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%); color: #fff; border-radius: var(--radius-sm); padding: 8px 14px; position: relative; overflow: hidden; cursor: pointer; transition: transform 0.15s; }
+.dash-announcement:hover { transform: translateY(-1px); }
+.dash-announcement::before { content: ''; position: absolute; top: 0; left: -100%; right: 0; bottom: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); animation: shimmer 3s infinite; }
+.dash-annc-icon { width: 28px; height: 28px; background: rgba(255,255,255,0.15); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.dash-annc-body { flex: 1; min-width: 0; }
+.dash-annc-title { font-size: 12px; font-weight: 700; }
+.dash-annc-text { font-size: 10.5px; opacity: 0.85; }
+.dash-annc-tag { font-size: 9px; font-weight: 700; padding: 2px 7px; background: rgba(255,255,255,0.2); border-radius: 6px; white-space: nowrap; }
+.dash-annc-close { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; padding: 2px; border-radius: 3px; font-size: 12px; flex-shrink: 0; }
+.dash-annc-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.dash-announcement.hidden { display: none; }
+
+.dash-quick-actions { display: flex; gap: 8px; overflow-x: auto; }
+.dash-qa-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; border: 1px solid var(--border); background: var(--surface); color: var(--text-secondary); white-space: nowrap; flex-shrink: 0; }
+.dash-qa-btn:hover { border-color: var(--teal); background: var(--teal-muted); color: var(--teal); transform: translateY(-1px); }
+.dash-qa-btn svg { flex-shrink: 0; }
+
+/* Sidebar Tools section */
+.sidebar-tools-section { border-top: 1px solid rgba(255,255,255,0.08); margin-top: auto; padding-top: 8px; }
+.sidebar-divider-btn { display: flex; align-items: center; gap: 10px; padding: 9px 20px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.65); cursor: pointer; border-left: 3px solid transparent; transition: all 0.12s; background: none; border-top: none; border-right: none; border-bottom: none; width: 100%; text-align: left; }
+.sidebar-divider-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.sidebar-divider-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Mini info list items */
+.dash-info-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--border); transition: background 0.1s; }
+.dash-info-item:last-child { border-bottom: none; }
+.dash-info-item:hover { background: var(--cream); }
+.dash-info-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.dash-info-body { flex: 1; min-width: 0; }
+.dash-info-title { font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dash-info-meta { font-size: 10.5px; color: var(--text-muted); }
+.dash-info-badge { font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════
    VIEWS
 ══════════════════════════════════════ */
 .view { display:none; padding:0; }
@@ -1301,19 +1419,524 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 
     <!-- ═══ DASHBOARD ═══ -->
     <div id="view-dashboard" class="view active">
-      <div class="page-header">
-        <div>
-          <h1 class="page-title" id="dashTitle">Agency Overview</h1>
-          <p class="page-subtitle" id="dashSubtitle">Friday, May 15, 2026 · 6 active deals · 4 open jobs · 47 candidates</p>
+      <!-- Metrics Strip -->
+      <div class="dash-metrics-strip">
+        <div class="dash-metric-chip">
+          <div class="dash-metric-chip-icon" style="background:var(--navy-muted);color:var(--navy);">💼</div>
+          <div class="dash-metric-chip-body"><div class="dash-metric-chip-val">6</div><div class="dash-metric-chip-label">Active Deals</div></div>
         </div>
-        <div class="topbar-actions">
-          <button class="btn btn-ghost" id="anncBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Announcements</button>
-          <button class="btn btn-primary" data-open-ai><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Daily AI Brief</button>
+        <div class="dash-metric-chip">
+          <div class="dash-metric-chip-icon" style="background:var(--teal-muted);color:var(--teal);">💰</div>
+          <div class="dash-metric-chip-body"><div class="dash-metric-chip-val">€328K</div><div class="dash-metric-chip-label">Pipeline Value</div></div>
+        </div>
+        <div class="dash-metric-chip">
+          <div class="dash-metric-chip-icon" style="background:var(--gold-muted);color:#9a7000;">📋</div>
+          <div class="dash-metric-chip-body"><div class="dash-metric-chip-val">4</div><div class="dash-metric-chip-label">Open Jobs</div></div>
+        </div>
+        <div class="dash-metric-chip">
+          <div class="dash-metric-chip-icon" style="background:var(--green-muted);color:var(--green);">👥</div>
+          <div class="dash-metric-chip-body"><div class="dash-metric-chip-val">47</div><div class="dash-metric-chip-label">Candidates</div></div>
+        </div>
+        <div class="dash-metric-chip">
+          <div class="dash-metric-chip-icon" style="background:var(--purple-muted);color:var(--purple);">🎤</div>
+          <div class="dash-metric-chip-body"><div class="dash-metric-chip-val">8</div><div class="dash-metric-chip-label">Interviews</div></div>
+        </div>
+        <div class="dash-metric-chip">
+          <div class="dash-metric-chip-icon" style="background:var(--green-muted);color:var(--green);">✅</div>
+          <div class="dash-metric-chip-body"><div class="dash-metric-chip-val">2</div><div class="dash-metric-chip-label">Offers Out</div></div>
         </div>
       </div>
 
-      <!-- Metrics Strip -->
-      <div class="metrics-strip stagger-children">
+      <!-- Tab Bar -->
+      <div class="dash-tab-bar">
+        <div class="dash-tab active" onclick="switchDashboardTab('activity')">📡 Activity</div>
+        <div class="dash-tab" onclick="switchDashboardTab('pipeline')">📊 Pipeline</div>
+        <div class="dash-tab" onclick="switchDashboardTab('calendar')">📅 Calendar</div>
+        <div class="dash-tab" onclick="switchDashboardTab('team')">👥 Team</div>
+        <div class="dash-tab" onclick="switchDashboardTab('outreach')">📧 Outreach</div>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="dash-tab-area">
+
+        <!-- ACTIVITY TAB -->
+        <div class="dash-tab-content active" id="tab-activity">
+          <div class="dash-tab-activity">
+            <!-- Activity Feed -->
+            <div class="dash-col">
+              <div class="dash-widget">
+                <div class="dash-widget-header">
+                  <span class="dash-widget-title">📡 Activity Feed</span>
+                  <button class="btn btn-ghost btn-sm">View all →</button>
+                </div>
+                <div class="dash-col-scroll">
+                  <div class="activity-v2-item">
+                    <div class="activity-v2-icon" style="background:var(--green-muted);color:var(--green);">✓</div>
+                    <div class="activity-v2-body"><div class="activity-v2-text"><strong>Brian Anderson</strong> moved <strong>Randstad Group</strong> to Won — €96K deal closed</div><div class="activity-v2-time">2 min ago</div></div>
+                    <div class="activity-v2-action">View</div>
+                  </div>
+                  <div class="activity-v2-item">
+                    <div class="activity-v2-icon" style="background:var(--navy-muted);color:var(--navy);">📋</div>
+                    <div class="activity-v2-body"><div class="activity-v2-text"><strong>Sara Lindqvist</strong> scheduled interview with <strong>Priya Nair</strong> for Lead Designer role</div><div class="activity-v2-time">18 min ago</div></div>
+                    <div class="activity-v2-action">Details</div>
+                  </div>
+                  <div class="activity-v2-item">
+                    <div class="activity-v2-icon" style="background:var(--teal-muted);color:var(--teal);">📧</div>
+                    <div class="activity-v2-body"><div class="activity-v2-text"><strong>Maya Kim</strong> sent Step 3 email to <strong>Marco van der Berg</strong> — Finova Bank Java role</div><div class="activity-v2-time">45 min ago</div></div>
+                    <div class="activity-v2-action">View</div>
+                  </div>
+                  <div class="activity-v2-item">
+                    <div class="activity-v2-icon" style="background:var(--gold-muted);color:#9a7000;">🎤</div>
+                    <div class="activity-v2-body"><div class="activity-v2-text"><strong>Thomas Vermeulen</strong> completed technical screening — <strong>James O'Brien</strong> advancing</div><div class="activity-v2-time">1 hr ago</div></div>
+                    <div class="activity-v2-action">Notes</div>
+                  </div>
+                  <div class="activity-v2-item">
+                    <div class="activity-v2-icon" style="background:var(--purple-muted);color:var(--purple);">⭐</div>
+                    <div class="activity-v2-body"><div class="activity-v2-text"><strong>Anna Schmidt</strong> candidate profile updated — new portfolio link added</div><div class="activity-v2-time">2 hr ago</div></div>
+                    <div class="activity-v2-action">Review</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Team Wins -->
+            <div class="dash-col">
+              <div class="dash-widget">
+                <div class="dash-widget-header">
+                  <span class="dash-widget-title">🏆 Team Wins</span>
+                  <span class="tb-badge badge-green" style="font-size:10px;">5 this week</span>
+                </div>
+                <div class="dash-col-scroll">
+                  <div class="win-item">
+                    <div class="win-icon-wrap" style="background:var(--green-muted);">🎉</div>
+                    <div class="win-body"><div class="win-title">Randstad Group — 4 placements!</div><div class="win-meta">Brian Anderson · Closed 2h ago · €96K value</div></div>
+                    <span class="win-badge" style="background:var(--green-muted);color:var(--green);">Won</span>
+                  </div>
+                  <div class="win-item">
+                    <div class="win-icon-wrap" style="background:var(--teal-muted);">🔥</div>
+                    <div class="win-body"><div class="win-title">3 interviews booked in one day</div><div class="win-meta">Sara Lindqvist · Today · Finova + Randstad</div></div>
+                    <span class="win-badge" style="background:var(--teal-muted);color:var(--teal);">Hot</span>
+                  </div>
+                  <div class="win-item">
+                    <div class="win-icon-wrap" style="background:var(--gold-muted);">💡</div>
+                    <div class="win-body"><div class="win-title">AI sourced 6 candidates for Data Engineer</div><div class="win-meta">Maya Kim · This morning · Avg score 87%</div></div>
+                    <span class="win-badge" style="background:var(--gold-muted);color:#9a7000;">AI</span>
+                  </div>
+                  <div class="win-item">
+                    <div class="win-icon-wrap" style="background:var(--navy-muted);">📞</div>
+                    <div class="win-body"><div class="win-title">Thomas V. — 10 candidate calls completed</div><div class="win-meta">Thomas Vermeulen · Yesterday · Personal best</div></div>
+                    <span class="win-badge" style="background:var(--navy-muted);color:var(--navy);">Record</span>
+                  </div>
+                  <div class="win-item">
+                    <div class="win-icon-wrap" style="background:var(--purple-muted);">🌟</div>
+                    <div class="win-body"><div class="win-title">Anna Schmidt — Offer accepted!</div><div class="win-meta">Brian Anderson · Yesterday · €85K/year</div></div>
+                    <span class="win-badge" style="background:var(--green-muted);color:var(--green);">Accepted</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PIPELINE TAB -->
+        <div class="dash-tab-content" id="tab-pipeline">
+          <div class="dash-tab-pipeline">
+            <div class="dash-kanban-strip">
+              <div class="dash-kanban-stage">
+                <div class="dash-kanban-stage-hd">
+                  <div class="dash-stage-dot" style="background:#9E9890"></div>
+                  <span class="dash-stage-name">Prospect</span>
+                  <span class="dash-stage-count">2</span>
+                </div>
+                <div class="dash-kanban-stage-body">
+                  <div class="dash-widget" style="padding:10px 12px;">
+                    <div class="dkc-title">Techcom Solutions</div>
+                    <div class="dkc-meta">IT Infrastructure · Amsterdam</div>
+                    <div class="dkc-footer"><span class="dkc-value">€18K</span><span class="dkc-jobs">☐ 2 jobs</span></div>
+                  </div>
+                  <div class="dash-widget" style="padding:10px 12px;">
+                    <div class="dkc-title">DataFlow BV</div>
+                    <div class="dkc-meta">Data Analytics · Utrecht</div>
+                    <div class="dkc-footer"><span class="dkc-value">€12K</span><span class="dkc-jobs">☐ 1 job</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="dash-kanban-stage">
+                <div class="dash-kanban-stage-hd">
+                  <div class="dash-stage-dot" style="background:#008B8B"></div>
+                  <span class="dash-stage-name">Qualified</span>
+                  <span class="dash-stage-count">1</span>
+                </div>
+                <div class="dash-kanban-stage-body">
+                  <div class="dash-widget" style="padding:10px 12px;">
+                    <div class="dkc-title">BlueWave Media</div>
+                    <div class="dkc-meta">Digital Marketing · Rotterdam</div>
+                    <div class="dkc-footer"><span class="dkc-value">€24K</span><span class="dkc-jobs">☑ 1 job</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="dash-kanban-stage">
+                <div class="dash-kanban-stage-hd">
+                  <div class="dash-stage-dot" style="background:#F5A623"></div>
+                  <span class="dash-stage-name">Proposal</span>
+                  <span class="dash-stage-count">1</span>
+                </div>
+                <div class="dash-kanban-stage-body">
+                  <div class="dash-widget" style="padding:10px 12px;">
+                    <div class="dkc-title">GreenTech NL</div>
+                    <div class="dkc-meta">Sustainability · Groningen</div>
+                    <div class="dkc-footer"><span class="dkc-value">€38K</span><span class="dkc-jobs">☑ 2 jobs</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="dash-kanban-stage">
+                <div class="dash-kanban-stage-hd">
+                  <div class="dash-stage-dot" style="background:#7c3aed"></div>
+                  <span class="dash-stage-name">Negotiation</span>
+                  <span class="dash-stage-count">1</span>
+                </div>
+                <div class="dash-kanban-stage-body">
+                  <div class="dash-widget" style="padding:10px 12px;">
+                    <div class="dkc-title">Finova Bank</div>
+                    <div class="dkc-meta">Financial Services · Amsterdam</div>
+                    <div class="dkc-footer"><span class="dkc-value">€52K</span><span class="dkc-jobs">☑ 3 jobs</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="dash-kanban-stage">
+                <div class="dash-kanban-stage-hd">
+                  <div class="dash-stage-dot" style="background:#22a06b"></div>
+                  <span class="dash-stage-name">Won</span>
+                  <span class="dash-stage-count">1</span>
+                </div>
+                <div class="dash-kanban-stage-body">
+                  <div class="dash-widget" style="padding:10px 12px;">
+                    <div class="dkc-title">Randstad Group</div>
+                    <div class="dkc-meta">Staffing & Recruitment · Diemen</div>
+                    <div class="dkc-footer"><span class="dkc-value">€96K</span><span class="dkc-jobs">☑ 4 jobs</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CALENDAR TAB -->
+        <div class="dash-tab-content" id="tab-calendar">
+          <div class="dash-tab-calendar">
+            <div class="dash-cal-month">
+              <div class="cal-grid-large">
+                <div class="cal-header-cell">Mo</div><div class="cal-header-cell">Tu</div><div class="cal-header-cell">We</div><div class="cal-header-cell">Th</div><div class="cal-header-cell">Fr</div><div class="cal-header-cell">Sa</div><div class="cal-header-cell">Su</div>
+                <div class="cal-day-cell other-month" style="opacity:0.4;">28</div>
+                <div class="cal-day-cell other-month" style="opacity:0.4;">29</div>
+                <div class="cal-day-cell other-month" style="opacity:0.4;">30</div>
+                <div class="cal-day-cell other-month" style="opacity:0.4;">31</div>
+                <div class="cal-day-cell"><div class="cal-day-num">1</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">2</div><div class="cal-day-events"><div class="cal-event-pill event">🇳🇱 Labour Day</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">3</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">4</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">5</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">6</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">7</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">8</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">9</div><div class="cal-day-events"><div class="cal-event-pill interview">10:00 Screening</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">10</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">11</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">12</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">13</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">14</div></div>
+                <div class="cal-day-cell today"><div class="cal-day-num">15</div><div class="cal-day-events"><div class="cal-event-pill interview">Anna Schmidt</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">16</div><div class="cal-day-events"><div class="cal-event-pill event">🏛 Ascension</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">17</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">18</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">19</div><div class="cal-day-events"><div class="cal-event-pill event">🎉 All-Hands Q2</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">20</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">21</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">22</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">23</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">24</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">25</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">26</div><div class="cal-day-events"><div class="cal-event-pill bday">🎂 Sara B.</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">27</div><div class="cal-day-events"><div class="cal-event-pill leave">🏖 MK PTO</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">28</div><div class="cal-day-events"><div class="cal-event-pill leave">🏖 MK PTO</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">29</div><div class="cal-day-events"><div class="cal-event-pill event">🌅 Ascension</div></div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">30</div></div>
+                <div class="cal-day-cell"><div class="cal-day-num">31</div></div>
+                <div class="cal-day-cell other-month" style="opacity:0.4;">1</div>
+                <div class="cal-day-cell other-month" style="opacity:0.4;">2</div>
+                <div class="cal-day-cell other-month" style="opacity:0.4;">3</div>
+              </div>
+              <div class="cal-legend">
+                <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--teal);"></div>Interview</div>
+                <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--navy);"></div>Event</div>
+                <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--purple);"></div>Birthday</div>
+                <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--gold);"></div>Leave</div>
+              </div>
+            </div>
+            <!-- Calendar Sidebar: Coming Up -->
+            <div class="dash-cal-sidebar">
+              <div class="dash-widget">
+                <div class="dash-widget-header">
+                  <span class="dash-widget-title">📅 Coming Up</span>
+                  <button class="btn btn-ghost btn-sm" data-show-view="calendar">Full →</button>
+                </div>
+                <div class="dash-col-scroll">
+                  <div class="upcoming-item">
+                    <div class="upcoming-time"><div class="upcoming-time-day">15</div><div class="upcoming-time-mon">May</div></div>
+                    <div class="upcoming-body"><div class="upcoming-title">Anna Schmidt — Screening</div><div class="upcoming-sub">10:00 AM · Randstad</div></div>
+                    <div class="upcoming-type" style="background:var(--teal-muted);color:var(--teal);">Today</div>
+                  </div>
+                  <div class="upcoming-item">
+                    <div class="upcoming-time"><div class="upcoming-time-day">15</div><div class="upcoming-time-mon">May</div></div>
+                    <div class="upcoming-body"><div class="upcoming-title">James O'Brien — 1st Interview</div><div class="upcoming-sub">2:00 PM · Finova</div></div>
+                    <div class="upcoming-type" style="background:var(--teal-muted);color:var(--teal);">Today</div>
+                  </div>
+                  <div class="upcoming-item">
+                    <div class="upcoming-time"><div class="upcoming-time-day">16</div><div class="upcoming-time-mon">May</div></div>
+                    <div class="upcoming-body"><div class="upcoming-title">Priya Nair — Technical</div><div class="upcoming-sub">11:30 AM · Randstad</div></div>
+                    <div class="upcoming-type" style="background:var(--navy-muted);color:var(--navy);">Tomorrow</div>
+                  </div>
+                  <div class="upcoming-item">
+                    <div class="upcoming-time"><div class="upcoming-time-day">16</div><div class="upcoming-time-mon">May</div></div>
+                    <div class="upcoming-body"><div class="upcoming-title">Sara Lindqvist — Final Round</div><div class="upcoming-sub">3:00 PM · Finova</div></div>
+                    <div class="upcoming-type" style="background:var(--navy-muted);color:var(--navy);">Tomorrow</div>
+                  </div>
+                  <div class="upcoming-item">
+                    <div class="upcoming-time"><div class="upcoming-time-day">19</div><div class="upcoming-time-mon">May</div></div>
+                    <div class="upcoming-body"><div class="upcoming-title">Team All-Hands Q2</div><div class="upcoming-sub">3:00 PM · Virtual + AMS</div></div>
+                    <div class="upcoming-type" style="background:var(--gold-muted);color:#9a7000;">Event</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TEAM TAB -->
+        <div class="dash-tab-content" id="tab-team">
+          <div class="dash-tab-team">
+            <div class="dash-col">
+              <!-- Team This Week -->
+              <div class="dash-widget">
+                <div class="dash-widget-header"><span class="dash-widget-title">👥 Team This Week</span></div>
+                <div class="dash-col-scroll">
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:#003B73;">BA</div>
+                    <div><div class="tws-name">Brian Anderson</div><div class="tws-stat">12 calls · 5 interviews · 3 offers</div></div>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:#008B8B;">SL</div>
+                    <div><div class="tws-name">Sara Lindqvist</div><div class="tws-stat">8 calls · 4 interviews · 1 offer</div></div>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:#7c3aed;">MK</div>
+                    <div><div class="tws-name">Maya Kim</div><div class="tws-stat">6 calls · 2 interviews · 1 offer</div></div>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:#F5A623;">TV</div>
+                    <div><div class="tws-name">Thomas Vermeulen</div><div class="tws-stat">4 calls · 1 interview · 0 offers</div></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Time Tracking -->
+              <div class="dash-widget">
+                <div class="dash-widget-header">
+                  <span class="dash-widget-title">⏱ Time Tracking</span>
+                  <span class="tb-badge badge-teal" id="ttStatus" style="font-size:10px;">Working</span>
+                </div>
+                <div class="time-tracking-panel">
+                  <div class="tt-timer" id="ttTimer">00:00:00</div>
+                  <div class="tt-task">Screening Candidates</div>
+                  <div class="tt-project">Finova Bank — Java Developer</div>
+                  <div class="tt-progress-bar"><div class="tt-progress-fill" id="ttProgress" style="width:35%;"></div></div>
+                  <div class="tt-stats">
+                    <div class="tt-stat"><div class="tt-stat-val">2h 14m</div><div class="tt-stat-label">Today</div></div>
+                    <div class="tt-stat"><div class="tt-stat-val">38h</div><div class="tt-stat-label">This Week</div></div>
+                    <div class="tt-stat"><div class="tt-stat-val">92%</div><div class="tt-stat-label">Goal</div></div>
+                  </div>
+                  <div class="tt-controls">
+                    <button class="btn btn-primary btn-sm" id="ttStartBtn" onclick="toggleTimer()"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start</button>
+                    <button class="btn btn-ghost btn-sm" onclick="stopTimer()"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Stop</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-col">
+              <!-- Birthdays -->
+              <div class="dash-widget">
+                <div class="dash-widget-header"><span class="dash-widget-title">🎂 Upcoming Birthdays</span><span class="tb-badge badge-purple" style="font-size:10px;">3 this month</span></div>
+                <div class="dash-col-scroll">
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:linear-gradient(135deg,#7c3aed,#db2777);font-size:12px;">SL</div>
+                    <div style="flex:1;"><div class="tws-name">Sara Lindqvist</div><div class="tws-stat" style="color:var(--purple);font-weight:600;">🎂 Birthday — May 26</div></div>
+                    <span class="tb-badge badge-purple" style="font-size:10px;">in 11 days</span>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:linear-gradient(135deg,#F5A623,#dc2626);font-size:12px;">TV</div>
+                    <div style="flex:1;"><div class="tws-name">Thomas Vermeulen</div><div class="tws-stat" style="color:var(--gold);font-weight:600;">🎂 Birthday — June 8</div></div>
+                    <span class="tb-badge badge-gold" style="font-size:10px;">in 24 days</span>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:linear-gradient(135deg,#003B73,#008B8B);font-size:12px;">BA</div>
+                    <div style="flex:1;"><div class="tws-name">Brian Anderson</div><div class="tws-stat" style="color:var(--navy);font-weight:600;">🎂 Birthday — July 3</div></div>
+                    <span class="tb-badge badge-navy" style="font-size:10px;">in 49 days</span>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:linear-gradient(135deg,#22a06b,#0d9488);font-size:12px;">MK</div>
+                    <div style="flex:1;"><div class="tws-name">Maya Kim</div><div class="tws-stat" style="color:var(--green);font-weight:600;">🎂 Birthday — Sep 14</div></div>
+                    <span class="tb-badge badge-green" style="font-size:10px;">in 122 days</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Leave Requests -->
+              <div class="dash-widget">
+                <div class="dash-widget-header">
+                  <span class="dash-widget-title">🏖 Leave Requests</span>
+                  <span class="tb-badge badge-gold" style="font-size:10px;">2 pending</span>
+                </div>
+                <div class="dash-col-scroll">
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:linear-gradient(135deg,#7c3aed,#db2777);font-size:12px;">MK</div>
+                    <div style="flex:1;"><div class="tws-name">Maya Kim</div><div class="tws-stat">May 27–28 (2 days) · Annual Leave</div></div>
+                    <div style="display:flex;gap:4px;">
+                      <button class="btn btn-sm" style="background:var(--green-muted);color:var(--green);border:none;padding:3px 8px;font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;">✓</button>
+                      <button class="btn btn-sm" style="background:var(--red-muted);color:var(--red);border:none;padding:3px 8px;font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;">✕</button>
+                    </div>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:linear-gradient(135deg,#F5A623,#dc2626);font-size:12px;">TV</div>
+                    <div style="flex:1;"><div class="tws-name">Thomas Vermeulen</div><div class="tws-stat">Jun 2–6 (5 days) · Annual Leave</div></div>
+                    <div style="display:flex;gap:4px;">
+                      <button class="btn btn-sm" style="background:var(--green-muted);color:var(--green);border:none;padding:3px 8px;font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;">✓</button>
+                      <button class="btn btn-sm" style="background:var(--red-muted);color:var(--red);border:none;padding:3px 8px;font-size:10px;font-weight:700;border-radius:4px;cursor:pointer;">✕</button>
+                    </div>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:linear-gradient(135deg,#003B73,#008B8B);font-size:12px;">SL</div>
+                    <div style="flex:1;"><div class="tws-name">Sara Lindqvist</div><div class="tws-stat" style="color:var(--green);">✓ Approved: May 26 (Birthday)</div></div>
+                    <span class="tb-badge badge-green" style="font-size:10px;">Approved</span>
+                  </div>
+                  <div class="tws-item" style="padding:10px 16px;">
+                    <div class="tws-avatar" style="background:linear-gradient(135deg,#22a06b,#0d9488);font-size:12px;">BA</div>
+                    <div style="flex:1;"><div class="tws-name">Brian Anderson</div><div class="tws-stat" style="color:var(--green);">✓ Approved: Jun 20–22 (3 days)</div></div>
+                    <span class="tb-badge badge-green" style="font-size:10px;">Approved</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OUTREACH TAB -->
+        <div class="dash-tab-content" id="tab-outreach">
+          <div class="dash-tab-outreach">
+            <div class="dash-col">
+              <div class="dash-widget">
+                <div class="dash-widget-header">
+                  <span class="dash-widget-title">📧 Active Outreach Sequences</span>
+                  <button class="btn btn-ghost btn-sm" data-show-view="outreach">Outreach →</button>
+                </div>
+                <div class="dash-col-scroll">
+                  <div class="dash-outreach-item" data-open-outreach-modal="seq-marco">
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;">
+                      <img class="dout-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=56&h=56&fit=crop&crop=face" alt="Marco">
+                      <div style="flex:1;min-width:0;">
+                        <div class="dout-name">Marco van der Berg</div>
+                        <div class="dout-meta">Java Developer · Finova Bank · Step 2/4</div>
+                        <div class="dout-step"><div class="dout-step-pip done"></div><div class="dout-step-pip active"></div><div class="dout-step-pip pending"></div><div class="dout-step-pip pending"></div></div>
+                      </div>
+                      <span class="tb-badge badge-teal" style="font-size:10px;padding:2px 7px;">Active</span>
+                    </div>
+                  </div>
+                  <div class="dash-outreach-item" data-open-outreach-modal="seq-priya">
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;">
+                      <img class="dout-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=56&h=56&fit=crop&crop=face" alt="Priya">
+                      <div style="flex:1;min-width:0;">
+                        <div class="dout-name">Priya Nair</div>
+                        <div class="dout-meta">Lead Designer · Randstad · Step 3/4</div>
+                        <div class="dout-step"><div class="dout-step-pip done"></div><div class="dout-step-pip done"></div><div class="dout-step-pip active"></div><div class="dout-step-pip pending"></div></div>
+                      </div>
+                      <span class="tb-badge badge-gold" style="font-size:10px;padding:2px 7px;">Reply!</span>
+                    </div>
+                  </div>
+                  <div class="dash-outreach-item" data-open-outreach-modal="seq-thomas">
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;">
+                      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#F5A623,#dc2626);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;">TM</div>
+                      <div style="flex:1;min-width:0;">
+                        <div class="dout-name">Thomas Müller</div>
+                        <div class="dout-meta">Principal Designer · GreenTech · Step 4/4</div>
+                        <div class="dout-step"><div class="dout-step-pip done"></div><div class="dout-step-pip done"></div><div class="dout-step-pip done"></div><div class="dout-step-pip done"></div></div>
+                      </div>
+                      <span class="tb-badge badge-green" style="font-size:10px;padding:2px 7px;">Done</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-col">
+              <div class="dash-widget">
+                <div class="dash-widget-header"><span class="dash-widget-title">📬 Reply Notifications</span></div>
+                <div class="dash-col-scroll">
+                  <div class="dash-info-item">
+                    <div class="dash-info-icon" style="background:var(--gold-muted);color:#9a7000;">💬</div>
+                    <div class="dash-info-body">
+                      <div class="dash-info-title">Priya Nair replied — "Interested, can we schedule a call Monday?"</div>
+                      <div class="dash-info-meta">Lead Designer · Randstad · 12 min ago</div>
+                    </div>
+                    <span class="dash-info-badge" style="background:var(--gold-muted);color:#9a7000;">Reply</span>
+                  </div>
+                  <div class="dash-info-item">
+                    <div class="dash-info-icon" style="background:var(--navy-muted);color:var(--navy);">📧</div>
+                    <div class="dash-info-body">
+                      <div class="dash-info-title">Thomas Müller — Offer acceptance pending response</div>
+                      <div class="dash-info-meta">Principal Designer · GreenTech NL · 1 hr ago</div>
+                    </div>
+                    <span class="dash-info-badge" style="background:var(--navy-muted);color:var(--navy);">Follow-up</span>
+                  </div>
+                  <div class="dash-info-item">
+                    <div class="dash-info-icon" style="background:var(--green-muted);color:var(--green);">✅</div>
+                    <div class="dash-info-body">
+                      <div class="dash-info-title">Anna Schmidt confirmed start date — July 1st</div>
+                      <div class="dash-info-meta">Senior UX/UI · Randstad Group · 2 hr ago</div>
+                    </div>
+                    <span class="dash-info-badge" style="background:var(--green-muted);color:var(--green);">Confirmed</span>
+                  </div>
+                  <div class="dash-info-item">
+                    <div class="dash-info-icon" style="background:var(--teal-muted);color:var(--teal);">📞</div>
+                    <div class="dash-info-body">
+                      <div class="dash-info-title">James O'Brien — "Happy with the offer, discussing with family"</div>
+                      <div class="dash-info-meta">Java Developer · Finova Bank · 3 hr ago</div>
+                    </div>
+                    <span class="dash-info-badge" style="background:var(--teal-muted);color:var(--teal);">Call</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end dash-tab-area -->
+
+      <!-- Bottom: Announcement + Quick Actions -->
+      <div class="dash-bottom-strip">
+        <div class="dash-announcement" id="dashAnnouncement">
+          <div class="dash-annc-icon">📣</div>
+          <div class="dash-annc-body">
+            <div class="dash-annc-title">Q2 Kickoff — All-Hands Meeting This Friday at 3 PM</div>
+            <div class="dash-annc-text">Join us for the quarterly review and team awards ceremony · Virtual & Amsterdam Office</div>
+          </div>
+          <div class="dash-annc-tag">New</div>
+          <button class="dash-annc-close" onclick="dismissDashAnnouncement()">✕</button>
+        </div>
+        <div class="dash-quick-actions">
+          <button class="dash-qa-btn" onclick="showView('deals')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Deal</button>
+          <button class="dash-qa-btn" onclick="showView('jobs')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Post Job</button>
+          <button class="dash-qa-btn" onclick="showView('candidates')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Add Candidate</button>
+          <button class="dash-qa-btn" onclick="showView('calendar')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Schedule</button>
+          <button class="dash-qa-btn" onclick="showView('outreach')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email Sequence</button>
+          <button class="dash-qa-btn" data-open-ai style="border-color:var(--teal);color:var(--teal);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>AI Assistant</button>
+        </div>
+      </div>
+    </div><!-- end dashboard -->
         <div class="metric-chip hover-lift animate-fade-in-up" style="opacity:0;animation-fill-mode:forwards;">
           <div class="metric-chip-icon" style="background:var(--navy-muted);color:var(--navy);">💼</div>
           <div class="metric-chip-body">
