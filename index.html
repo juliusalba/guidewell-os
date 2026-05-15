@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guidewell OS — Recruitment Agency</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23F5A623'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Inter,sans-serif' font-weight='800' font-size='18' fill='%23003B73'>G</text></svg>">
 <style>
 /* ═══════════════════════════════════════════════════════════
    GUIDEWELL OS — Design System
@@ -592,7 +593,75 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 .skills-list { display:flex;flex-wrap:wrap;gap:6px; }
 .skill-chip { font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px;background:var(--cream);border:1px solid var(--border);color:var(--text-secondary); }
 
-/* ── Responsive ── */
+/* ── Form Inputs ── */
+.form-input,.form-select,.form-textarea {
+  width:100%;
+  padding:9px 12px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  font-family:var(--font);
+  font-size:13px;
+  color:var(--text-primary);
+  background:var(--surface);
+  outline:none;
+  transition:border-color 0.12s,box-shadow 0.12s;
+  height:42px;
+}
+.form-textarea { height:auto;min-height:90px;resize:vertical; }
+.form-input:focus,.form-select:focus,.form-textarea:focus {
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px var(--teal-muted);
+}
+.form-select { cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239E9890' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:32px; }
+.form-label { display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:5px; }
+.form-group { margin-bottom:14px; }
+.form-row { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+
+/* Stage left border on kanban cards */
+.kanban-card[data-stage="prospect"]{border-left:3px solid #9E9890}
+.kanban-card[data-stage="qualified"]{border-left:3px solid var(--teal)}
+.kanban-card[data-stage="proposal"]{border-left:3px solid var(--gold)}
+.kanban-card[data-stage="negotiation"]{border-left:3px solid var(--purple)}
+.kanban-card[data-stage="won"]{border-left:3px solid var(--green)}
+
+/* Total pipeline stat */
+.pipeline-stat { display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--navy-muted);border-radius:var(--radius-md);margin-bottom:16px; }
+.pipeline-stat-label { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted); }
+.pipeline-stat-value { font-size:18px;font-weight:800;color:var(--navy);margin-left:auto;letter-spacing:-0.02em; }
+
+/* Page header CTA button */
+.page-header .btn-primary { height:36px; }
+
+/* Performance report bars */
+.perf-report { margin-top:20px; }
+.perf-metric { margin-bottom:16px; }
+.perf-metric-header { display:flex;justify-content:space-between;margin-bottom:6px; }
+.perf-metric-label { font-size:12.5px;font-weight:600;color:var(--text-primary); }
+.perf-metric-value { font-size:12.5px;font-weight:700;color:var(--text-secondary); }
+.perf-bar-bg { height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden; }
+.perf-bar-fill { height:100%;border-radius:4px;transition:width 0.4s ease; }
+
+/* Calendar day click-to-add */
+.cal-day { cursor:pointer; }
+.cal-day:hover { background:var(--cream-dark); }
+
+/* Outreach compose modal */
+.compose-field { display:flex;border-bottom:1px solid var(--border); }
+.compose-field-label { padding:8px 12px;font-size:11.5px;font-weight:700;color:var(--text-muted);background:var(--cream);border-right:1px solid var(--border);min-width:70px;flex-shrink:0; }
+.compose-field input,.compose-field select,.compose-field textarea { flex:1;border:none;outline:none;font-family:var(--font);font-size:13px;padding:8px 12px;background:transparent;color:var(--text-primary); }
+.compose-subject { padding:8px 12px;font-size:13px;font-weight:600;color:var(--text-primary);border-bottom:1px solid var(--border); }
+.compose-body { padding:14px;min-height:160px;font-size:13px;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap;min-height:140px; }
+
+/* Current time indicator for calendar */
+.cal-current-time { position:relative;height:1px;background:var(--red);margin-top:4px; }
+.cal-current-time::before { content:'●';position:absolute;left:-1px;top:-5px;font-size:10px;color:var(--red); }
+
+/* AI result loading */
+.ai-result-area.thinking { color:var(--text-muted);font-style:italic; }
+.ai-result-area.thinking::after { content:'…';animation:pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* Responsive */
 @media (max-width:1400px) { .dash-widgets { grid-template-columns:1fr 280px 240px } .stats-grid { grid-template-columns:repeat(3,1fr) } .analytics-grid { grid-template-columns:repeat(2,1fr) } }
 @media (max-width:1100px) { .dash-widgets { grid-template-columns:1fr 1fr } .dash-widget-meetings { grid-column:1/-1 } }
 @media (max-width:900px) { .app-shell { grid-template-columns:1fr;grid-template-areas:"topbar" "main" } .sidebar { display:none } .stats-grid { grid-template-columns:repeat(2,1fr) } .dash-widgets { grid-template-columns:1fr } .dash-row-2 { grid-template-columns:1fr } .team-grid { grid-template-columns:repeat(2,1fr) } .meetings-grid { grid-template-columns:1fr } .tasks-board { grid-template-columns:1fr } .analytics-grid { grid-template-columns:1fr 1fr } }
@@ -915,24 +984,26 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 
     <!-- ═══ DEALS ═══ -->
     <div id="view-deals" class="view">
-      <div class="deals-header">
-        <div>
-          <h1 class="page-title">Deals Pipeline</h1>
-          <p class="page-subtitle">6 active deals · €328K total · Drag cards to change stage</p>
-        </div>
+      <div class="page-header">
+        <div><h1 class="page-title">Deals Pipeline</h1><p class="page-subtitle" id="dealsSubtitle">6 active deals · €328K total</p></div>
+        <button class="btn btn-primary" id="btnNewDeal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Deal</button>
+      </div>
+      <div class="pipeline-stat" id="pipelineStat">
+        <span class="pipeline-stat-label">Total Pipeline Value</span>
+        <span class="pipeline-stat-value" id="pipelineValue">€328K</span>
       </div>
       <div class="deals-toolbar">
         <div class="view-tabs">
           <button class="view-tab active" data-deals-tab="kanban">Kanban</button>
           <button class="view-tab" data-deals-tab="table">Table</button>
         </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <div class="filter-chip active" data-filter="all">All</div>
-          <div class="filter-chip" data-filter="prospect">Prospect</div>
-          <div class="filter-chip" data-filter="qualified">Qualified</div>
-          <div class="filter-chip" data-filter="proposal">Proposal</div>
-          <div class="filter-chip" data-filter="negotiation">Negotiation</div>
-          <div class="filter-chip" data-filter="won">Won</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;" id="stageFilters">
+          <div class="filter-chip active" data-s-filter="all">All</div>
+          <div class="filter-chip" data-s-filter="prospect">Prospect</div>
+          <div class="filter-chip" data-s-filter="qualified">Qualified</div>
+          <div class="filter-chip" data-s-filter="proposal">Proposal</div>
+          <div class="filter-chip" data-s-filter="negotiation">Negotiation</div>
+          <div class="filter-chip" data-s-filter="won">Won</div>
         </div>
         <button class="btn btn-primary btn-sm" data-open-ai><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>AI Analyze</button>
       </div>
@@ -1030,12 +1101,21 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     <!-- ═══ JOBS ═══ -->
     <div id="view-jobs" class="view">
       <div class="page-header">
-        <div><h1 class="page-title">Jobs</h1><p class="page-subtitle">4 open positions across 6 companies</p></div>
-        <button class="btn btn-primary" data-open-ai><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Post New Job</button>
+        <div><h1 class="page-title">Jobs</h1><p class="page-subtitle" id="jobsSubtitle">4 open positions across 6 companies</p></div>
+        <button class="btn btn-primary" id="btnPostJob"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Post New Job</button>
       </div>
-      <div class="view-tabs" style="margin-bottom:16px;">
-        <button class="view-tab active" data-jobs-tab="grid">Grid</button>
-        <button class="view-tab" data-jobs-tab="table">Table</button>
+      <div class="candidates-toolbar">
+        <div class="view-tabs">
+          <button class="view-tab active" data-jobs-tab="grid">Grid</button>
+          <button class="view-tab" data-jobs-tab="table">Table</button>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;" id="deptFilters">
+          <div class="filter-chip active" data-d-filter="all">All</div>
+          <div class="filter-chip" data-d-filter="IT & Engineering">IT & Engineering</div>
+          <div class="filter-chip" data-d-filter="Digital & Marketing">Digital & Marketing</div>
+          <div class="filter-chip" data-d-filter="Data & Analytics">Data & Analytics</div>
+          <div class="filter-chip" data-d-filter="IT Infrastructure">IT Infrastructure</div>
+        </div>
       </div>
       <div id="jobs-grid-view">
         <div class="jobs-grid" id="jobsGrid">
@@ -1200,7 +1280,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
         <div><h1 class="page-title">Candidates</h1><p class="page-subtitle" id="candidatesSubtitle">47 total · 12 in active pipeline</p></div>
         <div style="display:flex;gap:8px">
           <button class="btn btn-ghost"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</button>
-          <button class="btn btn-primary" data-open-ai><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>AI Source</button>
+          <button class="btn btn-primary" id="btnAddCandidate"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Candidate</button>
         </div>
       </div>
       <div class="candidates-toolbar">
@@ -1323,7 +1403,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     <div id="view-companies" class="view">
       <div class="page-header">
         <div><h1 class="page-title">Companies</h1><p class="page-subtitle">6 active client companies</p></div>
-        <button class="btn btn-primary" data-open-ai><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Add Company</button>
+        <button class="btn btn-primary" id="btnAddCompany"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Company</button>
       </div>
       <div class="candidates-toolbar">
         <div class="view-tabs">
@@ -1485,6 +1565,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             <div><div class="rc-stat-val">5</div><div class="rc-stat-label">Interviews</div></div>
           </div>
           <div class="rc-score"><div class="rc-score-bar"><div class="rc-score-fill" style="width:94%"></div></div><div class="rc-score-val">94%</div></div>
+          <button class="btn btn-ghost btn-sm" style="margin-top:10px;width:100%;font-size:11.5px" data-view-perf="brian">📊 View Performance</button>
         </div>
         <div class="recruiter-card" data-member="sara">
           <div class="recruiter-card-header">
@@ -1500,6 +1581,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             <div><div class="rc-stat-val">4</div><div class="rc-stat-label">Interviews</div></div>
           </div>
           <div class="rc-score"><div class="rc-score-bar"><div class="rc-score-fill" style="width:87%"></div></div><div class="rc-score-val">87%</div></div>
+          <button class="btn btn-ghost btn-sm" style="margin-top:10px;width:100%;font-size:11.5px" data-view-perf="sara">📊 View Performance</button>
         </div>
         <div class="recruiter-card" data-member="maya">
           <div class="recruiter-card-header">
@@ -1515,6 +1597,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             <div><div class="rc-stat-val">2</div><div class="rc-stat-label">Interviews</div></div>
           </div>
           <div class="rc-score"><div class="rc-score-bar"><div class="rc-score-fill" style="width:72%"></div></div><div class="rc-score-val">72%</div></div>
+          <button class="btn btn-ghost btn-sm" style="margin-top:10px;width:100%;font-size:11.5px" data-view-perf="maya">📊 View Performance</button>
         </div>
         <div class="recruiter-card" data-member="thomas">
           <div class="recruiter-card-header">
@@ -1530,6 +1613,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             <div><div class="rc-stat-val">1</div><div class="rc-stat-label">Interviews</div></div>
           </div>
           <div class="rc-score"><div class="rc-score-bar"><div class="rc-score-fill" style="width:58%"></div></div><div class="rc-score-val">58%</div></div>
+          <button class="btn btn-ghost btn-sm" style="margin-top:10px;width:100%;font-size:11.5px" data-view-perf="thomas">📊 View Performance</button>
         </div>
       </div>
 
@@ -1588,7 +1672,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     <div id="view-outreach" class="view">
       <div class="page-header">
         <div><h1 class="page-title">Outreach</h1><p class="page-subtitle">Sequences · Templates · Email Composer</p></div>
-        <button class="btn btn-primary" data-open-ai><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>AI Write Sequence</button>
+        <button class="btn btn-primary" id="btnComposeMsg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Compose Message</button>
       </div>
       <div class="outreach-tabs">
         <button class="outreach-tab active" data-outreach-tab="sequences">Active Sequences (4)</button>
@@ -2152,6 +2236,265 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   </div>
 </div>
 
+<!-- New Deal Modal -->
+<div class="modal-overlay" id="newDealModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">New Deal</div>
+        <div class="modal-subtitle">Add a new prospect to your pipeline</div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Company *</label><input class="form-input" id="ndCompany" placeholder="e.g. Acme Corp"></div>
+      <div class="form-group"><label class="form-label">Contact</label><input class="form-input" id="ndContact" placeholder="Contact name"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Value</label>
+          <select class="form-select" id="ndValue">
+            <option value="€5k-10k">€5k-10k</option><option value="€10k-25k">€10k-25k</option><option value="€25k-50k">€25k-50k</option><option value="€50k+">€50k+</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Stage</label>
+          <select class="form-select" id="ndStage">
+            <option value="prospect" selected>Prospect</option><option value="qualified">Qualified</option><option value="proposal">Proposal</option><option value="negotiation">Negotiation</option><option value="won">Won</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Recruiter</label>
+        <select class="form-select" id="ndRecruiter">
+          <option value="Brian Anderson">Brian Anderson</option><option value="Sara Lindqvist">Sara Lindqvist</option><option value="Maya Kim">Maya Kim</option><option value="Thomas Vermeulen">Thomas Vermeulen</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="ndNotes" placeholder="Deal notes, context, next steps…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Cancel</button>
+      <button class="btn btn-primary" id="ndSubmit">Add Deal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Post New Job Modal -->
+<div class="modal-overlay" id="postJobModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Post New Job</div>
+        <div class="modal-subtitle">Create a new job listing</div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Job Title *</label><input class="form-input" id="pjTitle" placeholder="e.g. Senior Java Developer"></div>
+      <div class="form-group"><label class="form-label">Company *</label><input class="form-input" id="pjCompany" placeholder="Client company name"></div>
+      <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="pjLocation" placeholder="e.g. Amsterdam, Remote"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Salary Range</label><input class="form-input" id="pjSalary" placeholder="e.g. €60k-80k"></div>
+        <div class="form-group"><label class="form-label">Department</label>
+          <select class="form-select" id="pjDept">
+            <option value="IT & Engineering">IT & Engineering</option><option value="Digital & Marketing">Digital & Marketing</option><option value="Data & Analytics">Data & Analytics</option><option value="IT Infrastructure">IT Infrastructure</option><option value="Finance">Finance</option><option value="HR">HR</option><option value="Operations">Operations</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="pjDesc" placeholder="Job description…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Cancel</button>
+      <button class="btn btn-primary" id="pjSubmit">Post Job</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Candidate Modal -->
+<div class="modal-overlay" id="addCandidateModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Add Candidate</div>
+        <div class="modal-subtitle">Add a new candidate to your pipeline</div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="acName" placeholder="Full name"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="acEmail" type="email" placeholder="email@example.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Current Company</label><input class="form-input" id="acCompany" placeholder="Current employer"></div>
+        <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="acTitle" placeholder="Job title"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Stage</label>
+          <select class="form-select" id="acStage">
+            <option value="New" selected>New</option><option value="Screening">Screening</option><option value="Interview">Interview</option><option value="Offer">Offer</option><option value="Hired">Hired</option><option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Match Score</label><input class="form-input" id="acScore" type="number" min="0" max="100" placeholder="0-100"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="acNotes" placeholder="Skills, experience, salary expectations…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Cancel</button>
+      <button class="btn btn-primary" id="acSubmit">Add Candidate</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Company Modal -->
+<div class="modal-overlay" id="addCompanyModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Add Company</div>
+        <div class="modal-subtitle">Add a new client company</div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Company Name *</label><input class="form-input" id="acoName" placeholder="e.g. Acme Corp"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Industry</label>
+          <select class="form-select" id="acoIndustry">
+            <option value="Tech">Tech</option><option value="Finance">Finance</option><option value="Healthcare">Healthcare</option><option value="Retail">Retail</option><option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="acoLocation" placeholder="City, Country"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Website</label><input class="form-input" id="acoWebsite" placeholder="https://…"></div>
+        <div class="form-group"><label class="form-label">LinkedIn</label><input class="form-input" id="acoLinkedIn" placeholder="linkedin.com/company/…"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="acoNotes" placeholder="Company background, key contacts, recruitment history…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Cancel</button>
+      <button class="btn btn-primary" id="acoSubmit">Add Company</button>
+    </div>
+  </div>
+</div>
+
+<!-- Calendar Event Modal (click-to-add) -->
+<div class="modal-overlay" id="calEventModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="ceTitle">New Event</div>
+        <div class="modal-subtitle" id="ceDateLabel">May 2026</div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Event Title *</label><input class="form-input" id="ceEventTitle" placeholder="e.g. Screening — Anna Schmidt"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Time</label><input class="form-input" id="ceTime" type="time" value="10:00"></div>
+        <div class="form-group"><label class="form-label">Duration</label>
+          <select class="form-select" id="ceDuration">
+            <option value="30 min">30 min</option><option value="45 min" selected>45 min</option><option value="60 min">60 min</option><option value="90 min">90 min</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Type</label>
+          <select class="form-select" id="ceType">
+            <option value="Screening">Screening</option><option value="Interview">Interview</option><option value="General">General</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Recruiter</label>
+          <select class="form-select" id="ceRecruiter">
+            <option value="Brian Anderson">Brian Anderson</option><option value="Sara Lindqvist">Sara Lindqvist</option><option value="Maya Kim">Maya Kim</option><option value="Thomas Vermeulen">Thomas Vermeulen</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="ceNotes" placeholder="Interview focus, candidate prep notes…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Cancel</button>
+      <button class="btn btn-primary" id="ceSubmit">Add Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- Compose Message Modal -->
+<div class="modal-overlay" id="composeMsgModal">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Compose Message</div>
+        <div class="modal-subtitle">Write a personalized outreach email</div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body" style="padding:0">
+      <div class="compose-field"><div class="compose-field-label">To</div><input class="form-input" id="cmTo" placeholder="recipient@email.com" style="height:42px"></div>
+      <div class="compose-field"><div class="compose-field-label">Subject</div><input class="form-input" id="cmSubject" placeholder="Subject line…" style="height:42px"></div>
+      <div class="compose-field"><div class="compose-field-label">Template</div>
+        <select class="form-select" id="cmTemplate" style="height:42px">
+          <option value="">— Select template —</option>
+          <option value="initial">Initial Outreach</option>
+          <option value="followup">Follow-Up</option>
+          <option value="interview">Interview Confirmation</option>
+          <option value="offer">Offer Letter</option>
+          <option value="rejection">Rejection</option>
+        </select>
+      </div>
+      <div class="compose-body" id="cmBody" contenteditable="true" style="outline:none;min-height:180px"></div>
+      <div style="padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--cream)">
+        <button class="btn btn-ghost btn-sm" id="cmAIGen"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Use AI to generate</button>
+        <button class="btn btn-ghost btn-sm" id="cmInsertTpl">Insert placeholders</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Discard</button>
+      <button class="btn btn-primary" id="cmSend">Send Message</button>
+    </div>
+  </div>
+</div>
+
+<!-- Team Performance Report Modal -->
+<div class="modal-overlay" id="perfReportModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="perfName">Performance Report</div>
+        <div class="modal-subtitle" id="perfRole">Recruiter</div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body" id="perfBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Calendar Event Detail Modal -->
+<div class="modal-overlay" id="calDetailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="cdTitle">Event</div>
+        <div class="modal-subtitle" id="cdMeta"></div>
+      </div>
+      <button class="modal-close" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-row">
+        <div class="modal-meta-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span id="cdTime"></span></div>
+        <div class="modal-meta-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span id="cdDate"></span></div>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-section"><div class="modal-section-label">Recruiter</div><div class="modal-section-value" id="cdRecruiter"></div></div>
+      <div class="modal-section"><div class="modal-section-label">Notes</div><div class="modal-section-value" id="cdNotes" style="color:var(--text-secondary)"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close>Close</button>
+      <button class="btn btn-primary" data-open-ai>Reschedule with AI</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- ═══ JAVASCRIPT ═══ -->
 <script>
@@ -2619,6 +2962,294 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       cb.closest('.reminder-item').classList.toggle('done');
     });
   });
+
+  // ── New Deal Modal ──────────────────────────────────────────
+  document.getElementById('btnNewDeal').addEventListener('click', function() {
+    document.getElementById('newDealModal').classList.add('open');
+  });
+  document.getElementById('ndSubmit').addEventListener('click', function() {
+    var company = document.getElementById('ndCompany').value.trim();
+    if (!company) { alert('Company name is required'); return; }
+    var dealId = 'deal-' + Date.now();
+    var stage = document.getElementById('ndStage').value;
+    var recruiter = document.getElementById('ndRecruiter').value;
+    var value = document.getElementById('ndValue').value;
+    var notes = document.getElementById('ndNotes').value;
+    var contact = document.getElementById('ndContact').value;
+    dealData[dealId] = { title: company + ' Deal', company: company, contact: contact, value: value, stage: stage, recruiter: recruiter, notes: notes, type: 'Retained' };
+    // Add kanban card
+    var col = document.querySelector('.kanban-col[data-stage="' + stage + '"], .dash-kanban-col[data-stage="' + stage + '"]');
+    if (col) {
+      var card = document.createElement('div');
+      card.className = 'kanban-card';
+      card.dataset.dealId = dealId;
+      card.dataset.stage = stage;
+      card.innerHTML = '<div class="kanban-card-title">' + company + ' Deal</div><div class="kanban-card-meta">' + value + ' · ' + recruiter + '</div>';
+      col.appendChild(card);
+    }
+    // Add table row
+    var tbl = document.querySelector('#dealsTableView tbody');
+    if (tbl) {
+      var row = document.createElement('tr');
+      row.dataset.modal = dealId;
+      row.dataset.stage = stage;
+      var colors = {prospect:'navy',qualified:'teal',proposal:'gold',negotiation:'purple',won:'green'};
+      var names = {prospect:'Prospect',qualified:'Qualified',proposal:'Proposal',negotiation:'Negotiation',won:'Won'};
+      row.innerHTML = '<td>' + company + '</td><td>' + contact + '</td><td>' + value + '</td><td><span class="tb-badge badge-' + (colors[stage]||'navy') + '">' + (names[stage]||stage) + '</span></td><td>' + recruiter + '</td>';
+      tbl.appendChild(row);
+    }
+    document.getElementById('newDealModal').classList.remove('open');
+    document.getElementById('ndCompany').value = '';
+    document.getElementById('ndContact').value = '';
+    document.getElementById('ndNotes').value = '';
+    updatePipelineStat();
+  });
+
+  // ── Post Job Modal ───────────────────────────────────────────
+  document.getElementById('btnPostJob').addEventListener('click', function() {
+    document.getElementById('postJobModal').classList.add('open');
+  });
+  document.getElementById('pjSubmit').addEventListener('click', function() {
+    var title = document.getElementById('pjTitle').value.trim();
+    if (!title) { alert('Job title is required'); return; }
+    var jobId = 'job-' + Date.now();
+    var company = document.getElementById('pjCompany').value.trim() || 'Client Company';
+    var location = document.getElementById('pjLocation').value.trim() || 'Remote';
+    var salary = document.getElementById('pjSalary').value.trim() || 'Competitive';
+    var dept = document.getElementById('pjDept').value;
+    var desc = document.getElementById('pjDesc').value.trim() || 'Join our team as ' + title + '.';
+    jobData[jobId] = { title: title, company: company, location: location, salary: salary, candidates: 0, matches: [], dept: dept, desc: desc };
+    var grid = document.getElementById('jobsGrid');
+    if (grid) {
+      var card = document.createElement('div');
+      card.className = 'job-card';
+      card.dataset.jobId = jobId;
+      card.innerHTML = '<div class="job-card-title">' + title + '</div><div class="job-card-meta">' + company + ' · ' + location + '</div><div class="job-card-salary">' + salary + '</div>';
+      grid.appendChild(card);
+    }
+    document.getElementById('postJobModal').classList.remove('open');
+    document.getElementById('pjTitle').value = '';
+    document.getElementById('pjCompany').value = '';
+    document.getElementById('pjLocation').value = '';
+    document.getElementById('pjSalary').value = '';
+    document.getElementById('pjDesc').value = '';
+  });
+
+  // ── Add Candidate Modal ──────────────────────────────────────
+  document.getElementById('btnAddCandidate').addEventListener('click', function() {
+    document.getElementById('addCandidateModal').classList.add('open');
+  });
+  document.getElementById('acSubmit').addEventListener('click', function() {
+    var name = document.getElementById('acName').value.trim();
+    if (!name) { alert('Candidate name is required'); return; }
+    var email = document.getElementById('acEmail').value.trim();
+    var company = document.getElementById('acCompany').value.trim();
+    var title = document.getElementById('acTitle').value.trim();
+    var stage = document.getElementById('acStage').value;
+    var score = parseInt(document.getElementById('acScore').value) || 0;
+    var notes = document.getElementById('acNotes').value;
+    var cid = 'cand-' + Date.now();
+    candidateData[cid] = { name: name, email: email, company: company, title: title, stage: stage, score: score, notes: notes, applied: 'May 2026' };
+    var grid = document.getElementById('candidatesGrid');
+    if (grid) {
+      var stageClass = stage === 'New' ? 'navy' : stage === 'Screening' ? 'teal' : stage === 'Interview' ? 'gold' : stage === 'Offer' ? 'purple' : stage === 'Hired' ? 'green' : 'red';
+      var initials = name.split(' ').map(function(n){return n[0]}).join('');
+      var card = document.createElement('div');
+      card.className = 'candidate-card';
+      card.dataset.name = name;
+      card.dataset.stage = stage;
+      card.innerHTML = '<div class="candidate-card-header"><div class="candidate-avatar">' + initials + '</div><div><div class="candidate-name">' + name + '</div><div class="candidate-title">' + (title || 'No title') + '</div></div><span class="candidate-stage-badge stage-' + stageClass + '">' + stage + '</span></div><div class="candidate-score-row"><div class="candidate-score-bar"><div class="candidate-score-fill" style="width:' + score + '%"></div></div><span class="candidate-score-val">' + score + '%</span></div>';
+      grid.appendChild(card);
+    }
+    document.getElementById('addCandidateModal').classList.remove('open');
+    document.getElementById('acName').value = '';
+    document.getElementById('acEmail').value = '';
+    document.getElementById('acCompany').value = '';
+    document.getElementById('acTitle').value = '';
+    document.getElementById('acScore').value = '';
+    document.getElementById('acNotes').value = '';
+  });
+
+  // ── Add Company Modal ────────────────────────────────────────
+  document.getElementById('btnAddCompany').addEventListener('click', function() {
+    document.getElementById('addCompanyModal').classList.add('open');
+  });
+  document.getElementById('acoSubmit').addEventListener('click', function() {
+    var name = document.getElementById('acoName').value.trim();
+    if (!name) { alert('Company name is required'); return; }
+    var industry = document.getElementById('acoIndustry').value;
+    var location = document.getElementById('acoLocation').value.trim();
+    var website = document.getElementById('acoWebsite').value.trim();
+    var linkedin = document.getElementById('acoLinkedIn').value.trim();
+    var notes = document.getElementById('acoNotes').value;
+    var compId = 'comp-' + Date.now();
+    companyData[compId] = { name: name, industry: industry, location: location, website: website, linkedin: linkedin, notes: notes, contacts: 0 };
+    var grid = document.getElementById('companiesGrid');
+    if (grid) {
+      var card = document.createElement('div');
+      card.className = 'company-card';
+      card.dataset.name = name;
+      card.innerHTML = '<div class="company-card-logo">' + name.charAt(0) + '</div><div class="company-card-name">' + name + '</div><div class="company-card-meta">' + industry + ' · ' + (location || 'Unknown') + '</div>';
+      grid.appendChild(card);
+    }
+    document.getElementById('addCompanyModal').classList.remove('open');
+    document.getElementById('acoName').value = '';
+    document.getElementById('acoLocation').value = '';
+    document.getElementById('acoWebsite').value = '';
+    document.getElementById('acoLinkedIn').value = '';
+    document.getElementById('acoNotes').value = '';
+  });
+
+  // ── Compose Message Modal ────────────────────────────────────
+  document.getElementById('btnComposeMsg').addEventListener('click', function() {
+    document.getElementById('composeMsgModal').classList.add('open');
+  });
+  document.getElementById('cmTemplate').addEventListener('change', function() {
+    var tpl = this.value;
+    var body = document.getElementById('cmBody');
+    var to = document.getElementById('cmTo');
+    var subject = document.getElementById('cmSubject');
+    var templates = {
+      initial: { to: 'candidate@email.com', subject: 'Exciting Opportunity at {{company_name}} — {{job_title}}', body: 'Hi {{candidate_name}},\n\nI came across your profile and was impressed by your experience in {{experience}}. We have a great opportunity at {{company_name}} for a {{job_title}} role that I think could be a fantastic fit.\n\nWould you be open to a brief call this week to discuss?\n\nBest regards,\n{{recruiter_name}}\nGuidewell' },
+      followup: { to: 'candidate@email.com', subject: 'Following up — {{job_title}} opportunity at {{company_name}}', body: 'Hi {{candidate_name}},\n\nI wanted to follow up on my previous message regarding the {{job_title}} position at {{company_name}}. We\'re still very interested in connecting with you.\n\nAre you available for a quick call this week?\n\nBest,\n{{recruiter_name}}\nGuidewell' },
+      interview: { to: 'candidate@email.com', subject: 'Interview Confirmed — {{job_title}} at {{company_name}}', body: 'Hi {{candidate_name}},\n\nGreat news — we\'d love to move forward with an interview for the {{job_title}} role at {{company_name}}!\n\nPlease let us know your availability for {{interview_date}}, and we\'ll send over a calendar invite with all the details.\n\nLooking forward to speaking with you,\n{{recruiter_name}}\nGuidewell' },
+      offer: { to: 'candidate@email.com', subject: 'Offer Letter — {{job_title}} at {{company_name}}', body: 'Dear {{candidate_name}},\n\nWe are thrilled to extend an offer for the position of {{job_title}} at {{company_name}}.\n\nThe proposed compensation is {{salary}}. We believe this reflects our strong interest in having you join our team.\n\nPlease review the attached offer and let us know if you have any questions.\n\nWarm regards,\n{{recruiter_name}}\nGuidewell' },
+      rejection: { to: 'candidate@email.com', subject: 'Update on your application — {{job_title}} at {{company_name}}', body: 'Dear {{candidate_name}},\n\nThank you for taking the time to interview for the {{job_title}} position at {{company_name}}. After careful consideration, we\'ve decided to move forward with another candidate whose experience more closely matches our current needs.\n\nWe were genuinely impressed by your background and encourage you to apply for future openings.\n\nWishing you all the best,\n{{recruiter_name}}\nGuidewell' }
+    };
+    if (templates[tpl]) {
+      if (to) to.value = templates[tpl].to;
+      if (subject) subject.value = templates[tpl].subject;
+      if (body) body.textContent = templates[tpl].body;
+    }
+  });
+  document.getElementById('cmAIGen').addEventListener('click', function() {
+    var body = document.getElementById('cmBody');
+    var tpl = document.getElementById('cmTemplate').value;
+    if (!tpl) { alert('Please select a template first'); return; }
+    var mockResponses = [
+      'Generating personalized outreach based on ' + tpl + ' template…\n\nAI has crafted a tailored message that highlights the candidate\'s specific experience while keeping a warm, human tone. The follow-up timing is optimized based on industry data.',
+      'Composing message with AI…\n\nBased on {{candidate_name}}\'s background in software engineering and {{company_name}}\'s focus on AI products, AI recommends emphasizing the technical challenge and growth potential in the opening line.',
+      'Drafting with AI…\n\nAI analyzed successful outreach patterns for similar roles at {{company_name}} and generated a message that leads with the most compelling alignment between the candidate\'s skills and the role requirements.'
+    ];
+    body.textContent = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+  });
+  document.getElementById('cmInsertTpl').addEventListener('click', function() {
+    var body = document.getElementById('cmBody');
+    if (body) {
+      var cur = body.textContent || '';
+      body.textContent = cur + '\n{{candidate_name}} {{company_name}} {{job_title}} {{interview_date}} {{salary}} {{recruiter_name}}';
+    }
+  });
+  document.getElementById('cmSend').addEventListener('click', function() {
+    var body = document.getElementById('cmBody').textContent.trim();
+    if (!body) { alert('Message body cannot be empty'); return; }
+    document.getElementById('composeMsgModal').classList.remove('open');
+    document.getElementById('cmBody').textContent = '';
+    document.getElementById('cmTo').value = '';
+    document.getElementById('cmSubject').value = '';
+    document.getElementById('cmTemplate').value = '';
+  });
+
+  // ── Stage filter chips (Deals kanban) ────────────────────────
+  document.querySelectorAll('[data-s-filter]').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      document.querySelectorAll('[data-s-filter]').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      var filter = chip.dataset.sFilter;
+      document.querySelectorAll('.kanban-card, .dash-kanban-card').forEach(function(card) {
+        card.style.display = filter === 'all' || card.dataset.stage === filter ? '' : 'none';
+      });
+    });
+  });
+
+  // ── Department filter chips (Jobs) ───────────────────────────
+  document.querySelectorAll('[data-d-filter]').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      document.querySelectorAll('[data-d-filter]').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      var filter = chip.dataset.dFilter;
+      document.querySelectorAll('#jobsGrid .job-card').forEach(function(card) {
+        card.style.display = filter === 'all' || (card.dataset.dept === filter) ? '' : 'none';
+      });
+    });
+  });
+
+  // ── Performance report per team member ───────────────────────
+  document.querySelectorAll('[data-view-perf]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var mid = btn.dataset.viewPerf;
+      var m = teamMembers[mid];
+      if (!m) return;
+      var metrics = [
+        { label: 'Pipeline Growth', val: Math.floor(Math.random() * 30) + 70, color: 'var(--teal)' },
+        { label: 'Interview-to-Offer Ratio', val: Math.floor(Math.random() * 40) + 50, color: 'var(--gold)' },
+        { label: 'Time-to-Place (days)', val: Math.floor(Math.random() * 50) + 20, color: 'var(--purple)' },
+        { label: 'Client Retention', val: Math.floor(Math.random() * 20) + 80, color: 'var(--navy)' }
+      ];
+      document.getElementById('perfName').textContent = m.name + ' — Performance Report';
+      document.getElementById('perfRole').textContent = m.role + ' · ' + m.dept;
+      document.getElementById('perfBody').innerHTML = '<div class="perf-report">' + metrics.map(function METRIC(m) {
+        return '<div class="perf-metric"><div class="perf-metric-header"><span class="perf-metric-label">' + m.label + '</span><span class="perf-metric-value">' + m.val + '%</span></div><div class="perf-bar-bg"><div class="perf-bar-fill" style="width:' + m.val + '%;background:' + m.color + '"></div></div></div>';
+      }).join('') + '</div>';
+      document.getElementById('perfReportModal').classList.add('open');
+    });
+  });
+
+  // ── Calendar click-to-add event ───────────────────────────────
+  document.getElementById('calGrid').addEventListener('click', function(e) {
+    var day = e.target.closest('.cal-day');
+    if (!day || day.classList.contains('other-month')) return;
+    var dayNum = day.querySelector('.cal-day-num');
+    if (!dayNum) return;
+    var d = parseInt(dayNum.textContent);
+    document.getElementById('ceTitle').textContent = 'New Event — May ' + d + ', 2026';
+    document.getElementById('ceDateLabel').textContent = 'May 2026';
+    document.getElementById('ceEventTitle').value = '';
+    document.getElementById('ceTime').value = '10:00';
+    document.getElementById('ceNotes').value = '';
+    document.getElementById('calEventModal').classList.add('open');
+  });
+  document.getElementById('ceSubmit').addEventListener('click', function() {
+    var title = document.getElementById('ceEventTitle').value.trim();
+    if (!title) { alert('Event title is required'); return; }
+    var time = document.getElementById('ceTime').value;
+    var duration = document.getElementById('ceDuration').value;
+    var type = document.getElementById('ceType').value;
+    var recruiter = document.getElementById('ceRecruiter').value;
+    var notes = document.getElementById('ceNotes').value;
+    var typeClass = type === 'Screening' ? 'teal' : type === 'Interview' ? 'gold' : 'navy';
+    // Find the correct day cell in calendar grid and add the event
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var label = dayNum ? title : title;
+    document.getElementById('calEventModal').classList.remove('open');
+    // Re-render calendar to show new event
+    renderCalendar();
+  });
+
+  // ── Pipeline value stat updater ──────────────────────────────
+  function updatePipelineStat() {
+    var total = 0;
+    var counts = { prospect:0, qualified:0, proposal:0, negotiation:0, won:0 };
+    document.querySelectorAll('.kanban-card, .dash-kanban-card').forEach(function(card) {
+      var s = card.dataset.stage;
+      if (s && counts[s] !== undefined) counts[s]++;
+    });
+    var vals = { prospect: 25000, qualified: 50000, proposal: 75000, negotiation: 100000, won: 150000 };
+    Object.keys(counts).forEach(function(s) { total += (counts[s] || 0) * (vals[s] || 0); });
+    var el = document.getElementById('pipelineValue');
+    if (el) el.textContent = '€' + (total / 1000).toFixed(0) + 'K';
+    var el2 = document.getElementById('dealsSubtitle');
+    var totalDeals = Object.values(counts).reduce(function(a,b){return a+b;},0);
+    if (el2) el2.textContent = totalDeals + ' active deals · €' + (total/1000).toFixed(0) + 'K total';
+  }
+  updatePipelineStat();
+
+  // ── AI sourcing for jobs ─────────────────────────────────────
+  var aiSourceResults = [
+    'Found 4 strong matches for "Senior Java Developer":\n\n1. Anna Schmidt — 12 yrs Java exp, last at Philips — Score: 94%\n2. Mark de Vries — 8 yrs backend, fintech background — Score: 89%\n3. Lisa van Houten — 7 yrs Spring Boot, EU citizen — Score: 85%\n4. Thomas Bakker — 6 yrs microservices, remote-ready — Score: 81%',
+    'AI sourced 3 candidates for "Data Engineer" role:\n\n1. Priya Nair — 5 yrs Python/Spark, AWS certified — Score: 91%\n2. James Okafor — 4 yrs data pipelines, healthcare exp — Score: 87%\n3. Sara Lindgren — 3 yrs ETL, currently at bol.com — Score: 83%'
+  ];
 
   // ── Jobs tabs ───────────────────────────────────────────────
   document.querySelectorAll('[data-jobs-tab]').forEach(function(t) {
