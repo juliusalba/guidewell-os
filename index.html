@@ -2539,6 +2539,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     wasDragged = true;
     draggedDeal = null;
     saveKanbanState(); // persist position after drop
+  });
 
   document.addEventListener('dragover', function(e) {
     e.preventDefault();
