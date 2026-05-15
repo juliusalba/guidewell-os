@@ -202,6 +202,23 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
 #sidebarToggle svg { transition: transform 0.3s ease; }
 #sidebarToggle.toggled svg { transform: rotate(180deg); }
 
+/* Sidebar overlay (off-canvas backdrop) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.sidebar-overlay.visible {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* Theme toggle */
 #themeToggle {
   width: 34px; height: 34px; border-radius: 8px;
@@ -1251,12 +1268,290 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 /* Responsive */
 @media (max-width:1400px) { .dash-widgets { grid-template-columns:1fr 280px 240px } .stats-grid { grid-template-columns:repeat(3,1fr) } .analytics-grid { grid-template-columns:repeat(2,1fr) } }
 @media (max-width:1100px) { .dash-widgets { grid-template-columns:1fr 1fr } .dash-widget-meetings { grid-column:1/-1 } }
-@media (max-width:900px) { .app-shell { grid-template-columns:1fr;grid-template-areas:"topbar" "main" } .sidebar { display:none } .stats-grid { grid-template-columns:repeat(2,1fr) } .dash-widgets { grid-template-columns:1fr } .dash-row-2 { grid-template-columns:1fr } .team-grid { grid-template-columns:repeat(2,1fr) } .meetings-grid { grid-template-columns:1fr } .tasks-board { grid-template-columns:1fr } .analytics-grid { grid-template-columns:1fr 1fr } }
-@media (max-width:600px) { .main-content { padding:16px } .page-header { flex-direction:column } }
-@media (max-width:480px) { .notif-panel { width:300px;right:-40px; } }
+
+/* ── 900px: sidebar hidden, desktop layout stripped ── */
+@media (max-width:900px) {
+  .app-shell { grid-template-columns:1fr;grid-template-areas:"topbar" "main" }
+  .sidebar { display:none }
+  .stats-grid { grid-template-columns:repeat(2,1fr) }
+  .dash-widgets { grid-template-columns:1fr }
+  .dash-row-2 { grid-template-columns:1fr }
+  .team-grid { grid-template-columns:repeat(2,1fr) }
+  .meetings-grid { grid-template-columns:1fr }
+  .tasks-board { grid-template-columns:1fr }
+  .analytics-grid { grid-template-columns:1fr 1fr }
+  .jobs-grid { grid-template-columns:1fr }
+  .candidates-grid { grid-template-columns:1fr }
+  .companies-grid { grid-template-columns:1fr }
+  .template-grid { grid-template-columns:1fr }
+}
+
+/* ── 768px: off-canvas sidebar + hamburger ── */
+@media (max-width:768px) {
+  .main-content { padding:16px }
+
+  /* Off-canvas sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    transition: left 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease;
+    opacity: 1;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+  }
+  .sidebar.open { left: 0; }
+  .sidebar-collapsed { display: flex; left: -260px; opacity: 0; }
+  .app-shell.sidebar-collapsed { grid-template-columns:1fr; }
+  .app-shell.sidebar-open { overflow: hidden; }
+
+  /* Hamburger / sidebar toggle visible */
+  #sidebarToggle { display: flex; }
+
+  /* Sidebar overlay backdrop */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .sidebar-overlay.visible { opacity: 1; pointer-events: auto; }
+
+  /* Page header stacked */
+  .page-header { flex-direction:column;align-items:flex-start;gap:12px }
+  .topbar-actions { width:100%;flex-wrap:wrap }
+
+  /* Dashboard — tab bar horizontal scroll */
+  .dash-tab-bar { overflow-x:auto;-webkit-overflow-scrolling:touch }
+  .dash-metrics-strip { overflow-x:auto;-webkit-overflow-scrolling:touch }
+
+  /* Dashboard — kanban horizontal scroll */
+  .dash-kanban-strip { overflow-x:auto;-webkit-overflow-scrolling:touch }
+
+  /* Dashboard — tab area grids become single column */
+  .dash-tab-activity,
+  .dash-tab-outreach { grid-template-columns:1fr }
+  .dash-tab-calendar { grid-template-columns:1fr }
+  .dash-tab-team { grid-template-columns:1fr }
+  .dash-tab-pipeline .dash-kanban-strip { overflow-x:auto;-webkit-overflow-scrolling:touch }
+
+  /* Deals — kanban board horizontal scroll */
+  .kanban-board { overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory }
+  .kanban-col { scroll-snap-align:start }
+
+  /* Deals — table wrapper scroll */
+  .table-wrapper { overflow-x:auto;-webkit-overflow-scrolling:touch }
+
+  /* Jobs grid single column */
+  .jobs-grid { grid-template-columns:1fr }
+
+  /* Candidates grid 1 column */
+  .candidates-grid { grid-template-columns:1fr }
+
+  /* Companies grid 1 column */
+  .companies-grid { grid-template-columns:1fr }
+
+  /* Team grid 2→1 on narrow */
+  .team-grid { grid-template-columns:1fr }
+
+  /* Calendar — meetings grid stacked */
+  .meetings-grid { grid-template-columns:1fr }
+
+  /* Outreach items */
+  .outreach-tabs { overflow-x:auto;-webkit-overflow-scrolling:touch }
+
+  /* Internal tabs */
+  .internal-tabs { overflow-x:auto;-webkit-overflow-scrolling:touch }
+
+  /* Analytics grid 1→1 */
+  .analytics-grid { grid-template-columns:1fr }
+
+  /* Tasks board 1 column */
+  .tasks-board { grid-template-columns:1fr }
+
+  /* Stats grid 2→1 */
+  .stats-grid { grid-template-columns:1fr 1fr }
+
+  /* Job detail header stacked */
+  .job-detail-header { flex-direction:column }
+  .job-detail-meta-row { flex-wrap:wrap }
+
+  /* Company detail */
+  .company-detail-header { flex-wrap:wrap }
+
+  /* Team member detail */
+  .team-member-hero { flex-direction:column }
+}
+
+/* ── 600px: tighter spacing, full-width cards ── */
+@media (max-width:600px) {
+  .main-content { padding:12px }
+
+  .page-title { font-size:18px }
+  .page-subtitle { font-size:12px }
+
+  /* Dashboard widgets stack */
+  .dash-widgets { grid-template-columns:1fr }
+
+  /* Metric chips scroll */
+  .dash-metrics-strip { gap:8px;padding:10px 12px }
+
+  /* Stats grid 2→1 */
+  .stats-grid { grid-template-columns:1fr }
+
+  /* Kanban col narrower */
+  .kanban-col { min-width:240px;width:240px }
+
+  /* Job cards full width */
+  .job-card { margin-bottom:0 }
+  .jobs-grid { gap:10px }
+
+  /* Candidate cards */
+  .candidates-grid { gap:10px }
+
+  /* Company cards */
+  .companies-grid { gap:10px }
+
+  /* Team grid */
+  .team-grid { gap:10px }
+
+  /* Quick actions bar scroll */
+  .quick-actions-bar { overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap }
+  .qa-btn { flex-shrink:0 }
+
+  /* Outreach items */
+  .outreach-item { padding:12px }
+
+  /* Calendar day min-height reduced */
+  .cal-day { min-height:60px }
+
+  /* Notifications panel full-width-ish */
+  .notif-panel { min-width:280px;right:-20px }
+
+  /* Outreach sequence dots */
+  .sequence-dot { flex-shrink:0 }
+
+  /* Analytics KPI 1 column */
+  .analytics-kpi { grid-template-columns:1fr }
+
+  /* Template grid 1 col */
+  .template-grid { grid-template-columns:1fr }
+
+  /* Time tracking panel */
+  .tt-timer { font-size:22px }
+
+  /* Live clock smaller on mobile */
+  .live-clock { font-size:28px }
+
+  /* Deals toolbar scroll */
+  .deals-toolbar { overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap }
+  .filter-chip { flex-shrink:0 }
+
+  /* Candidates toolbar */
+  .candidates-toolbar { overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap }
+}
+
+/* ── 480px: compact mobile, single column everything ── */
+@media (max-width:480px) {
+  .main-content { padding:10px }
+
+  /* Metric chips compact */
+  .dash-metric-chip { padding:6px 10px }
+  .dash-metric-chip-val { font-size:14px }
+  .dash-metric-chip-label { font-size:9px }
+
+  /* Kanban narrower */
+  .kanban-col { min-width:210px;width:210px }
+  .kanban-card { padding:12px }
+
+  /* Job card full bleed */
+  .job-card-header { padding:12px 14px }
+  .job-card-body { padding:10px 14px }
+  .job-card-footer { padding:8px 14px }
+
+  /* Stat cards */
+  .stat-card { padding:12px 14px }
+  .stat-value { font-size:20px }
+
+  /* Team grid */
+  .recruiter-card { padding:12px }
+
+  /* Tab bars very compact */
+  .dash-tab { padding:8px 12px;font-size:12px }
+
+  /* Calendar compact */
+  .cal-day { min-height:50px;padding:4px }
+  .cal-day-num { font-size:11px }
+
+  /* Notification panel */
+  .notif-panel { width:260px;right:-60px }
+
+  /* Modal/panel full width */
+  .notif-panel { left:auto;right:-10px;width:300px }
+
+  /* Topbar compact */
+  .topbar { padding:0 12px }
+  .topbar-brand { font-size:13px }
+  .topbar-breadcrumb { display:none }
+
+  /* Sidebar user compact */
+  .sidebar-logo { padding:14px 16px }
+  .sidebar-nav-item a { padding:8px 16px;font-size:12px }
+  .sidebar-section-label { padding:10px 16px 4px }
+
+  /* Page header actions */
+  .topbar-actions { gap:6px }
+
+  /* AI insight compact */
+  .ai-insight { padding:12px 14px }
+
+  /* Breadcrumb hidden on very small */
+  .topbar-breadcrumb { font-size:11px }
+
+  /* Deals filter chips scroll */
+  .view-tabs { flex-shrink:0 }
+
+  /* Kanban card actions always visible */
+  .kanban-card-actions { opacity:1;transform:translateY(0) }
+
+  /* Calendar event pills smaller */
+  .cal-event-pill { font-size:8px;padding:1px 3px }
+
+  /* Holiday item compact */
+  .holiday-item { padding:6px 12px }
+  .hi-date { padding:3px 5px }
+  .hi-name { font-size:11px }
+
+  /* Upcoming items compact */
+  .upcoming-item { padding:7px 12px }
+  .upcoming-time { min-width:40px;padding:4px }
+
+  /* Team wins compact */
+  .win-item { padding:8px 12px }
+  .win-icon-wrap { width:28px;height:28px;font-size:12px }
+
+  /* Meetings list compact */
+  .meeting-card { padding:8px }
+  .mc-time-block { min-width:36px;padding:4px }
+  .mc-title { font-size:12px }
+}
+
+/* ── Off-canvas sidebar JS hook classes ── */
+.sidebar-open .sidebar { left: 0; }
+.sidebar-open .sidebar-overlay { opacity: 1; pointer-events: auto; display: block; }
 </style>
 </head>
 <body>
+
+<!-- Sidebar overlay backdrop (for mobile off-canvas) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <!-- Impersonation Banner -->
 <div id="impersonationBar">
@@ -4797,14 +5092,28 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   // ── Sidebar Toggle ─────────────────────────────────────
   var sidebarToggle = document.getElementById('sidebarToggle');
   var appShell = document.querySelector('.app-shell');
+  var sidebarOverlay = document.getElementById('sidebarOverlay');
   if (sidebarToggle && appShell) {
     sidebarToggle.addEventListener('click', function() {
-      appShell.classList.toggle('sidebar-collapsed');
-      sidebarToggle.classList.toggle('toggled');
+      var isOpen = appShell.classList.contains('sidebar-open');
+      if (isOpen) {
+        appShell.classList.remove('sidebar-open');
+        sidebarOverlay.classList.remove('visible');
+      } else {
+        appShell.classList.add('sidebar-open');
+        sidebarOverlay.classList.add('visible');
+      }
       // Haptic feedback via scale animation
       sidebarToggle.classList.add('haptic-pulse');
       setTimeout(function(){ sidebarToggle.classList.remove('haptic-pulse'); }, 300);
     });
+    // Close sidebar when clicking overlay
+    if (sidebarOverlay) {
+      sidebarOverlay.addEventListener('click', function() {
+        appShell.classList.remove('sidebar-open');
+        sidebarOverlay.classList.remove('visible');
+      });
+    }
   }
 
   // ── Theme Toggle ────────────────────────────────────────
