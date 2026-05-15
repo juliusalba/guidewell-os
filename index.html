@@ -726,29 +726,47 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
 .filter-chip { display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:12px;font-weight:500;color:var(--text-secondary);cursor:pointer;transition:all 0.1s; }
 .filter-chip:hover,.filter-chip.active { border-color:var(--teal);background:var(--teal-muted);color:var(--teal); }
 
-/* Full kanban */
-.kanban-board { display:flex;gap:14px;overflow-x:auto;padding-bottom:24px;align-items:flex-start; }
-.kanban-col { min-width:260px;width:260px;flex-shrink:0;display:flex;flex-direction:column; }
-.kanban-col-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px; }
-.kanban-col-title { display:flex;align-items:center;gap:7px; }
-.kanban-col-title h3 { font-size:12.5px;font-weight:600;color:var(--text-primary); }
-.kanban-col-dot { width:8px;height:8px;border-radius:50%; }
-.kanban-count { font-size:11px;font-weight:600;color:var(--text-muted);background:var(--cream-dark);padding:2px 7px;border-radius:10px; }
-.kanban-cards { display:flex;flex-direction:column;gap:8px;min-height:80px;padding:4px;border-radius:var(--radius-sm);transition:background 0.15s; }
-.kanban-cards.drag-over { background:var(--gold-muted); }
-.kanban-card { background:var(--surface);border-radius:var(--radius-md);padding:13px;border:1px solid var(--border);box-shadow:var(--shadow-sm);cursor:grab;transition:all 0.15s; }
-.kanban-card:hover { box-shadow:var(--shadow-md);transform:translateY(-1px); }
-.kanban-card.dragging { opacity:0.4;cursor:grabbing; }
-.kanban-card-title { font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:3px; }
-.kanban-card-company { font-size:12px;color:var(--text-secondary);margin-bottom:8px; }
+/* Full kanban - Modern Design */
+.kanban-board { display:flex;gap:16px;overflow-x:auto;padding:16px 8px 28px;align-items:flex-start;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory; }
+.kanban-col { min-width:280px;width:280px;flex-shrink:0;display:flex;flex-direction:column;scroll-snap-align:start; }
+.kanban-col-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:12px 16px;background:linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(250,249,247,0.95) 100%);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:14px;border:1px solid rgba(0,59,115,0.08);box-shadow:0 4px 16px rgba(0,59,115,0.06),inset 0 1px 0 rgba(255,255,255,0.8); }
+.kanban-col-title { display:flex;align-items:center;gap:10px; }
+.kanban-col-title h3 { font-size:13px;font-weight:700;color:var(--navy);letter-spacing:0.02em; }
+.kanban-col-dot { width:10px;height:10px;border-radius:50%;box-shadow:0 0 8px currentColor; }
+.kanban-count { font-size:11px;font-weight:700;color:#fff;background:var(--navy);padding:3px 10px;border-radius:12px;box-shadow:0 2px 6px rgba(0,59,115,0.25); }
+.kanban-col-total { font-size:11px;font-weight:600;color:var(--teal);background:linear-gradient(135deg, rgba(0,139,139,0.1) 0%, rgba(0,139,139,0.05) 100%);padding:3px 10px;border-radius:10px;border:1px solid rgba(0,139,139,0.15); }
+.kanban-cards { display:flex;flex-direction:column;gap:10px;min-height:100px;padding:6px;border-radius:16px;transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);background:linear-gradient(180deg, rgba(250,249,247,0.5) 0%, rgba(250,249,247,0.2) 100%); }
+.kanban-cards.drag-over { background:linear-gradient(135deg, rgba(245,166,35,0.15) 0%, rgba(245,166,35,0.08) 100%);border:2px dashed var(--gold);transform:scale(1.02);box-shadow:0 8px 24px rgba(245,166,35,0.15); }
+.kanban-card { background:linear-gradient(145deg, #ffffff 0%, #faf9f7 100%);border-radius:16px;padding:16px;border:1px solid rgba(0,59,115,0.06);box-shadow:0 2px 8px rgba(0,59,115,0.04),0 1px 2px rgba(0,59,115,0.02);cursor:grab;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden; }
+.kanban-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg, var(--navy), var(--teal));opacity:0;transition:opacity 0.3s; }
+.kanban-card:hover { box-shadow:0 8px 24px rgba(0,59,115,0.12),0 4px 8px rgba(0,59,115,0.06);transform:translateY(-3px) scale(1.01);border-color:rgba(0,139,139,0.15); }
+.kanban-card:hover::before { opacity:1; }
+.kanban-card:hover .kanban-card-actions { opacity:1;transform:translateY(0); }
+.kanban-card.dragging { opacity:0.5;cursor:grabbing;transform:rotate(3deg) scale(1.05);box-shadow:0 16px 40px rgba(0,59,115,0.2); }
+.kanban-card.dropping { animation:dropBounce 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+.kanban-card.wiggle { animation:wiggle 0.4s ease-in-out; }
+.kanban-card-actions { position:absolute;top:10px;right:10px;display:flex;gap:6px;opacity:0;transform:translateY(-4px);transition:all 0.2s ease; }
+.kanban-card-action { width:26px;height:26px;border-radius:8px;background:#fff;border:1px solid rgba(0,59,115,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--text-muted);transition:all 0.2s;box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+.kanban-card-action:hover { background:var(--navy);color:#fff;border-color:var(--navy);transform:scale(1.1); }
+.kanban-card-title { font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px; }
+.kanban-card-company { font-size:12px;color:var(--text-secondary);margin-bottom:12px; }
 .kanban-card-meta { display:flex;align-items:center;justify-content:space-between; }
-.kanban-card-value { font-size:13px;font-weight:700;color:var(--teal); }
+.kanban-card-value { font-size:15px;font-weight:800;color:var(--teal);text-shadow:0 1px 2px rgba(0,139,139,0.1); }
 .kanban-card-jobs { font-size:11px;color:var(--text-muted); }
-.kanban-card-footer { display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border); }
-.kanban-card-recruiter { display:flex;align-items:center;gap:5px; }
-.ravatar { width:20px;height:20px;border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center; }
-.rname { font-size:11px;color:var(--text-muted); }
+.kanban-card-footer { display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid rgba(0,59,115,0.06); }
+.kanban-card-recruiter { display:flex;align-items:center;gap:7px; }
+.ravatar { width:22px;height:22px;border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.15); }
+.rname { font-size:11px;color:var(--text-muted);font-weight:500; }
 .kanban-card-date { font-size:10.5px;color:var(--text-muted); }
+@keyframes dropBounce { 0%{transform:scale(0.8) translateY(-20px);opacity:0} 50%{transform:scale(1.05) translateY(2px)} 70%{transform:scale(0.98) translateY(-4px)} 100%{transform:scale(1) translateY(0);opacity:1} }
+@keyframes wiggle { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-3deg)} 75%{transform:rotate(3deg)} }
+@media (max-width:768px) {
+.kanban-board { gap:12px;padding:12px 4px 20px; }
+.kanban-col { min-width:260px;width:260px; }
+.kanban-col-header { padding:10px 12px;margin-bottom:10px; }
+.kanban-card { padding:14px; }
+.kanban-card-actions { opacity:1;transform:translateY(0); }
+}
 
 /* Table */
 .table-card { background:var(--surface);border-radius:var(--radius-md);border:1px solid var(--border);box-shadow:var(--shadow-sm);overflow:hidden; }
@@ -1969,14 +1987,16 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       <div id="deals-kanban-view" style="margin-top:20px;">
         <div class="kanban-board">
           <div class="kanban-col" data-stage="prospect">
-            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#9E9890"></div><h3>Prospect</h3></div><span class="kanban-count">2</span></div>
+            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#9E9890"></div><h3>Prospect</h3></div><div style="display:flex;gap:8px;align-items:center;"><span class="kanban-col-total">€30K</span><span class="kanban-count">2</span></div></div>
             <div class="kanban-cards" data-stage="prospect">
               <div class="kanban-card" draggable="true" data-deal-id="deal-techcom" data-modal="deal-techcom">
+                <div class="kanban-card-actions"><div class="kanban-card-action">★</div><div class="kanban-card-action">✕</div></div>
                 <div class="kanban-card-title">Techcom Solutions</div><div class="kanban-card-company">IT Infrastructure · Amsterdam</div>
                 <div class="kanban-card-meta"><span class="kanban-card-value">€18K</span><span class="kanban-card-jobs">☐ 2 jobs</span></div>
                 <div class="kanban-card-footer"><div class="kanban-card-recruiter"><div class="ravatar" style="background:#7c3aed">TV</div><span class="rname">Thomas V.</span></div><span class="kanban-card-date">2d ago</span></div>
               </div>
               <div class="kanban-card" draggable="true" data-deal-id="deal-dataflow" data-modal="deal-dataflow">
+                <div class="kanban-card-actions"><div class="kanban-card-action">★</div><div class="kanban-card-action">✕</div></div>
                 <div class="kanban-card-title">DataFlow BV</div><div class="kanban-card-company">Data Analytics · Utrecht</div>
                 <div class="kanban-card-meta"><span class="kanban-card-value">€12K</span><span class="kanban-card-jobs">☐ 1 job</span></div>
                 <div class="kanban-card-footer"><div class="kanban-card-recruiter"><div class="ravatar" style="background:#F5A623">MK</div><span class="rname">Maya K.</span></div><span class="kanban-card-date">5d ago</span></div>
@@ -1984,9 +2004,10 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             </div>
           </div>
           <div class="kanban-col" data-stage="qualified">
-            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#008B8B"></div><h3>Qualified</h3></div><span class="kanban-count">1</span></div>
+            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#008B8B"></div><h3>Qualified</h3></div><div style="display:flex;gap:8px;align-items:center;"><span class="kanban-col-total">€24K</span><span class="kanban-count">1</span></div></div>
             <div class="kanban-cards" data-stage="qualified">
               <div class="kanban-card" draggable="true" data-deal-id="deal-bluewave" data-modal="deal-bluewave">
+                <div class="kanban-card-actions"><div class="kanban-card-action">★</div><div class="kanban-card-action">✕</div></div>
                 <div class="kanban-card-title">BlueWave Media</div><div class="kanban-card-company">Digital Marketing · Rotterdam</div>
                 <div class="kanban-card-meta"><span class="kanban-card-value">€24K</span><span class="kanban-card-jobs">☑ 1 job</span></div>
                 <div class="kanban-card-footer"><div class="kanban-card-recruiter"><div class="ravatar" style="background:#008B8B">SL</div><span class="rname">Sara L.</span></div><span class="kanban-card-date">1d ago</span></div>
@@ -1994,9 +2015,10 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             </div>
           </div>
           <div class="kanban-col" data-stage="proposal">
-            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#F5A623"></div><h3>Proposal</h3></div><span class="kanban-count">1</span></div>
+            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#F5A623"></div><h3>Proposal</h3></div><div style="display:flex;gap:8px;align-items:center;"><span class="kanban-col-total">€38K</span><span class="kanban-count">1</span></div></div>
             <div class="kanban-cards" data-stage="proposal">
               <div class="kanban-card" draggable="true" data-deal-id="deal-greentech" data-modal="deal-greentech">
+                <div class="kanban-card-actions"><div class="kanban-card-action">★</div><div class="kanban-card-action">✕</div></div>
                 <div class="kanban-card-title">GreenTech NL</div><div class="kanban-card-company">Sustainability · Groningen</div>
                 <div class="kanban-card-meta"><span class="kanban-card-value">€38K</span><span class="kanban-card-jobs">☑ 2 jobs</span></div>
                 <div class="kanban-card-footer"><div class="kanban-card-recruiter"><div class="ravatar" style="background:#003B73">BA</div><span class="rname">Brian A.</span></div><span class="kanban-card-date">3d ago</span></div>
@@ -2004,9 +2026,10 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             </div>
           </div>
           <div class="kanban-col" data-stage="negotiation">
-            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#7c3aed"></div><h3>Negotiation</h3></div><span class="kanban-count">1</span></div>
+            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#7c3aed"></div><h3>Negotiation</h3></div><div style="display:flex;gap:8px;align-items:center;"><span class="kanban-col-total">€52K</span><span class="kanban-count">1</span></div></div>
             <div class="kanban-cards" data-stage="negotiation">
               <div class="kanban-card" draggable="true" data-deal-id="deal-finova" data-modal="deal-finova">
+                <div class="kanban-card-actions"><div class="kanban-card-action">★</div><div class="kanban-card-action">✕</div></div>
                 <div class="kanban-card-title">Finova Bank</div><div class="kanban-card-company">Financial Services · Amsterdam</div>
                 <div class="kanban-card-meta"><span class="kanban-card-value">€52K</span><span class="kanban-card-jobs">☑ 3 jobs</span></div>
                 <div class="kanban-card-footer"><div class="kanban-card-recruiter"><div class="ravatar" style="background:#003B73">BA</div><span class="rname">Brian A.</span></div><span class="kanban-card-date">Today</span></div>
@@ -2014,9 +2037,10 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
             </div>
           </div>
           <div class="kanban-col" data-stage="won">
-            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#22a06b"></div><h3>Won</h3></div><span class="kanban-count">1</span></div>
+            <div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#22a06b"></div><h3>Won</h3></div><div style="display:flex;gap:8px;align-items:center;"><span class="kanban-col-total">€96K</span><span class="kanban-count">1</span></div></div>
             <div class="kanban-cards" data-stage="won">
               <div class="kanban-card" draggable="true" data-deal-id="deal-randstad" data-modal="deal-randstad">
+                <div class="kanban-card-actions"><div class="kanban-card-action">★</div><div class="kanban-card-action">✕</div></div>
                 <div class="kanban-card-title">Randstad Group</div><div class="kanban-card-company">Staffing & Recruitment · Diemen</div>
                 <div class="kanban-card-meta"><span class="kanban-card-value">€96K</span><span class="kanban-card-jobs">☑ 4 jobs</span></div>
                 <div class="kanban-card-footer"><div class="kanban-card-recruiter"><div class="ravatar" style="background:#22a06b">BA</div><span class="rname">Brian A.</span></div><span class="kanban-card-date" style="color:var(--green)">Closed ✓</span></div>
