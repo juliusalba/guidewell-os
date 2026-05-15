@@ -86,6 +86,14 @@ html,body { font-family: var(--font); background: var(--cream); color: var(--tex
 .topbar-avatar { width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;position:relative; }
 .topbar-avatar img { width:100%;height:100%;border-radius:50%;object-fit:cover; }
 
+/* Multi-timezone clocks */
+.tz-clocks { display:flex;align-items:center;gap:2px; }
+.tz-clock { display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;cursor:default;transition:background 0.1s; }
+.tz-clock:hover { background:rgba(0,59,115,0.05); }
+.tz-label { font-size:9.5px;font-weight:700;letter-spacing:0.06em;color:var(--text-muted);text-transform:uppercase; }
+.tz-time { font-size:12.5px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums; }
+.topbar-divider-v { width:1px;height:20px;background:var(--border);margin:0 4px; }
+
 /* Avatar dropdown */
 .avatar-dropdown { position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);min-width:220px;z-index:100;display:none; }
 .avatar-dropdown.open { display:block; }
@@ -679,6 +687,26 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       <span class="topbar-breadcrumb" id="topbarBreadcrumb">Agency Overview</span>
     </div>
     <div class="topbar-right">
+      <!-- Multi-timezone clock -->
+      <div class="tz-clocks">
+        <div class="tz-clock" title="Netherlands (Europe/Amsterdam)">
+          <span class="tz-label">NL</span>
+          <span class="tz-time" id="clock-nl">--:--</span>
+        </div>
+        <div class="tz-clock" title="South Africa (Africa/Johannesburg)">
+          <span class="tz-label">SA</span>
+          <span class="tz-time" id="clock-sa">--:--</span>
+        </div>
+        <div class="tz-clock" title="Philippines (Asia/Manila)">
+          <span class="tz-label">PH</span>
+          <span class="tz-time" id="clock-ph">--:--</span>
+        </div>
+        <div class="tz-clock" title="Curaçao (America/Curacao)">
+          <span class="tz-label">CW</span>
+          <span class="tz-time" id="clock-cw">--:--</span>
+        </div>
+      </div>
+      <div class="topbar-divider-v"></div>
       <button class="topbar-btn" title="Notifications">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
         <span class="notif-dot"></span>
@@ -2218,6 +2246,9 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     dd.classList.toggle('open');
   }
   document.addEventListener('click', function(e) {
+    // Ignore post-drag click — dragend sets wasDragged=true
+    if (wasDragged) { wasDragged = false; return; }
+
     var btn = document.getElementById('topbarAvatarBtn');
     var dd = document.getElementById('avatarDropdown');
     if (btn && !btn.contains(e.target) && dd && !dd.contains(e.target)) {
@@ -2460,12 +2491,43 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
 
   // ── Drag & Drop Kanban ─────────────────────────────────────
   var draggedDeal = null;
+  var wasDragged = false; // prevents click from firing after drag ends
+
+  // Save kanban state to localStorage
+  function saveKanbanState() {
+    var state = {};
+    document.querySelectorAll('.kanban-col, .dash-kanban-col').forEach(function(col) {
+      var stage = col.dataset.stage;
+      if (!stage) return;
+      var cards = Array.prototype.slice.call(col.querySelectorAll('.kanban-card, .dash-kanban-card')).map(function(c) {
+        return c.dataset.dealId;
+      });
+      state[stage] = cards;
+    });
+    localStorage.setItem('guidewell_kanban', JSON.stringify(state));
+  }
+
+  // Load kanban state from localStorage
+  function loadKanbanState() {
+    try {
+      var saved = JSON.parse(localStorage.getItem('guidewell_kanban') || '{}');
+      Object.keys(saved).forEach(function(stage) {
+        saved[stage].forEach(function(dealId) {
+          var card = document.querySelector('[data-deal-id="' + dealId + '"]');
+          var col = document.querySelector('.kanban-col[data-stage="' + stage + '"], .dash-kanban-col[data-stage="' + stage + '"]');
+          if (card && col) col.appendChild(card);
+        });
+      });
+    } catch(e) {}
+  }
+  loadKanbanState();
 
   document.addEventListener('dragstart', function(e) {
     var card = e.target.closest('.kanban-card, .dash-kanban-card');
     if (!card) return;
     draggedDeal = card;
     card.classList.add('dragging');
+    wasDragged = false;
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', card.dataset.dealId || '');
   });
@@ -2474,8 +2536,9 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
     var card = e.target.closest('.kanban-card, .dash-kanban-card');
     if (card) card.classList.remove('dragging');
     document.querySelectorAll('.drag-over').forEach(function(el){ el.classList.remove('drag-over') });
+    wasDragged = true;
     draggedDeal = null;
-  });
+    saveKanbanState(); // persist position after drop
 
   document.addEventListener('dragover', function(e) {
     e.preventDefault();
@@ -2520,6 +2583,7 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
       var s = el.dataset.stage;
       if (stageCounts[s] !== undefined) stageCounts[s]++;
     });
+    saveKanbanState(); // persist after drop
   });
 
   // ── Outreach tab switching ──────────────────────────────────
@@ -2807,6 +2871,31 @@ tbody tr.deal-stale td:first-child { border-left:3px solid var(--red); }
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeAllModals();
   });
+
+  // ── Multi-timezone clocks ────────────────────────────────────
+  var tzOffsets = { nl: 2, sa: 2, ph: 8, cw: -4 }; // UTC offsets (DST-aware would need a lib)
+  function updateClocks() {
+    var now = new Date();
+    var fmt = function(h, m) { return ((h < 10 ? '0' : '') + h) + ':' + ((m < 10 ? '0' : '') + m); };
+    var toUTC = function(d, offset) {
+      var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+      return new Date(utc + (offset * 3600000));
+    };
+    var saTime = toUTC(now, tzOffsets.sa);
+    var phTime = toUTC(now, tzOffsets.ph);
+    var nlTime = toUTC(now, tzOffsets.nl);
+    var cwTime = toUTC(now, tzOffsets.cw);
+    var el = document.getElementById('clock-nl');
+    if (el) el.textContent = fmt(nlTime.getHours(), nlTime.getMinutes());
+    el = document.getElementById('clock-sa');
+    if (el) el.textContent = fmt(saTime.getHours(), saTime.getMinutes());
+    el = document.getElementById('clock-ph');
+    if (el) el.textContent = fmt(phTime.getHours(), phTime.getMinutes());
+    el = document.getElementById('clock-cw');
+    if (el) el.textContent = fmt(cwTime.getHours(), cwTime.getMinutes());
+  }
+  updateClocks();
+  setInterval(updateClocks, 30000); // update every 30s
 
 })();
 </script>
